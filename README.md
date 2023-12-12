@@ -4,8 +4,10 @@ This guide will help you set up the Laravel project on a Windows system.
 
 ## Prerequisites
 
-- Ensure you have Git, Composer, PHP, and WAMP/XAMPP (or equivalent) installed on your system.
-- Node.js and NPM are required for managing front-end resources.
+- **Install XAMPP**: Ensure you have XAMPP installed with at least PHP version 8.1. You can download it from [the official XAMPP website](https://www.apachefriends.org/index.html).
+- **Install Composer**: After installing XAMPP, install the latest version of Composer. Download it from [the Composer website](https://getcomposer.org/).
+- Ensure you have Git installed on your system.
+- **Install Node.js**: Ensure you have Node.js version 18 installed. Download it from [the Node.js website](https://nodejs.org/).
 
 ## Setup Instructions
 
@@ -27,10 +29,10 @@ This guide will help you set up the Laravel project on a Windows system.
 5. **Database Setup**
    - Run `php artisan migrate` to create the database schema.
 
-6. **Install NPM Dependencies (if needed)**
+6. **Install NPM Dependencies**
    - Run `npm install`.
 
-7. **Compile Front-end Assets (if applicable)**
+7. **Compile Front-end Assets**
    - Run `npm run dev`.
 
 8. **Run the Application**
@@ -39,11 +41,9 @@ This guide will help you set up the Laravel project on a Windows system.
 
 ## Troubleshooting
 
-- Ensure all prerequisites are correctly installed.
+- Ensure all prerequisites, including XAMPP, Composer, and Node.js version 18, are correctly installed.
 - Check `.env` settings if you encounter database or mail driver issues.
-- Ensure WAMP/XAMPP servers are running for database connectivity.
-
-
+- Ensure XAMPP servers are running for database connectivity.
 
 # Laravel Project Setup Guide (Mac)
 
@@ -52,7 +52,7 @@ This guide will help you set up the Laravel project on a Mac system.
 ## Prerequisites
 
 - Ensure you have Git, Composer, and PHP installed on your system.
-- Node.js and NPM are required for managing front-end resources.
+- **Install Node.js**: Ensure you have Node.js version 18 installed. Download it from [the Node.js website](https://nodejs.org/).
 
 ## Setup Instructions
 
@@ -74,10 +74,10 @@ This guide will help you set up the Laravel project on a Mac system.
 5. **Database Setup**
    - Run `php artisan migrate` to create the database schema.
 
-6. **Install NPM Dependencies (if needed)**
+6. **Install NPM Dependencies**
    - Run `npm install`.
 
-7. **Compile Front-end Assets (if applicable)**
+7. **Compile Front-end Assets**
    - Run `npm run dev`.
 
 8. **Run the Application**
@@ -86,5 +86,5 @@ This guide will help you set up the Laravel project on a Mac system.
 
 ## Troubleshooting
 
-- Ensure all prerequisites are correctly installed.
+- Ensure all prerequisites, including Composer and Node.js version 18, are correctly installed.
 - Check `.env` settings if you encounter database or mail driver issues.
