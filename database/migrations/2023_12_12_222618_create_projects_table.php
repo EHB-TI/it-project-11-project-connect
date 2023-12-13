@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name', 100)->unique();
+            $table->string('description', 255)->nullable();
+            $table->string('status', 255)->nullable();
+
+            $table->unsignedBigInteger('ownerID')->nullable();
+            /**$table->unsignedBigInteger('spaceID')->nullable(); */
+
+            $table->foreign('ownerID')->references('id')->on('users');
+            /**$table->foreign('spaceID')->references('id')->on('spaces'); */
         });
     }
 
