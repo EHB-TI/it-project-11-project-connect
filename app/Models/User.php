@@ -11,7 +11,7 @@ class User extends Model
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class, 'applicantID');
     }
 
     public function projects()
