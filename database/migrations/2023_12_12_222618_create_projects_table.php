@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('status', 255)->nullable();
 
             $table->unsignedBigInteger('ownerID')->nullable();
-            /**$table->unsignedBigInteger('spaceID')->nullable(); */
+            $table->unsignedBigInteger('spaceID')->nullable(); 
 
             $table->foreign('ownerID')->references('id')->on('users');
-            /**$table->foreign('spaceID')->references('id')->on('spaces'); */
+            $table->foreign('spaceID')->references('id')->on('spaces');
         });
     }
 

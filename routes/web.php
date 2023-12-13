@@ -17,5 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Needs to go through project controller (create)
+Route::get('/project/create', function() {
+    return view('shared.project_proposition');
+});
 
-
+// Needs to go through project controller (create)
+Route::get('/project/create', function() {
+    return view('shared.project_proposition');
+});
