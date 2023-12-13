@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
+
+    use HasFactory;
+
     public function applicant()
     {
         return $this->belongsTo(User::class, 'applicantID');
