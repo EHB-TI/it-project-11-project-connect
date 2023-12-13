@@ -22,6 +22,10 @@ Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
 
+Route::get('/deadline/create', function(){
+    return view('teachers.deadline.create');
+});
+
 Route::get('/space', function () {
     return view('shared.space');
 });
