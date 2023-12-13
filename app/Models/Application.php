@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
-    protected $fillable = ['file url', 'motivation content' ];
+    protected $fillable = ['file url', 'motivation content', 'status', 'reason' ];
 }
