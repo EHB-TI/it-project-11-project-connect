@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('fileurl')->nullable();
             $table->string('status');
             $table->string('reason');
-            $table->unsignedBigInteger('applicantId')->nullable(false);
-
-            $table->foreign('applicantId')->references('id')->on('users');
+           
+            $table->unsignedBigInteger('applicantID')->nullable(false);
+            $table->foreign('applicantID')->references('id')->on('users');
         });
     }
     
