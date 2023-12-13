@@ -3,5 +3,5 @@
 
 @section('content')
     <!-- Hier voeg je de content van de pagina toe -->
-    <div>project overview page</div>
+    <div>Welcome</div>
 @endsection
