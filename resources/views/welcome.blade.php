@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>hello world</title>
-   @vite('resources/css/app.css')
-</head>
-<body>
+@extends('head')
+@section('title', 'Home')
     @include('components.nav-bar')
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Home</h1>
+                <p>This is the home page.</p>
+            </div>
+        </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+@extends('footer')
+@section('title', 'Home')
