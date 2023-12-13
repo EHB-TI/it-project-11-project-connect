@@ -11,20 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('role');
-            $table->boolean('available')->default(true);
-            $table->timestamps();
+            $table->text('motivationcontent')-> nullable();
+            $table->String('fileurl')->nullable();
+            $table->string('status');
+            $table->string('reason');
+
+            $table->foreign('applicant')->belongsTo('id')->on('users');
         });
     }
+    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('applications');
     }
 };
