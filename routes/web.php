@@ -18,4 +18,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('/space', function () {
+    return view('shared.space');
+});
+
+
 
