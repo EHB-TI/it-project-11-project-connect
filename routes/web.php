@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,5 @@ Route::get('/space', function () {
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
+
+Route::get('/project/details/{id}', [ProjectController::class, 'show']);
