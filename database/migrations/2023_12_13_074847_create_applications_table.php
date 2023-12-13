@@ -17,6 +17,8 @@ return new class extends Migration
             $table->String('fileurl')->nullable();
             $table->string('status');
             $table->string('reason');
+
+            $table->foreign('applicant')->belongsTo('id')->on('users');
         });
     }
     
