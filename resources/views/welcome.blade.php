@@ -1,14 +1,13 @@
-@extends('head')
+@extends('components.head')
 @section('title', 'Home')
-    @include('components.nav-bar')
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Home</h1>
-                <p>This is the home page.</p>
-            </div>
-        </div>
 
-@extends('footer')
+    <div class="app-container">
+        @include('components.nav-bar')
+        <div class="app-content ml-[max(250px,_20%)] p-5">
+            <div>testest</div>
+        </div>
+    
+    </div>
+
+@extends('components.footer')
 @section('title', 'Home')
