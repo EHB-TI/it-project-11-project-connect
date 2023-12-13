@@ -8,3 +8,12 @@
     @vite('resources/css/app.css')
 </head>
 <body>
+    <div class="app-container">
+        @include('components.nav-bar')
+        <div class="app-content ml-[max(250px,_20%)] p-5">
+            @yield('content')
+        </div>
+    </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+</body>
+</html>
