@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('space_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            $table->string('role');
-            $table->boolean('available')->default(true);
+            $table->unsignedBigInteger('space_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('space_user');
     }
 };
