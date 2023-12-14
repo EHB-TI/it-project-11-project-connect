@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 use App\Http\Controllers\DeadlineController;
 
@@ -18,7 +19,10 @@ use App\Http\Controllers\DeadlineController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/students/approvedProjects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject');
 
+Route::get('/students/makeProject', [ProjectController::class, 'create'])->name('makeProject');
+Route::post('/students/makeProject', [ProjectController::class, 'store'])->name('storeProjects');
 // Needs to go through project controller (create)
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
