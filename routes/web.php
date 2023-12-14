@@ -31,6 +31,12 @@ Route::post('/projects', [ProjectController::class, 'store'])->name('storeProjec
 //ROUTE TO DASHBOARD STUDENTS
 Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
+//ROUTE TO DASHBOARD TEACHERS
+Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard');
+
+
+
+
 // DEADLINE ROUTES
 // display a list of deadlines
 Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
