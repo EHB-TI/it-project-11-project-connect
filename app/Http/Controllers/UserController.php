@@ -24,4 +24,12 @@ class UserController extends Controller
         //same should be done for applications or just add an applicant variable
         
     }
+
+    public function index(){
+        return view('teachers.studentsOverview');
+    }
+
+    
+
+
 }

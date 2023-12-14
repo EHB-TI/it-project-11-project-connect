@@ -56,3 +56,11 @@ Route::post('/space/create', [SpaceController::class,'store'])->name('space.crea
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
+
+
+//STUDENTS OVERVIEW ROUTES
+//display  page of students
+Route::get('studentsOverview',[UserController::class,'index'])->name('studentsOverview');
+//
+/* Route::get('studentsOverview',[UserController::class,'findAllStudents'])->name('studentsOverview');
+ */
