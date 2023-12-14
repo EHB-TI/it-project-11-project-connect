@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProjectDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\DeadlineController;
 use App\Http\Controllers\SpaceController;
 
@@ -56,3 +56,10 @@ Route::post('/space/create', [SpaceController::class,'store'])->name('space.crea
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
+
+Route::get('/project/details/{id}', [ProjectController::class, 'show']);
+Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
+Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
+Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
+Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
+

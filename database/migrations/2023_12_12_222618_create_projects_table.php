@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'closed', 'denied', 'published'])->default('pending');
             $table->string('filepath', 255)->nullable();
             $table->unsignedBigInteger('ownerID')->nullable();
-            $table->unsignedBigInteger('spaceID')->nullable(); 
+            $table->unsignedBigInteger('spaceID')->nullable();
 
             $table->foreign('ownerID')->references('id')->on('users');
             $table->foreign('spaceID')->references('id')->on('spaces');
