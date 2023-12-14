@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 
@@ -35,3 +36,8 @@ Route::get('/project/create', function() {
 });
 
 Route::get('/project/details/{id}', [ProjectController::class, 'show']);
+Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
+Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
+Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
+Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
+
