@@ -36,7 +36,7 @@
         <h2 class="font-bold">OR</h2>
 
         <div class="flex flex-col space-y-2 w-3/4">
-            <input type="hidden" id="content" name="content">
+            <input type="hidden" id="content" name="motivationContent">
         <label for="editor" class="text-gray-600 font-semibold">Write your motivation down below</label>
         <div id="editor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"><div>
         </div>

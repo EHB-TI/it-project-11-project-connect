@@ -11,10 +11,12 @@ class Application extends Model
 
     use HasFactory;
 
+    public $timestamps = true;
+
     public function applicant()
     {
         return $this->belongsTo(User::class, 'applicantID');
     }
 
-    protected $fillable = ['file', 'content' ];
+    protected $fillable = ['fileurl', 'motivationContent','status','reason' ];
 }
