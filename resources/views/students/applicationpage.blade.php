@@ -13,14 +13,17 @@
             <p>Welcome to the developer application form. if you're passionate about...</p>
         </header>
 
-        <div class="float-right">
+        <div class="float-right border rounded-lg border-gray-300 p-4" >
+            <h2 class="font-bold">Application done ?</h2>
+            <p>click to submit</p>
             <form action="submit_form.php" method="post">
+                @csrf
                 <button class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full border border-white-500">Submit</button>
             </form>
         </div>
 
         <header class="mb-4">
-            <h2 class="text-2xl font-bold">Additional Information</h2>
+            <h2 class="text-2xl font-bold">Motivation letter</h2>
             <p>Provide any additional details or upload supporting documents.</p>
         </header>
 
