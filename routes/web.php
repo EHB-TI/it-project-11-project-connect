@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DeadlineController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,15 @@ Route::get('/', function () {
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
+
+
+// DEADLINE ROUTES
+// display a list of deadlines
+Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
+// show the form to create a new deadline
+Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
+//store a new deadline
+Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
 
 Route::get('/space', function () {
     return view('shared.space');
