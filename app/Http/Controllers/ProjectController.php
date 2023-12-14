@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ProjectController extends Controller
 {
     /**
@@ -20,7 +20,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->id();
+        return view('students/makeProject', ['user' => $user]);
     }
 
     /**
@@ -28,7 +29,23 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'Title' => 'required|max:100', // Assuming the input field name is 'Title'
+            'content' => 'required', // Assuming the input field name is 'content'
+            'user' => 'required|numeric', // Assuming the input field name is 'user'
+        ]);
+
+        // Create a new project instance
+        $project = new Project();
+        $project->name = $validatedData['Title'];
+        $project->description = $request->input('content');
+        $project->ownerID = $validatedData['user']; // Assuming 'user' corresponds to ownerID
+
+        // Save the project to the database
+        $project->save();
+
+        // Optionally, you can redirect to a specific route after storing the project
+        return redirect()->route('makeProject');
     }
 
     /**
@@ -61,5 +78,24 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function findAllProjectsPublished(){
+
+        $projects = Project::where('status', 'published')->with('owner')->get();
+    //  dd(DB::getQueryLog());
+        return view('students/approvedProjects', ['projects' => $projects]);
+    }
+
+    public function findMyProjectsPublished(){
+        $userId = auth()->id();
+        $projects = Project::where('status', 'published')
+                            ->where('ownerID', $userId)
+                            ->with('owner')
+                            ->get();
+        
+        return view('students/dashboard', ['projects' => $projects, 'user' => $userId]);
+        //same should be done for applications or just add an applicant variable
+        
     }
 }

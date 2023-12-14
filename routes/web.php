@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/students/approvedProjects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject');
 
-
+Route::get('/students/makeProject', [ProjectController::class, 'create'])->name('makeProject');
+Route::post('/students/makeProject', [ProjectController::class, 'store'])->name('storeProjects');
 
