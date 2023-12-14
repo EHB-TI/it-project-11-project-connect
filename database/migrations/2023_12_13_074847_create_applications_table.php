@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->text('motivationcontent')-> nullable();
-            $table->string('fileurl')->nullable();
+            $table->timestamps();
+            $table->text('motivationContent')-> nullable();
+            $table->string('fileUrl')->nullable();
             $table->string('status');
-            $table->string('reason');
+            $table->string('reason')->nullable();
            
             $table->unsignedBigInteger('applicantID')->nullable(false);
             $table->foreign('applicantID')->references('id')->on('users');
