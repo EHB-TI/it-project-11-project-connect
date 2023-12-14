@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Project;
-
-class projectController extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,8 @@ class projectController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->id();
+        return view('students/makeProject', ['user' => $user]);
     }
 
     /**
@@ -28,7 +29,23 @@ class projectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'Title' => 'required|max:100', // Assuming the input field name is 'Title'
+            'content' => 'required', // Assuming the input field name is 'content'
+            'user' => 'required|numeric', // Assuming the input field name is 'user'
+        ]);
+
+        // Create a new project instance
+        $project = new Project();
+        $project->name = $validatedData['Title'];
+        $project->description = $request->input('content');
+        $project->ownerID = $validatedData['user']; // Assuming 'user' corresponds to ownerID
+
+        // Save the project to the database
+        $project->save();
+
+        // Optionally, you can redirect to a specific route after storing the project
+        return redirect()->route('makeProject');
     }
 
     /**
@@ -49,7 +66,7 @@ class projectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
         //
     }
@@ -57,7 +74,7 @@ class projectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
         //
     }
@@ -65,8 +82,17 @@ class projectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
         //
     }
+
+    public function findAllProjectsPublished(){
+
+        $projects = Project::where('status', 'published')->with('owner')->get();
+    //  dd(DB::getQueryLog());
+        return view('students/approvedProjects', ['projects' => $projects]);
+    }
+
+    
 }
