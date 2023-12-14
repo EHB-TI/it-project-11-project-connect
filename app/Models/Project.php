@@ -22,5 +22,9 @@ class Project extends Model
         return $this->belongsTo(Space::class, 'spaceID');
     }
 
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
     
 }
