@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProjectDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
@@ -35,6 +36,8 @@ Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'
 Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard');
 
 
+//INCOMING APPLICATION 
+Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
 
 
 // DEADLINE ROUTES
