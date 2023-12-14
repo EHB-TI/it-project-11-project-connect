@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,12 @@ Route::get('/space', function () {
 });
 
 
-
 // Needs to go through project controller (create)
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
+
+
+// application (test)
+
+
