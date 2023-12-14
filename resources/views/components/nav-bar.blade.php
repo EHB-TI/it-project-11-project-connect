@@ -8,13 +8,13 @@
         <!-- Navigatiemenu van student -->
         <ul class="flex flex-col flex-grow">
             <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="#" class="block">
+                <a href="{{ route('dashboard') }}" class="block">
                     <img src="path/to/your/icon.png" alt="Icon" class="w-6 h-6 inline-block">
                     Dashboard
                 </a>
             </li>
             <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="#" class="block">
+                <a href="{{ route('approvedProject') }}" class="block">
                     <img src="path/to/your/icon.png" alt="Icon" class="w-6 h-6 inline-block">
                     Projects
                 </a>
