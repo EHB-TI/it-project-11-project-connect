@@ -94,5 +94,5 @@ class ProjectController extends Controller
         return view('students/approvedProjects', ['projects' => $projects]);
     }
 
-    
+
 }
