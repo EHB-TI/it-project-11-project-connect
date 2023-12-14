@@ -87,15 +87,5 @@ class ProjectController extends Controller
         return view('students/approvedProjects', ['projects' => $projects]);
     }
 
-    public function findMyProjectsPublished(){
-        $userId = auth()->id();
-        $projects = Project::where('status', 'published')
-                            ->where('ownerID', $userId)
-                            ->with('owner')
-                            ->get();
-        
-        return view('students/dashboard', ['projects' => $projects, 'user' => $userId]);
-        //same should be done for applications or just add an applicant variable
-        
-    }
+    
 }

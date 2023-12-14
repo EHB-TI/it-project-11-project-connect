@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\DeadlineController;
 
@@ -19,10 +20,14 @@ use App\Http\Controllers\DeadlineController;
 Route::get('/', function () {
     return view('welcome');
 });
+//ROUTE TO APPROVEDPROJECT PAGE
 Route::get('/students/approvedProjects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject');
-
+//ROUTE TO PAGE TO CREATE A PROJECT
 Route::get('/students/makeProject', [ProjectController::class, 'create'])->name('makeProject');
 Route::post('/students/makeProject', [ProjectController::class, 'store'])->name('storeProjects');
+//ROUTE TO DASHBOARD STUDENTS
+Route::get('/students/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
+
 // Needs to go through project controller (create)
 Route::get('/project/create', function() {
     return view('shared.project_proposition');
