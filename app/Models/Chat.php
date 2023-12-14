@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model
+class Chat extends Model
 {
     use HasFactory;
     protected $fillable = [
         'message'
-        
     ];
-
-    public function owner()
+    public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasMany(User::class);
     }
 }
