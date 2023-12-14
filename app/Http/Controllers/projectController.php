@@ -16,6 +16,15 @@ class ProjectController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $user = auth()->id();
+        return view('students/makeProject', ['user' => $user]);
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show($id)
@@ -28,15 +37,6 @@ class ProjectController extends Controller
         }
 
         return view('shared.project-details', ['project' => $project]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $user = auth()->id();
-        return view('students/makeProject', ['user' => $user]);
     }
 
     /**
@@ -62,7 +62,6 @@ class ProjectController extends Controller
         // Optionally, you can redirect to a specific route after storing the project
         return redirect()->route('makeProject');
     }
-
 
     /**
      * Show the form for editing the specified resource.
