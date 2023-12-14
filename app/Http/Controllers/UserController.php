@@ -24,4 +24,19 @@ class UserController extends Controller
         //same should be done for applications or just add an applicant variable
         
     }
+
+    public function findProjectsAndApplications(){
+        $projects = Project::all();
+        // where('status', 'published')
+        //                     ->where('ownerID', $userId)
+        //                     ->with('owner')
+        //                     ->get();
+
+        $applications = Application::all();
+        //where('applicantID', $userId);
+        
+        return view('teachers/dashboard', ['projects' => $projects, 'applications' => $applications]);
+        //same should be done for applications or just add an applicant variable
+        
+    }
 }

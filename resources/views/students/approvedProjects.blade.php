@@ -1,8 +1,8 @@
-{{-- @extends('components.head')
-@section('title', 'Home') --}}
+@extends('components.head')
+@section('title', 'Home')
+@section('content')
 
 <div class="app-container">
-    @include('components.nav-bar')
     <div class="app-content ml-[max(250px,_20%)] p-5">
 
         <h1>All projects</h1>
@@ -34,5 +34,4 @@
         <button onclick="window.location = '{{route('approvedProject')}}'">Transform my idea into reality</button>
 
 
-        {{-- @extends('components.footer')
-        @section('title', 'Home') --}}
+       @endsection
