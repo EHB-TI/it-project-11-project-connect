@@ -27,6 +27,13 @@ class User extends Model
         return $this->hasMany(Chat::class);
     }
 
+    
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
+
     protected $fillable = [
         'name',
         'role',

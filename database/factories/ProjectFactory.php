@@ -20,6 +20,24 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
+        $markdownString = "
+# Markdown Test String
+
+## Subheader
+
+This is a *quick* Markdown **test string** to check the parser functionality.
+
+### Features
+
+- **Bold text**: Like this **bold text**.
+- *Italic text*: Like this *italic text*.
+- `Code`: Inline `code` snippet.
+- [Link](https://example.com): A hyperlink to [example.com](https://example.com).
+
+#### Conclusion
+
+That's a **basic test**! _Good luck_ with your parser!
+        ";
 
         $userIds = User::pluck('id')->toArray();
         $ownerID = $this->faker->randomElement($userIds);
@@ -29,10 +47,31 @@ class ProjectFactory extends Factory
 
         return [
          'name' => $this->faker->unique()->word,
-         'description' => $this->faker->sentence,
+         'description' => $markdownString,
          'status' => $this->faker->randomElement(['Pending', 'Approved', 'Denied', 'Closed', 'Published']),
          'ownerID' => $ownerID,
          'spaceID' => $spaceID,
         ];
     }
 }
+
+/*
+
+# Markdown Test String
+
+## Subheader
+
+This is a *quick* Markdown **test string** to check the parser functionality.
+
+### Features
+
+- **Bold text**: Like this **bold text**.
+- *Italic text*: Like this *italic text*.
+- `Code`: Inline `code` snippet.
+- [Link](https://example.com): A hyperlink to [example.com](https://example.com).
+
+#### Conclusion
+
+That's a **basic test**! _Good luck_ with your parser!
+
+*/
