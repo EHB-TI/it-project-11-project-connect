@@ -52,6 +52,9 @@ Route::get('/project/create', function() {
 });
 
 
-// application (test)
+// application
+Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
+
+
 
 
