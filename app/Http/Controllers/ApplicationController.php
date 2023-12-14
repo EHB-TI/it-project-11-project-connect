@@ -7,9 +7,9 @@ use App\Application;
 
 class ApplicationController extends Controller
 {
- function Show()
+ function Show(Request $request)
  {
-    return view('/public/views/students/applicationpage');
+    return view('students.applicationpage');
  }
  
 }
