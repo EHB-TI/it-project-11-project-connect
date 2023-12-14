@@ -57,7 +57,7 @@ Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
 
-Route::get('/project/details/{id}', [ProjectController::class, 'show']);
+Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');
 Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
 Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
 Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
