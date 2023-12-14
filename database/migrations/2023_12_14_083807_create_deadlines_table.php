@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spaces', function (Blueprint $table) {
+        Schema::create('deadlines', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->unique();
-            $table->unsignedBigInteger('canvasCourseId')->nullable();
-            $table->integer(('defaultTeamSize'));
             $table->timestamps();
-    
+            $table->string('title');
+            $table->string('who');
+            $table->string('what');
+            $table->dateTime('end_date');
+            
+            $table->unsignedBigInteger('spaceID');
+
+            $table->foreign('spaceID')->references('id')->on('spaces');
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spaces');
+        Schema::dropIfExists('deadlines');
     }
 };

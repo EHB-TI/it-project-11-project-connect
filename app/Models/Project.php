@@ -9,6 +9,9 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'owner_id', 'status'];
+    
+    
     public function owner()
     {
         return $this->belongsTo(User::class, 'ownerID');
@@ -19,11 +22,9 @@ class Project extends Model
         return $this->belongsTo(Space::class, 'spaceID');
     }
 
-    protected $fillable = [
-        'name',
-        'description',
-        'status',
-        'ownerID',
-        'spaceID'
-    ];
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+    
 }
