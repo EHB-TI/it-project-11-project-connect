@@ -3,7 +3,12 @@
 
 @section('content')
 <body class="font-sans bg-gray-100">
-<form id="form_apply"method="post">
+<form id="form_apply"method="post" enctype="multipart/form-data">
+@if (session('success'))
+    <div class="alert alert-success font-bold text-green-500">
+        {{ session('success') }}
+    </div>
+@endif
 
     <div class="max-w-4xl mx-auto p-4">
 
@@ -27,10 +32,15 @@
             <h2 class="text-2xl font-bold">Motivation letter</h2>
             <p>Provide any additional details or upload supporting documents.</p>
         </header>
+        @if (session('error'))
+        <div class="alert alert-success font-bold text-red-500">
+        {{ session('error') }}
+        </div>
+        @endif
 
         <div class="mt-4">
             <label for="file" class="block text-sm font-medium text-gray-700">Upload File:</label>
-            <input type="file" id="file" name="file" class="mt-1 p-2 border rounded-full border-gray-300">
+            <input type="file" id="file" name="fileurl" class="mt-1 p-2 border rounded-full border-gray-300">
         </div>
 
         <h2 class="font-bold">OR</h2>

@@ -7,7 +7,7 @@ use App\Models\Application;
 
 class ApplicationController extends Controller
 {
- function Show(Request $request)
+ function show(Request $request)
  {
     return view('students.applicationpage');
  }
@@ -15,26 +15,25 @@ class ApplicationController extends Controller
  
  public function store(Request $request)
  {
-     // Validate the incoming request
-      $validatedData = $request->validate([
-         'fileurl' => 'required_without:motivationContent|file',
-         'motivationContent' => 'required_without:fileurl|string',
-      ]);
-
+      
+      if(!$request->hasfile('fileurl')&& !$request->has('motivationcontent')){
+         return redirect()->back()->with('error','Please upload a file or write a motivation');  
+      }
 
      // get path of file, store it
      if ($request->hasFile('fileurl')) {
-         $filePath = $request->file('fileurl')->store('applications', 'public');
+         $filePath = $request->file('fileurl')->store('public');
      }
 
      $application = new Application();
      $application->fileurl = $filePath ?? null;
-     $application->motivationContent = $validatedData['motivationContent'];
-     $application->applicantID = 1; //Auth::id(); // Assuming you're using Laravel's authentication
+     $application->motivationContent = $request->get('motivationcontent') ?? null;
+     $application->applicantID = 1; //Auth::id();
      $application->save();
 
      // Redirect or return response
      return redirect()->back()->with('success', 'Application submitted successfully.');
- }
+     
+ } 
  
 }

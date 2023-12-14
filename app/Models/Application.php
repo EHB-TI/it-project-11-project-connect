@@ -18,5 +18,5 @@ class Application extends Model
         return $this->belongsTo(User::class, 'applicantID');
     }
 
-    protected $fillable = ['fileurl', 'motivationContent','status','reason' ];
+    protected $fillable = ['fileurl', 'motivationContent','status','reason','applicantID'];
 }
