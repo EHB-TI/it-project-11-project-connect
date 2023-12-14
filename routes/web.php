@@ -35,9 +35,16 @@ Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines
 
 Route::get('/space', function () {
     return view('shared.space');
-});
+}) -> name('space');
 
+// Needs to go through space controller (create)
+Route::get('/space/create', function () {
+    return view('shared.space_create');
+})->name('spaces.create');
 
+Route::get('/space', 'App\Http\Controllers\SpaceController@index');
+
+Route::post('/space', 'App\Http\Controllers\SpaceController@store')->name('space.store');
 
 // Needs to go through project controller (create)
 Route::get('/project/create', function() {
