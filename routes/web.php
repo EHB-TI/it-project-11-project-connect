@@ -54,6 +54,7 @@ Route::get('/project/create', function() {
 
 // application
 Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
+Route::post('/applicationpage', 'App\Http\Controllers\ApplicationController@store');
 
 
 

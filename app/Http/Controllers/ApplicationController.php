@@ -12,7 +12,7 @@ class ApplicationController extends Controller
     return view('students.applicationpage');
  }
 
- // New Store function to handle form submission
+ 
  public function store(Request $request)
  {
      // Validate the incoming request
@@ -21,12 +21,11 @@ class ApplicationController extends Controller
          'content' => 'required|string',
      ]);
 
-     // Store the file and get its path
+     // get path of file, store it
      if ($request->hasFile('file')) {
          $filePath = $request->file('file')->store('applications', 'public');
      }
 
-     // Create a new Application instance and save it
      $application = new Application();
      $application->file = $filePath ?? null;
      $application->content = $validatedData['content'];
