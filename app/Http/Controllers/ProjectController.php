@@ -57,7 +57,7 @@ class ProjectController extends Controller
             // Redirect back or show an error message
             return redirect('/')->with('error', 'Project not found');
         } else {
-            return view('shared.project_details', ['project' => $project]);
+            return view('shared.project-details', ['project' => $project]);
         }
     }
 
