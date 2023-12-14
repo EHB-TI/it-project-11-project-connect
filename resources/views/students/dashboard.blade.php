@@ -1,9 +1,7 @@
-{{-- @extends('components.head')
-@section('title', 'Home') --}}
-
-
+@extends('components.head')
+@section('title', 'Home')
+@section('content')
 <div class="app-container">
-    @include('components.nav-bar')
     <div class="app-content ml-[max(250px,_20%)] p-5">
         <h1>My Projects</h1>
         @if ($projects->isEmpty())
@@ -44,9 +42,5 @@
     </div>
 </div>
 
-
-
-
-{{-- @extends('components.footer')
-@section('title', 'Home') --}}
+@endsection
 

@@ -51,9 +51,14 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
-    {
-        //
+    public function show($Id) {
+        $project = Project::find($Id);
+        if ($project === null) {
+            // Redirect back or show an error message
+            return redirect('/')->with('error', 'Project not found');
+        } else {
+            return view('shared.project-details', ['project' => $project]);
+        }
     }
 
     /**
@@ -82,10 +87,10 @@ class ProjectController extends Controller
 
     public function findAllProjectsPublished(){
 
-        $projects = Project::where('status', 'published')->with('owner')->get();
+        $projects = Project::all();
     //  dd(DB::getQueryLog());
         return view('students/approvedProjects', ['projects' => $projects]);
     }
 
-    
+
 }

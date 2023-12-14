@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProjectDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\DeadlineController;
 use App\Http\Controllers\SpaceController;
 
@@ -21,18 +21,15 @@ use App\Http\Controllers\SpaceController;
 Route::get('/', function () {
     return view('welcome');
 });
-//ROUTE TO APPROVEDPROJECT PAGE
-Route::get('/students/approvedProjects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject');
-//ROUTE TO PAGE TO CREATE A PROJECT
-Route::get('/students/makeProject', [ProjectController::class, 'create'])->name('makeProject');
-Route::post('/students/makeProject', [ProjectController::class, 'store'])->name('storeProjects');
-//ROUTE TO DASHBOARD STUDENTS
-Route::get('/students/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
-// Needs to go through project controller (create)
-Route::get('/project/create', function() {
-    return view('shared.project_proposition');
-});
+
+//ROUTE TO APPROVEDPROJECT PAGE
+Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
+//ROUTE TO PAGE TO CREATE A PROJECT
+Route::get('/projects/create', [ProjectController::class, 'create'])->name('makeProject'); // projects.create
+Route::post('/projects', [ProjectController::class, 'store'])->name('storeProjects'); // projects.store
+//ROUTE TO DASHBOARD STUDENTS
+Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
 // DEADLINE ROUTES
 // display a list of deadlines
@@ -57,10 +54,15 @@ Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
 
-
 //STUDENTS OVERVIEW ROUTES
 //display  page of students
 Route::get('studentsOverview',[UserController::class,'index'])->name('studentsOverview');
 //
 /* Route::get('studentsOverview',[UserController::class,'findAllStudents'])->name('studentsOverview');
  */
+Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');
+Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
+Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
+Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
+Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
+
