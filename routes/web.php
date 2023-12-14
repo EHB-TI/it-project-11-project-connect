@@ -5,6 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\DeadlineController;
+use App\Http\Controllers\SpaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,6 @@ Route::get('/project/create', function() {
     return view('shared.project_proposition');
 });
 
-
 // DEADLINE ROUTES
 // display a list of deadlines
 Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
@@ -42,18 +42,15 @@ Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('de
 //store a new deadline
 Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
 
-Route::get('/space', function () {
-    return view('shared.space');
-}) -> name('space');
-
-// Needs to go through space controller (create)
+// SPACE ROUTES
+// display a list of spaces
+Route::get('/space', [SpaceController::class,'index'])->name('space.index');
+// show the form to create a new space
 Route::get('/space/create', function () {
     return view('shared.space_create');
-})->name('spaces.create');
-
-Route::get('/space', 'App\Http\Controllers\SpaceController@index');
-
-Route::post('/space', 'App\Http\Controllers\SpaceController@store')->name('space.store');
+})->name('space.create');
+//store a new space
+Route::post('/space/create', [SpaceController::class,'store'])->name('space.create');
 
 // Needs to go through project controller (create)
 Route::get('/project/create', function() {
