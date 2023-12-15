@@ -33,7 +33,11 @@
         @else
             @foreach ($applications as $application)
                 <div>
-                    
+                    <p>{{$application->motivationContent}}</p>
+                    {{-- <p>Created By: {{ $application->owner->name }}</p> --}}
+                    <p>Created By: {{ $application->created_at }}</p>
+                    <p>Status:{{$application->status}}</p>
+                    <p>Reason:{{$application->reason}}</p>
                 </div>
             @endforeach
             <br>
