@@ -67,29 +67,32 @@ Route::get('/logout', function() {
 
 
 //Mock authentication for development
-Route::get('/login/{role}', function($role) {
-    if (!in_array($role, ['student', 'teacher'])) {
-        return redirect('/');
-    }
+if (app()->environment('local')) {
+    Route::get('/login/{role}', function($role) {
+        if (!in_array($role, ['student', 'teacher'])) {
+            return redirect('/');
+        }
 
-    $casUser = config('cas.cas_attributes.' . $role . '.name');
-    $attributes = config('cas.cas_attributes.' . $role . '.attributes');
-    $role = $attributes['role'] ?? 'student';
+        $casUser = config('cas.cas_attributes.' . $role . '.name');
+        $attributes = config('cas.cas_attributes.' . $role . '.attributes');
+        $role = $attributes['role'] ?? 'student';
 
-    // Find existing user or create a new user
-    $user = User::firstOrCreate(
-        ['name' => $casUser],
-        ['role' => $role],
-        ['available' => 'true'],
-        ['access_card_id' => '123456789']
-    );
+        // Find existing user or create a new user
+        $user = User::firstOrCreate(
+            ['name' => $casUser],
+            ['role' => $role],
+            ['available' => 'true'],
+            ['access_card_id' => '123456789']
+        );
 
-    // Log the user in
-    Auth::login($user, true);
+        // Log the user in
+        Auth::login($user, true);
 
-    // Redirect the user to their intended page
-    return redirect()->intended();
-});
+        // Redirect the user to their intended page
+        return redirect()->intended();
+    });
+}
+
 
 
 //ROUTE TO APPROVEDPROJECT PAGE
