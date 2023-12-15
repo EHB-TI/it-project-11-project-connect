@@ -6,7 +6,28 @@ return [
     |--------------------------------------------------------------------------
     | Example: 'cas.myuniv.edu'.
     */
-    'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
+    //change this to your CAS hostname (or IP address) in a production environment
+    //'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
+    'cas_hostname' => 'localhost',
+    'cas_enable_mocking' => true,
+    'cas_attributes' => [
+        'student' => [
+            'name' => 'CAS Student User',
+            'attributes' => [
+                'email' => 'studentuser@example.com',
+                'name' => 'Student User',
+                'role' => 'student',
+            ],
+        ],
+        'teacher' => [
+            'name' => 'CAS Teacher User',
+            'attributes' => [
+                'email' => 'teacheruser@example.com',
+                'name' => 'Teacher User',
+                'role' => 'teacher',
+            ],
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +70,7 @@ return [
     |--------------------------------------------------------------------------
     | Usually 443
     */
-    'cas_port' => env('CAS_PORT', 443),
+    'cas_port' => env('CAS_PORT', 8000),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +86,7 @@ return [
     |--------------------------------------------------------------------------
     | Example: 'http://localhost', 'https://example.com:8888'
     */
-    'cas_client_service' => env('CAS_CLIENT_SERVICE', 'http://localhost'),
+    'cas_client_service' => 'http://localhost',
 
 
     /*
