@@ -7,24 +7,24 @@ return [
     | Example: 'cas.myuniv.edu'.
     */
     //change this to your CAS hostname (or IP address) in a production environment
-    //'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
-    'cas_hostname' => 'localhost',
-    'cas_enable_mocking' => true,
+    'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
+
+    'cas_enable_mocking' => env('CAS_ENABLE_MOCKING', false),
     'cas_attributes' => [
         'student' => [
-            'name' => 'CAS Student User',
+            'name' => env('CAS_MOCK_STUDENT_NAME', 'CAS Student User'),
             'attributes' => [
-                'email' => 'studentuser@example.com',
-                'name' => 'Student User',
-                'role' => 'student',
+                'email' => env('CAS_MOCK_STUDENT_EMAIL', 'studentuser@example.com'),
+                'name' => env('CAS_MOCK_STUDENT_NAME', 'Student User'),
+                'role' => env('CAS_MOCK_STUDENT_ROLE', 'student'),
             ],
         ],
         'teacher' => [
-            'name' => 'CAS Teacher User',
+            'name' => env('CAS_MOCK_TEACHER_NAME', 'CAS Teacher User'),
             'attributes' => [
-                'email' => 'teacheruser@example.com',
-                'name' => 'Teacher User',
-                'role' => 'teacher',
+                'email' => env('CAS_MOCK_TEACHER_EMAIL', 'teacheruser@example.com'),
+                'name' => env('CAS_MOCK_TEACHER_NAME', 'Teacher User'),
+                'role' => env('CAS_MOCK_TEACHER_ROLE', 'teacher'),
             ],
         ],
     ],

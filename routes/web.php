@@ -94,7 +94,6 @@ if (app()->environment('local')) {
 }
 
 
-
 //ROUTE TO APPROVEDPROJECT PAGE
 Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
 //ROUTE TO PAGE TO CREATE A PROJECT
