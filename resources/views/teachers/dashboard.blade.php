@@ -18,6 +18,7 @@
                             <p>Created By: {{ $project->owner->name }}</p>
                         </div>
             @endforeach
+            <br>
             <h1>Published Projects</h1>
             @foreach ($publishedProjects as $project)
                         <div>
@@ -26,6 +27,7 @@
                             <p>Created By: {{ $project->owner->name }}</p>
                         </div>
             @endforeach
+            <br>
             <h1>Approved Projects</h1>
             @foreach ($approvedProjects as $project)
                         <div>
@@ -34,6 +36,7 @@
                             <p>Created By: {{ $project->owner->name }}</p>
                         </div>
             @endforeach
+            <br>
             <h1>Closed Projects</h1>
             @foreach ($closedProjects as $project)
                         <div>
@@ -42,6 +45,7 @@
                             <p>Created By: {{ $project->owner->name }}</p>
                         </div>
             @endforeach
+            <br>
             <h1>Denied Projects</h1>
             @foreach ($deniedProjects as $project)
                     
@@ -51,40 +55,6 @@
                             <p>Created By: {{ $project->owner->name }}</p>
                         </div>
             @endforeach
-       
-            {{-- @foreach ($projects as $project)
-                @if($project->status = "published")
-                    <div>
-                        <img src="{{$project->filepath}}" alt="project image">
-                        <p>{{$project->name}}</p>
-                        <p>Created By: {{ $project->owner->name }}</p>
-                    </div>
-                @elseif($project->status = "pending")
-                    <div>
-                        <img src="{{$project->filepath}}" alt="project image">
-                        <p>{{$project->name}}</p>
-                        <p>Created By: {{ $project->owner->name }}</p>
-                    </div>
-                @elseif($project->status = "approved")
-                    <div>
-                        <img src="{{$project->filepath}}" alt="project image">
-                        <p>{{$project->name}}</p>
-                        <p>Created By: {{ $project->owner->name }}</p>
-                    </div>
-                    @elseif($project->status = "closed")
-                    <div>
-                        <img src="{{$project->filepath}}" alt="project image">
-                        <p>{{$project->name}}</p>
-                        <p>Created By: {{ $project->owner->name }}</p>
-                    </div>
-                    @elseif($project->status = "denied")
-                    <div>
-                        <img src="{{$project->filepath}}" alt="project image">
-                        <p>{{$project->name}}</p>
-                        <p>Created By: {{ $project->owner->name }}</p>
-                        
-                    </div>
-            @endforeach --}}
             <br>
             <br>
         @endif
