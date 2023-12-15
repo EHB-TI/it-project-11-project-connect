@@ -16,6 +16,21 @@ class ProjectController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $project = Project::find($id);
+
+        if ($project === null) {
+            // Redirect back or show an error message
+            return redirect('/')->with('error', 'Project not found');
+        }
+
+        return view('shared.project-details', ['project' => $project]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -49,14 +64,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Project $project)
@@ -87,5 +94,5 @@ class ProjectController extends Controller
         return view('students/approvedProjects', ['projects' => $projects]);
     }
 
-    
+
 }
