@@ -7,7 +7,7 @@ return [
     | Example: 'cas.myuniv.edu'.
     */
     //change this to your CAS hostname (or IP address) in a production environment
-    'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
+    'cas_hostname' => env('CAS_HOSTNAME', 'cas.ehb.be'),
 
     'cas_enable_mocking' => env('CAS_ENABLE_MOCKING', false),
     'cas_attributes' => [
@@ -37,7 +37,7 @@ return [
     | recommended for protecting against DOS attacks.  If using load
     | balanced hosts, then separate each with a comma.
     */
-    'cas_real_hosts' => env('CAS_REAL_HOSTS', 'cas.myuniv.edu'),
+    'cas_real_hosts' => env('CAS_REAL_HOSTS', 'cas.ehb.be'),
 
 
     /*
@@ -70,7 +70,7 @@ return [
     |--------------------------------------------------------------------------
     | Usually 443
     */
-    'cas_port' => env('CAS_PORT', 8000),
+    'cas_port' => env('CAS_PORT', 443),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ return [
     | CAS Logout URI
     |--------------------------------------------------------------------------
     */
-    'cas_logout_url' => env('CAS_LOGOUT_URL', 'https://cas.myuniv.edu/cas/logout'),
+    'cas_logout_url' => env('CAS_LOGOUT_URL', 'https://cas.ehb.be/cas/logout'),
 
     /*
     |--------------------------------------------------------------------------
