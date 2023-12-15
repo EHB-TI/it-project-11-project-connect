@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     public function projects(): HasManyAlias
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'ownerID');
     }
     public function feedback(): HasManyAlias
     {
