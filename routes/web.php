@@ -27,8 +27,8 @@ Route::get('/', function () {
 //ROUTE TO APPROVEDPROJECT PAGE
 Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
 //ROUTE TO PAGE TO CREATE A PROJECT
-Route::get('/projects/create', [ProjectController::class, 'create'])->name('makeProject'); // projects.create
-Route::post('/projects', [ProjectController::class, 'store'])->name('storeProjects'); // projects.store
+Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 //ROUTE TO DASHBOARD STUDENTS
 Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
