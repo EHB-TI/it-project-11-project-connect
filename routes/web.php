@@ -50,7 +50,7 @@ Route::get('/login', function() {
 
     // Redirect the user to their intended page
     return redirect()->intended();
-});
+})->name('login');
 
 
 Route::get('/logout', function() {
@@ -63,7 +63,7 @@ Route::get('/logout', function() {
     }
 
     return redirect('/');
-});
+})->name('logout');
 
 
 //Mock authentication for development
