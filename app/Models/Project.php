@@ -4,27 +4,43 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
+/**
+ * Class Project
+ *
+ * @package App\Models
+ *
+ * @property string $name
+ * @property string $description
+ * @property int $owner_id
+ * @property string $status
+ *
+ * @property-read \App\Models\User $owner
+ * @property-read \App\Models\Space $space
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feedback[] $feedback
+ */
 class Project extends Model
 {
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'owner_id', 'status'];
-    
-    
-    public function owner()
+
+
+    public function owner(): BelongsToAlias
     {
         return $this->belongsTo(User::class, 'ownerID');
     }
 
-    public function space()
+    public function space(): BelongsToAlias
     {
         return $this->belongsTo(Space::class, 'spaceID');
     }
 
-    public function feedback()
+    public function feedback(): HasManyAlias
     {
         return $this->hasMany(Feedback::class);
     }
-    
+
 }
