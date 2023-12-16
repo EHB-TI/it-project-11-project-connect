@@ -23,7 +23,7 @@ use App\Http\Controllers\SpaceController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 
 //AUTH ROUTES
