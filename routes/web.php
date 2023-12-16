@@ -26,9 +26,8 @@ Route::get('/', function () {
 });
 
 
-//Authentication routes
-
-//Authenication for production
+//AUTH ROUTES
+//Authentication for production
 Route::get('/login', function() {
     cas()->authenticate();
 
@@ -54,11 +53,13 @@ Route::get('/login', function() {
 
 
 Route::get('/logout', function() {
-    // Log the user out of the Laravel application
-    Auth::logout();
-
-    // Log the user out of the CAS server
-    if (!app()->environment('local')) {
+    if (app()->environment('local')) {
+        // Log the user out of the Laravel application
+        Auth::logout();
+    } else {
+        // Log the user out of the Laravel application
+        Auth::logout();
+        // Log the user out of the CAS server
         cas()->logout();
     }
 
@@ -67,6 +68,7 @@ Route::get('/logout', function() {
 
 
 //Mock authentication for development
+//This route is only available in the local environment
 if (app()->environment('local')) {
     Route::get('/login/{role}', function($role) {
         if (!in_array($role, ['student', 'teacher'])) {
@@ -93,49 +95,79 @@ if (app()->environment('local')) {
     });
 }
 
+//AUTH PROTECTED ROUTES
+//only authenticated users can access these routes
+Route::middleware(['auth'])->group(function () {
+    //DASHBOARD ROUTES
+    //display the dashboard for students
+    Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
-//ROUTE TO APPROVEDPROJECT PAGE
-Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
-//ROUTE TO PAGE TO CREATE A PROJECT
-Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
-Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-//ROUTE TO DASHBOARD STUDENTS
-Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
-
-//ROUTE TO DASHBOARD TEACHERS
-Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard');
+    //display the dashboard for docents
+    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard');
 
 
-//INCOMING APPLICATION
-Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
+    //PROJECT ROUTES
+    //display a list of projects
+    Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
+
+    //display the page to create a new project
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+
+    //store a new project
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 
 
-// DEADLINE ROUTES
-// display a list of deadlines
-Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
-// show the form to create a new deadline
-Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
-//store a new deadline
-Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
+    //PROJECT DETAILS ROUTES
+    //display the project details
+    Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');
 
-// SPACE ROUTES
-// display a list of spaces
-Route::get('/space', [SpaceController::class,'index'])->name('space.index');
-// show the form to create a new space
-Route::get('/space/create', function () {
-    return view('shared.space_create');
-})->name('space.create');
-//store a new space
-Route::post('/space/create', [SpaceController::class,'store'])->name('space.create');
+    //get the overview component of the project details
+    Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
 
-// Needs to go through project controller (create)
-Route::get('/project/create', function() {
-    return view('shared.project_proposition');
+    //get the feedback component of the project details
+    Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
+
+    //get the members component of the project details
+    Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
+
+    //get the applications component of the project details
+    Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
+
+
+    //INCOMING APPLICATION
+    Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
+
+
+    // DEADLINE ROUTES
+    // display a list of deadlines
+    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
+
+    // show the form to create a new deadline
+    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
+
+    //store a new deadline
+    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
+
+    // DEADLINE ROUTES
+    // display a list of deadlines
+    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
+    // show the form to create a new deadline
+    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
+    //store a new deadline
+    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
+
+
+    // SPACE ROUTES
+    // display a list of spaces
+    Route::get('/space', [SpaceController::class,'index'])->name('space.index');
+
+    // show the form to create a new space
+    Route::get('/space/create', function () {
+        return view('shared.space_create');
+    })->name('space.create');
+
+    //store a new space
+    Route::post('/space/create', [SpaceController::class,'store'])->name('space.create');
+
 });
-
-Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');
-Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
-Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
-Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
-Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
 
