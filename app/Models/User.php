@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
+/**
+ * Class User
+ *
+ * @package App\Models
+ *
+ * @property string $name
+ * @property string $role
+ * @property bool $available
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $applications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Project[] $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feedback[] $feedback
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Chat[] $chat
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Notification[] $notifications
+ */
 class User extends Authenticatable
 {
     use HasFactory;
