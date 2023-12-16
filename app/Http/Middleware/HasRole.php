@@ -14,11 +14,11 @@ class HasRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role)
+    public function handle(Request $request, Closure $next, string $role = null)
     {
         if (!Auth::check()) {
-            return redirect('/login');
-        } else if (Auth::user()->role !== $role) {
+            return redirect('/');
+        } else if ($role && Auth::user()->role !== $role) {
             abort(403);
         }
 
