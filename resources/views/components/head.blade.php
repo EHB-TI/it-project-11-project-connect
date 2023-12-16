@@ -7,6 +7,7 @@
     <title>@yield('title')</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 <body>
     {{--DEVELOPMENT TOOL--}}
@@ -24,7 +25,7 @@
 
     <div class="app-container">
         @include('components.nav-bar')
-        <div class="app-content ml-[max(250px,_20%)] p-10">
+        <div class="app-content ml-[max(250px,_20%)] p-10 bg-gray-100">
             @yield('content')
         </div>
     </div>
