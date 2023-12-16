@@ -85,6 +85,8 @@ if (app()->environment('local')) {
             ['access_card_id' => '123456789']
         );
 
+        //user info should be updated
+
         // Log the user in
         Auth::login($user, true);
 
