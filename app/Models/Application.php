@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
 
 
 class Application extends Model
@@ -14,7 +14,7 @@ class Application extends Model
 
     public $timestamps = true;
 
-    
+
     public function applicant(): BelongsToAlias
     {
         return $this->belongsTo(User::class, 'applicantID');

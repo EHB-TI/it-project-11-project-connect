@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
 
 /**
  * Class NotificationUserStatus
@@ -15,8 +15,8 @@ use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
  * @property int $userID
  * @property int $notificationID
  *
- * @property-read \App\Models\User $user
- * @property-read \App\Models\Notification $notification
+ * @property-read User $user
+ * @property-read Notification $notification
  */
 class NotificationUserStatus extends Model
 {

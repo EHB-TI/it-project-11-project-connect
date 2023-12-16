@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
-use \Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
 /**
  * Class User
  *
@@ -15,11 +16,11 @@ use \Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
  * @property string $role
  * @property bool $available
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $applications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Project[] $projects
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feedback[] $feedback
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Chat[] $chat
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Notification[] $notifications
+ * @property-read Collection|Application[] $applications
+ * @property-read Collection|Project[] $projects
+ * @property-read Collection|Feedback[] $feedback
+ * @property-read Collection|Chat[] $chat
+ * @property-read Collection|Notification[] $notifications
  */
 class User extends Authenticatable
 {

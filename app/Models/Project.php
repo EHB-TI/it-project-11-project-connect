@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
-use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
 /**
  * Class Project
@@ -17,9 +18,9 @@ use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
  * @property int $owner_id
  * @property string $status
  *
- * @property-read \App\Models\User $owner
- * @property-read \App\Models\Space $space
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Feedback[] $feedback
+ * @property-read User $owner
+ * @property-read Space $space
+ * @property-read Collection|Feedback[] $feedback
  */
 class Project extends Model
 {
@@ -45,7 +46,7 @@ class Project extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class); 
+        return $this->belongsToMany(User::class);
     }
-    
+
 }

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectDetailsController extends Controller
 {
     public function showOverview($id)
     {
-        $project = \App\Models\Project::find($id);
+        $project = Project::find($id);
 
         if ($project === null) {
             // Redirect back or show an error message

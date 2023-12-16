@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
 
 /**
  * Class Feedback
@@ -13,7 +13,7 @@ use \Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
  *
  * @property string $message
  *
- * @property-read \App\Models\User $owner
+ * @property-read User $owner
  */
 class Feedback extends Model
 {

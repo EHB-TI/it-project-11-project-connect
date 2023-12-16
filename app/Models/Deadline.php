@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\belongsTo as belongsToAlias;
  * @property string $end_date
  * @property int $spaceID
  *
- * @property-read \App\Models\Space $space
+ * @property-read Space $space
  */
 class Deadline extends Model
 {

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
 /**
  * Class Chat
@@ -13,7 +14,7 @@ use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
  *
  * @property string $message
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read Collection|User[] $users
  */
 class Chat extends Model
 {
