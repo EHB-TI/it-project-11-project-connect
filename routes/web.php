@@ -103,7 +103,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
 
     //display the dashboard for docents
-    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard');
+    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard')->middleware('role:teacher');
 
 
     //PROJECT ROUTES
@@ -134,27 +134,28 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
 
 
-    //INCOMING APPLICATION
+    //APPLICATION ROUTES
+    //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
 
 
     // DEADLINE ROUTES
     // display a list of deadlines
-    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
+    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index')->middleware('role:teacher');
 
     // show the form to create a new deadline
-    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
+    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create')->middleware('role:teacher');
 
     //store a new deadline
-    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
+    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
 
     // DEADLINE ROUTES
     // display a list of deadlines
-    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index');
+    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index')->middleware('role:teacher');
     // show the form to create a new deadline
-    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create');
+    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create')->middleware('role:teacher');
     //store a new deadline
-    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store');
+    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
 
 
     // SPACE ROUTES
@@ -164,10 +165,10 @@ Route::middleware(['auth'])->group(function () {
     // show the form to create a new space
     Route::get('/space/create', function () {
         return view('shared.space_create');
-    })->name('space.create');
+    })->name('space.create')->middleware('role:teacher');
 
     //store a new space
-    Route::post('/space/create', [SpaceController::class,'store'])->name('space.create');
+    Route::post('/space/create', [SpaceController::class,'store'])->name('space.create')->middleware('role:teacher');
 
 });
 
