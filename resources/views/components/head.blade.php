@@ -10,7 +10,7 @@
 <body>
     <div class="app-container">
         @include('components.nav-bar')
-        <div class="app-content ml-[max(250px,_20%)] p-10">
+        <div class="app-content ml-[max(250px,_20%)] p-10 bg-gray-100">
             @yield('content')
         </div>
     </div>

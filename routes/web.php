@@ -57,7 +57,12 @@ Route::get('/project/create', function() {
 //STUDENTS OVERVIEW ROUTES
 //display  page of students
 Route::get('studentsOverview',[UserController::class,'index'])->name('studentsOverview');
+
+//USER INFORMATION ROUTES
+Route::get('/user/{id}', [UserController::class,'show'])->name('userInformation');
 //
+
+
 /* Route::get('studentsOverview',[UserController::class,'findAllStudents'])->name('studentsOverview');
  */
 Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');

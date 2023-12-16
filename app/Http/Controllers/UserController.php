@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Application;
+use App\Models\User;
 
 
 
@@ -26,11 +27,9 @@ class UserController extends Controller
     }
 
     public function index(){
-        return view('teachers.studentsOverview');
+        $users = User::with('projects')->get();
+        return view('teachers.studentsOverview',['users' => $users]);
     }
-
-    
-
 
     public function findProjectsAndApplications(){
         $projects = Project::all();
@@ -45,5 +44,10 @@ class UserController extends Controller
         return view('teachers/dashboard', ['projects' => $projects, 'applications' => $applications]);
         //same should be done for applications or just add an applicant variable
         
+    }
+
+    public function show($id){
+        $user = User::find($id);
+        return view('teachers.userInformation', ['user' => $user]);
     }
 }
