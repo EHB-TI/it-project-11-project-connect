@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "@toast-ui/editor": "^3.2.2",
-        "laravel-mix": "^6.0.49"
+        "laravel-mix": "^6.0.49",
         "codemirror": "^6.0.1"
     }
 }

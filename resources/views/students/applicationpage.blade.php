@@ -12,14 +12,16 @@
 
     <div class="max-w-4xl mx-auto p-4">
 
-        <h2 class="text-3xl font-bold mb-4">Application Form</h2>
-        <p class="text3 font-bold mb-4">Project Connect</p>
+        <h2 class="text-3xl font-bold mb-1">Application Form</h2>
+        <p class="text3 font-bold mb-4">Project Connect - Projectmatching-app</p>
 
         <header class="mb-4">
-            <p>Welcome to the developer application form. if you're passionate...</p>
+            <p>Welcome to the developer application form. If you're passionate about contributing to innovative projects, please fill out this form to apply.
+                We're excited to learn more about your skills and why you're intrested in joining our project.
+            </p>
         </header>
 
-        <div class="float-right border rounded-lg border-gray-300 p-4" >
+        <div class="flex flex-col items-end border rounded-lg border-gray-300 p-4 " >
             <h2 class="font-bold">Application done ?</h2>
             <p>click to submit</p>
             
@@ -39,11 +41,11 @@
         @endif
 
         <div class="mt-4">
-            <label for="file" class="block text-sm font-medium text-gray-700">Upload File:</label>
+            <label for="file" class="block text-sm font-medium text-gray$-700">Upload File:</label>
             <input type="file" id="file" name="fileurl" class="mt-1 p-2 border rounded-full border-gray-300">
         </div>
 
-        <h2 class="font-bold">OR</h2>
+        <h2 class="font-bold my-2">OR</h2>
 
         <div class="flex flex-col space-y-2 w-3/4">
             <input type="hidden" id="content" name="motivationContent">
