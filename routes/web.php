@@ -174,13 +174,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/space/create', [SpaceController::class,'store'])->name('space.create')->middleware('role:teacher');
 
 
+    //STUDENTS OVERVIEW ROUTES
+    //display  page of students
+    Route::get('studentsOverview',[UserController::class,'index'])->name('studentsOverview');
+
+    //USER INFORMATION ROUTES
+    Route::get('/user/{id}', [UserController::class,'show'])->name('userInformation');
+    //
 });
-
-
-
-
-
-
 
 
 

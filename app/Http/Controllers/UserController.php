@@ -9,6 +9,7 @@ use App\Models\Application;
 use App\Models\User;
 
 
+
 class UserController extends Controller
 {
     public function findMyProjectsAndApplications(){
@@ -21,6 +22,11 @@ class UserController extends Controller
         return view('students/dashboard', ['projects' => $projects, 'applications' => $applications]);
         //same should be done for applications or just add an applicant variable
         
+    }
+
+    public function index(){
+        $users = User::with('projects')->get();
+        return view('teachers.studentsOverview',['users' => $users]);
     }
 
     public function findProjectsAndApplications(){
@@ -43,5 +49,10 @@ class UserController extends Controller
             'deniedProjects' => $deniedProjects
         ]);
         
+    }
+
+    public function show($id){
+        $user = User::find($id);
+        return view('teachers.userInformation', ['user' => $user]);
     }
 }

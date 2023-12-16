@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
-
+use \Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
 /**
  * Class User
  *
@@ -30,9 +30,9 @@ class User extends Authenticatable
         return $this->hasMany(Application::class, 'applicantID');
     }
 
-    public function projects(): HasManyAlias
+    public function projects(): belongsToManyAlias
     {
-        return $this->hasMany(Project::class, 'ownerID');
+        return $this->belongsToMany(Project::class);
     }
     public function feedback(): HasManyAlias
     {
