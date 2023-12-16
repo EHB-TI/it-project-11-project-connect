@@ -89,7 +89,7 @@ class ProjectController extends Controller
 
     public function findAllProjectsPublished(){
 
-        $projects = Project::where('status', 'published')->with('owner')->get();
+        $projects = Project::all();
     //  dd(DB::getQueryLog());
         return view('students/approvedProjects', ['projects' => $projects]);
     }

@@ -3,32 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
 
-    public function applications()
+    public function applications(): HasManyAlias
     {
         return $this->hasMany(Application::class, 'applicantID');
     }
 
-    public function projects()
+    public function projects(): HasManyAlias
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'ownerID');
     }
-    public function feedback()
+    public function feedback(): HasManyAlias
     {
         return $this->hasMany(Feedback::class);
     }
-    public function chat()
+    public function chat(): HasManyAlias
     {
         return $this->hasMany(Chat::class);
     }
 
-    
-    public function notifications()
+    public function notifications(): HasManyAlias
     {
         return $this->hasMany(Notification::class, 'user_id');
     }
