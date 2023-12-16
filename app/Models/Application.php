@@ -12,10 +12,13 @@ class Application extends Model
 
     use HasFactory;
 
+    public $timestamps = true;
+
+    
     public function applicant(): BelongsToAlias
     {
         return $this->belongsTo(User::class, 'applicantID');
     }
 
-    protected $fillable = ['file url', 'motivation content', 'status', 'reason' ];
+    protected $fillable = ['fileurl', 'motivationContent','status','reason','applicantID'];
 }

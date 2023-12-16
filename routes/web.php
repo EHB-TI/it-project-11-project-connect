@@ -137,6 +137,9 @@ Route::middleware(['auth'])->group(function () {
     //APPLICATION ROUTES
     //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
+    
+    Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
+    Route::post('/applicationpage', 'App\Http\Controllers\ApplicationController@store');
 
 
     // DEADLINE ROUTES
@@ -170,5 +173,14 @@ Route::middleware(['auth'])->group(function () {
     //store a new space
     Route::post('/space/create', [SpaceController::class,'store'])->name('space.create')->middleware('role:teacher');
 
+
 });
+
+
+
+
+
+
+
+
 
