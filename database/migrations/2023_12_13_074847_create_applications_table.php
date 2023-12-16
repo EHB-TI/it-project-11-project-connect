@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('motivationContent')-> nullable();
-            $table->string('fileUrl')->nullable();
-            $table->string('status');
+            $table->text('fileUrl')->nullable();
+            $table->string('status')->default('pending');
             $table->string('reason')->nullable();
            
             $table->unsignedBigInteger('applicantID')->nullable(false);

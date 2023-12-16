@@ -137,6 +137,9 @@ Route::middleware(['auth'])->group(function () {
     //APPLICATION ROUTES
     //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
+    
+    Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
+    Route::post('/applicationpage', 'App\Http\Controllers\ApplicationController@store');
 
 
     // DEADLINE ROUTES
