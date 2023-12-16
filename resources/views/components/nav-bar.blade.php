@@ -21,7 +21,7 @@
 
             <!--auth('')-->
             <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="#" class="block">
+                <a href="{{ route('application.index') }}" class="block">
                     Applicaties
                 </a>
             </li>
@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="#" class="block">
+                <a href="{{ route('studentsOverview') }}" class="block">
                     Students
                 </a>
             </li>
