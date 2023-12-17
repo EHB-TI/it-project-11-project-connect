@@ -2,44 +2,57 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
+/**
+ * Class User
+ *
+ * @package App\Models
+ *
+ * @property string $name
+ * @property string $role
+ * @property bool $available
+ *
+ * @property-read Collection|Application[] $applications
+ * @property-read Collection|Project[] $projects
+ * @property-read Collection|Feedback[] $feedback
+ * @property-read Collection|Chat[] $chat
+ * @property-read Collection|Notification[] $notifications
+ */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    public function applications(): HasManyAlias
+    {
+        return $this->hasMany(Application::class, 'applicant_id');
+    }
+
+    public function projects(): belongsToManyAlias
+    {
+        return $this->belongsToMany(Project::class);
+    }
+    public function feedback(): HasManyAlias
+    {
+        return $this->hasMany(Feedback::class);
+    }
+    public function chat(): HasManyAlias
+    {
+        return $this->hasMany(Chat::class);
+    }
+
+    public function notifications(): HasManyAlias
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
+
     protected $fillable = [
         'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'role',
+        'available',
     ];
 }
