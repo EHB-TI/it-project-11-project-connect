@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Constants;
+
+class ProjectDetailsItems
+{
+    const TEACHER = [
+        'overview' => 'overview',
+        'members' => 'members',
+        'feedback' => 'feedback',
+        'applications' => 'applications',
+        'teacher discussion' => 'teacher-discussion',
+    ];
+
+    const STUDENT = [
+        'overview' => 'overview',
+        'members' => 'members',
+    ];
+
+    const PRODUCT_OWNER = [
+        'overview' => 'overview',
+        'members' => 'members',
+        'feedback' => 'feedback',
+        'applications' => 'applications',
+    ];
+}
