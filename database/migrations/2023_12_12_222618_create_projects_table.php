@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 100)->unique();
-            $table->longText('description')->nullable();
+            $table->text('brief');
+            $table->longText('description');
             $table->enum('status', ['pending', 'approved', 'closed', 'denied', 'published'])->default('pending');
             $table->string('filepath', 255)->nullable();
             $table->unsignedBigInteger('owner_id')->nullable();

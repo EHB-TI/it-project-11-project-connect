@@ -8,7 +8,7 @@ use \App\Constants\ProjectDetailsItems as ProjectDetailsItemsAlias;
 $projectDetailItems = [];
 if (Auth::user()->role == 'teacher') {
 $projectDetailItems = ProjectDetailsItemsAlias::TEACHER;
-} elseif (Auth::user()->role == 'student' && Auth::user()->id == $project->user_id) {
+} elseif (Auth::user()->role == 'student' && Auth::user()->id == $project->owner_id) {
 $projectDetailItems = ProjectDetailsItemsAlias::PRODUCT_OWNER;
 } elseif (Auth::user()->role == 'student') {
 $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;

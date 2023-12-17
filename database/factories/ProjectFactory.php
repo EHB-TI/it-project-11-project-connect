@@ -48,6 +48,7 @@ That's a **basic test**! _Good luck_ with your parser!
 
         return [
          'name' => $this->faker->unique()->word,
+         'brief' => $this->faker->sentence,
          'description' => $markdownString,
          'status' => $this->faker->randomElement(['Pending', 'Approved', 'Denied', 'Closed', 'Published']),
          'owner_id' => $owner_id,

@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
  *
  * @package App\Models
  *
+ * @property string $id
  * @property string $name
+ * @property string $brief
  * @property string $description
  * @property int $owner_id
  * @property string $status

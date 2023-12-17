@@ -58,6 +58,7 @@ class ProjectController extends Controller
         // Create a new project instance
         $project = new Project();
         $project->name = $validatedData['name'];
+        $project->brief = $request->input('brief');
         $project->description = $request->input('description');
         $project->owner_id = Auth::user()->id;
 
