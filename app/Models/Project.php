@@ -31,12 +31,12 @@ class Project extends Model
 
     public function owner(): BelongsToAlias
     {
-        return $this->belongsTo(User::class, 'ownerID');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function space(): BelongsToAlias
     {
-        return $this->belongsTo(Space::class, 'spaceID');
+        return $this->belongsTo(Space::class, 'space_id');
     }
 
     public function feedback(): HasManyAlias

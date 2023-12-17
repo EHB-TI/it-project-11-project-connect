@@ -3,13 +3,10 @@
 
 @section('content')
 <body class="font-sans bg-gray-100">
-<form id="form_apply"method="post" enctype="multipart/form-data">
-@if (session('success'))
-    <div class="alert alert-success font-bold text-green-500">
-        {{ session('success') }}
-    </div>
-@endif
 
+
+<form id="form_apply" method="post" action="{{ route('applications.store') }}" enctype="multipart/form-data">
+    @csrf
     <div class="max-w-4xl mx-auto p-4">
 
         <h2 class="text-3xl font-bold mb-1">Application Form</h2>
@@ -25,7 +22,7 @@
             <h2 class="font-bold">Application done ?</h2>
             <p>click to submit</p>
             
-                @csrf
+                
             <button class="bg-gray-500 hover:bg-brown-700 text-black font-bold py-2 px-4 rounded-full border border-white-500">Submit</button>
             
         </div>
@@ -34,11 +31,6 @@
             <h2 class="text-2xl font-bold">Motivation letter</h2>
             <p>Provide any additional details or upload supporting documents.</p>
         </header>
-        @if (session('error'))
-        <div class="alert alert-success font-bold text-red-500">
-        {{ session('error') }}
-        </div>
-        @endif
 
         <div class="mt-4">
             <label for="file" class="block text-sm font-medium text-gray$-700">Upload File:</label>

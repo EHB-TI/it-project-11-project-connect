@@ -13,7 +13,7 @@ class DeadlineController extends Controller
     {
         $deadlines = Deadline::latest()->get();
 
-        return view('teachers.deadlines.index', compact('deadlines'));
+        return view('deadlines.teacher.index', compact('deadlines'));
     }
 
     public function store(Request $request)
@@ -34,14 +34,14 @@ class DeadlineController extends Controller
             'who' => $validatedData['who'],
             'what' => $validatedData['what'],
             'end_date' => $validatedData['when_date'] . ' ' . $validatedData['when_time'],
-            'spaceID' => 1,
+            'space_id' => 1,
         ]);
 
-        return redirect()->route('deadlines.index');
+        return redirect()->route('deadlines.index')->with('status', 'Deadline Created!');
     }
 
     public function create()
     {
-        return view('teachers.deadlines.create');
+        return view('deadlines.teacher.create');
     }
 }

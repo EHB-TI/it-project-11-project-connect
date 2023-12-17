@@ -14,8 +14,8 @@
     </div>
         <br><br><br>
         <div id="postModal" title="Create Project" class="p-5">
-            <form action="{{ route('storeProjects') }}" method="POST" enctype="multipart/form-data" id="post-form"
-                data-route="{{ route('storeProjects') }}" class="space-y-4">
+            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" id="post-form"
+                data-route="{{ route('projects.store') }}" class="space-y-4">
         
                 @csrf
         

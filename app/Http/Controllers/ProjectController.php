@@ -12,7 +12,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+
+        return view('projects.index', ['projects' => $projects]);
     }
 
     /**
@@ -36,7 +38,7 @@ class ProjectController extends Controller
     public function create()
     {
         $user = auth()->id();
-        return view('students/makeProject', ['user' => $user]);
+        return view('projects.create', ['user' => $user]);
     }
 
     /**
@@ -54,13 +56,13 @@ class ProjectController extends Controller
         $project = new Project();
         $project->name = $validatedData['Title'];
         $project->description = $request->input('content');
-        $project->ownerID = $validatedData['user']; // Assuming 'user' corresponds to ownerID
+        $project->owner_id = $validatedData['user']; // Assuming 'user' corresponds to owner_id
 
         // Save the project to the database
         $project->save();
 
         // Optionally, you can redirect to a specific route after storing the project
-        return redirect()->route('makeProject');
+        return redirect()->route('projects.show', ['project' => $project])->with('status', 'Project Created!');
     }
 
     /**
@@ -85,13 +87,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
-    }
-
-    public function findAllProjectsPublished(){
-
-        $projects = Project::all();
-    //  dd(DB::getQueryLog());
-        return view('students/approvedProjects', ['projects' => $projects]);
     }
 
 

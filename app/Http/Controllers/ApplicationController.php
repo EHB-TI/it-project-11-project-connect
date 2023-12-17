@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Application;
 
+use Auth;
+
 class ApplicationController extends Controller
 {
  function show(Request $request)
  {
-    return view('students.applicationpage');
+   // new show page
  }
 
  
@@ -28,7 +30,7 @@ class ApplicationController extends Controller
      $application = new Application();
      $application->fileurl = $filePath ?? null;
      $application->motivationContent = $request->get('motivationcontent') ?? null;
-     $application->applicantID = 1; //Auth::id();
+     $application->applicant_id = Auth::user()->id;
      $application->save();
 
      // Redirect or return response
@@ -44,7 +46,7 @@ class ApplicationController extends Controller
         $applications = Application::with('applicant')->get();
 
         // Return the applications with user names to a view or as needed
-        return view('/teachers/incomingApplications', ['applications' => $applications]);
+        return view('applications.teacher.index', ['applications' => $applications]);
     }
 
     /**
@@ -52,7 +54,7 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+        return view('applications.student.create');
     }
 
     

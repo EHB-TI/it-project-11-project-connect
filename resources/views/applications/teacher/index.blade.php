@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 @foreach ($applications as $application)
-                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100">
+                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer">
                         <td class="p-2">{{ $application->applicant->name }}</td>
                         <td class="p-2">
                             <div class="bg-gray-300 rounded-lg w-fit py-1 px-2">

@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\belongsTo as belongsToAlias;
  * @property string $who
  * @property string $what
  * @property string $end_date
- * @property int $spaceID
+ * @property int $space_id
  *
  * @property-read Space $space
  */
@@ -25,7 +25,7 @@ class Deadline extends Model
 
     public function space(): belongsToAlias
     {
-        return $this->belongsTo(Space::class, 'spaceID');
+        return $this->belongsTo(Space::class, 'space_id');
     }
 
     protected $fillable = [
@@ -33,7 +33,7 @@ class Deadline extends Model
         'who',
         'what',
         'end_date',
-        'spaceID',
+        'space_id',
     ];
 
 }

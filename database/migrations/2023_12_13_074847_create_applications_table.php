@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->string('reason')->nullable();
            
-            $table->unsignedBigInteger('applicantID')->nullable(false);
-            $table->foreign('applicantID')->references('id')->on('users');
+            $table->unsignedBigInteger('applicant_id')->nullable(false);
+            $table->foreign('applicant_id')->references('id')->on('users');
         });
     }
     

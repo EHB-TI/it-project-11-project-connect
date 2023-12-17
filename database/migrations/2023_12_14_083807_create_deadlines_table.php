@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('what');
             $table->dateTime('end_date');
             
-            $table->unsignedBigInteger('spaceID');
+            $table->unsignedBigInteger('space_id');
 
-            $table->foreign('spaceID')->references('id')->on('spaces');
+            $table->foreign('space_id')->references('id')->on('spaces');
         });
     }
 

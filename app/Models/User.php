@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function applications(): HasManyAlias
     {
-        return $this->hasMany(Application::class, 'applicantID');
+        return $this->hasMany(Application::class, 'applicant_id');
     }
 
     public function projects(): belongsToManyAlias

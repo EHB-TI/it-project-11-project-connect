@@ -3,6 +3,9 @@
 
 @section('content')
     <div class="container mx-auto p-4">
+
+
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach ($deadlines as $deadline)
                 <div class="bg-white border-2 p-4 rounded">
