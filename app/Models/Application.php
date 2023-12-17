@@ -17,8 +17,8 @@ class Application extends Model
 
     public function applicant(): BelongsToAlias
     {
-        return $this->belongsTo(User::class, 'applicantID');
+        return $this->belongsTo(User::class, 'applicant_id');
     }
 
-    protected $fillable = ['fileurl', 'motivationContent','status','reason','applicantID'];
+    protected $fillable = ['fileurl', 'motivationContent','status','reason','applicant_id'];
 }

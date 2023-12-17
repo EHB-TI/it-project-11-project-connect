@@ -18,11 +18,11 @@ class ProjectUserFactory extends Factory
      */
     public function definition(): array
     {
-        $userIds = User::pluck('id')->toArray();
+        $user_ids = User::pluck('id')->toArray();
         $projectIds = Project::pluck('id')->toArray();
 
         return [
-            'user_id' => $this->faker->randomElement($userIds),
+            'user_id' => $this->faker->randomElement($user_ids),
             'project_id' => $this->faker->randomElement($projectIds),
 
         ];

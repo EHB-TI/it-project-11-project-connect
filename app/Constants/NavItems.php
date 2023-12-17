@@ -5,17 +5,17 @@ namespace App\Constants;
 class NavItems
 {
     const TEACHER = [
-        'Dashboard' => 'dashboard.teacher',
-        'Projects' => 'approvedProject',
-        'Applicaties' => 'application.index',
+        'Dashboard' => 'dashboard',
+        'Projects' => 'projects.index',
+        'Applications' => 'applications.index',
         'Deadlines' => 'deadlines.index',
-        'Students' => 'studentsOverview',
+        'Students' => 'students.index',
         'Make your project' => 'projects.create',
     ];
 
     const STUDENT = [
-        'Dashboard' => 'dashboard.student',
-        'Projects' => 'approvedProject',
+        'Dashboard' => 'dashboard',
+        'Projects' => 'projects.index',
         'Make your project' => 'projects.create',
     ];
 }

@@ -24,8 +24,15 @@
     @endif
 
     <div class="app-container">
+
         @include('components.nav-bar')
         <div class="app-content ml-[max(250px,_20%)] p-10 bg-gray-100">
+            @if (session('status'))
+            <div class="bg-blue-500 text-white px-4 py-3 mb-2 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('status') }}</span>
+            </div>      
+        @endif
+
             @yield('content')
         </div>
     </div>

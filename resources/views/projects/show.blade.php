@@ -13,7 +13,7 @@
             <div class="rounded-xl border-2 overflow-hidden mb-8 p-4">
                 <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Apply for this project</h1>
                 <p class="mb-4">Want to be part of this project?</p>
-                <button class="project-detail__applyButton rounded-full px-4 py-2 border-2">Apply now</button>
+                <a href="{{ route('applications.create') }}" class="project-detail__applyButton rounded-full px-4 py-2 border-2">Apply now</a>
             </div>
             <ul class="rounded-xl border-2 overflow-hidden">
                 <li class="border-b-2"><button id="overview" class="projectDetails__navButton w-full p-2">Overview</button></li>
@@ -29,7 +29,7 @@
         let activeTextColor = 'text-white';
         document.addEventListener('DOMContentLoaded', function() {
             let projectId = {{ $project->id }};
-            fetch('/project/details/overview/' + projectId)
+            fetch('/projects/details/overview/' + projectId)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('details-content').innerHTML = data;
@@ -41,7 +41,7 @@
             button.addEventListener('click', function() {
                 let section = this.getAttribute('id');
                 let projectId = {{ $project->id }};
-                fetch('/project/details/' + section + '/' + projectId)
+                fetch('/projects/details/' + section + '/' + projectId)
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById('details-content').innerHTML = data;

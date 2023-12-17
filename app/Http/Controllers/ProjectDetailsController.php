@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ProjectDetailsController extends Controller
 {
-    public function showOverview($id)
+    public function overview($id)
     {
         $project = Project::find($id);
 
@@ -16,27 +16,27 @@ class ProjectDetailsController extends Controller
             return redirect('/')->with('error', 'Project not found');
         }
 
-        return view('shared.detail-sections.overview', ['project' => $project]);
+        return view('projects.detail-sections.overview', ['project' => $project]);
     }
 
-    public function showFeedback($id)
+    public function feedback($id)
     {
         //$projectFeedback = find project feedback by id
 
-        return view('shared.detail-sections.feedback', ['projectId' => $id]);
+        return view('projects.detail-sections.feedback', ['project_id' => $id]);
     }
 
-    public function showMembers($id)
+    public function members($id)
     {
         //$projectMembers = find project members by id
 
-        return view('shared.detail-sections.members', ['projectId' => $id]);
+        return view('projects.detail-sections.members', ['project_id' => $id]);
     }
 
-    public function showApplications($id)
+    public function applications($id)
     {
         //$projectApplications = find project applications by id
 
-        return view('shared.detail-sections.applications',  ['projectId' => $id]);
+        return view('projects.detail-sections.applications',  ['project_id' => $id]);
     }
 }

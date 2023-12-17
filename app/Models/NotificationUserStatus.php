@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
  * @package App\Models
  *
  * @property bool $seen
- * @property int $userID
- * @property int $notificationID
+ * @property int $user_id
+ * @property int $notification_id
  *
  * @property-read User $user
  * @property-read Notification $notification
@@ -24,17 +24,17 @@ class NotificationUserStatus extends Model
 
     protected $fillable = [
         'seen',
-        'userID',
-        'notificationID'
+        'user_id',
+        'notification_id'
     ];
 
     public function user(): BelongsToAlias
     {
-        return $this->belongsTo(User::class, 'userID');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function notification(): BelongsToAlias
     {
-        return $this->belongsTo(Notification::class, 'notificationID');
+        return $this->belongsTo(Notification::class, 'notification_id');
     }
 }

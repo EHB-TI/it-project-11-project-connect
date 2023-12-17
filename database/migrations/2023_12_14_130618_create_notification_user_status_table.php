@@ -17,11 +17,11 @@ return new class extends Migration
 
             $table->boolean('seen')->default(false);
 
-            $table->unsignedBigInteger('userId');
-            $table->unsignedBigInteger('notificationId');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('notification_id');
 
-            $table->foreign('userId')->references('id')->on('users');
-            $table->foreign('notificationId')->references('id')->on('notifications');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('notification_id')->references('id')->on('notifications');
         });
     }
 

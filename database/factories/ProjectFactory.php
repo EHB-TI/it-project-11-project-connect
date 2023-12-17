@@ -40,18 +40,18 @@ This is a *quick* Markdown **test string** to check the parser functionality.
 That's a **basic test**! _Good luck_ with your parser!
         ";
 
-        $userIds = User::pluck('id')->toArray();
-        $ownerID = $this->faker->randomElement($userIds);
+        $user_ids = User::pluck('id')->toArray();
+        $owner_id = $this->faker->randomElement($user_ids);
 
         $spaces = Space::pluck('id')->toArray();
-        $spaceID = $this->faker->randomElement($spaces);
+        $space_id = $this->faker->randomElement($spaces);
 
         return [
          'name' => $this->faker->unique()->word,
          'description' => $markdownString,
          'status' => $this->faker->randomElement(['Pending', 'Approved', 'Denied', 'Closed', 'Published']),
-         'ownerID' => $ownerID,
-         'spaceID' => $spaceID,
+         'owner_id' => $owner_id,
+         'space_id' => $space_id,
         ];
     }
 }

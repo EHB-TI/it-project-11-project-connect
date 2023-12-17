@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectDetailsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -98,17 +100,15 @@ if (app()->environment('local')) {
 //AUTH PROTECTED ROUTES
 //only authenticated users can access these routes
 Route::middleware(['auth'])->group(function () {
+
     //DASHBOARD ROUTES
     //display the dashboard for students
-    Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard.student')->middleware('role:student');
-
-    //display the dashboard for docents
-    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard.teacher')->middleware('role:teacher');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 
     //PROJECT ROUTES
     //display a list of projects
-    Route::get('/projects', [ProjectController::class, 'findAllProjectsPublished'])->name('approvedProject'); // projects.approve
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 
     //display the page to create a new project
     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
@@ -119,26 +119,26 @@ Route::middleware(['auth'])->group(function () {
 
     //PROJECT DETAILS ROUTES
     //display the project details
-    Route::get('/project/details/{id}', [ProjectController::class, 'show'])->name('project.details');
+    Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('project.details');
 
     //get the overview component of the project details
-    Route::get('/project/details/overview/{id}', [ProjectDetailsController::class, 'showOverview']);
+    Route::get('/projects/details/overview/{id}', [ProjectDetailsController::class, 'overview']);
 
     //get the feedback component of the project details
-    Route::get('/project/details/feedback/{id}', [ProjectDetailsController::class, 'showFeedback']);
+    Route::get('/projects/details/feedback/{id}', [ProjectDetailsController::class, 'feedback']);
 
     //get the members component of the project details
-    Route::get('/project/details/members/{id}', [ProjectDetailsController::class, 'showMembers']);
+    Route::get('/projects/details/members/{id}', [ProjectDetailsController::class, 'members']);
 
     //get the applications component of the project details
-    Route::get('/project/details/applications/{id}', [ProjectDetailsController::class, 'showApplications']);
+    Route::get('/projects/details/applications/{id}', [ProjectDetailsController::class, 'applications']);
 
 
     //APPLICATION ROUTES
     //display the page of a specific application
-    Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
-    Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
-    Route::post('/applicationpage', 'App\Http\Controllers\ApplicationController@store');
+    Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
+    Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 
 
     // DEADLINE ROUTES
@@ -148,37 +148,27 @@ Route::middleware(['auth'])->group(function () {
     // show the form to create a new deadline
     Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create')->middleware('role:teacher');
 
-    //store a new deadline
-    Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
-
-    // DEADLINE ROUTES
-    // display a list of deadlines
-    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('deadlines.index')->middleware('role:teacher');
-    // show the form to create a new deadline
-    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('deadlines.create')->middleware('role:teacher');
     //store a new deadline
     Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
 
 
     // SPACE ROUTES
     // display a list of spaces
-    Route::get('/space', [SpaceController::class,'index'])->name('space.index');
+    Route::get('/spaces', [SpaceController::class,'index'])->name('spaces.index');
 
     // show the form to create a new space
-    Route::get('/space/create', function () {
-        return view('shared.space_create');
-    })->name('space.create')->middleware('role:teacher');
+    Route::get('/spaces/create', [SpaceController::class,'create'])->name('spaces.create')->middleware('role:teacher');
 
     //store a new space
-    Route::post('/space/create', [SpaceController::class,'store'])->name('space.create')->middleware('role:teacher');
+    Route::post('/spaces', [SpaceController::class,'store'])->name('spaces.store')->middleware('role:teacher');
 
 
     //STUDENTS OVERVIEW ROUTES
     //display  page of students
-    Route::get('studentsOverview',[UserController::class,'index'])->name('studentsOverview');
+    Route::get('/students',[UserController::class,'index'])->name('students.index');
 
-    //USER INFORMATION ROUTES
-    Route::get('/user/{id}', [UserController::class,'show'])->name('userInformation');
+    //STUDENT INFORMATION ROUTES
+    Route::get('/students/{id}', [UserController::class,'show'])->name('students.show');
     //
 });
 

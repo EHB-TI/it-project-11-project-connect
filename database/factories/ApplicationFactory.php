@@ -19,14 +19,14 @@ class ApplicationFactory extends Factory
      */
     public function definition(): array
     {
-        $userIds = User::pluck('id')->toArray();
-        $applicantID = $this->faker->randomElement($userIds);
+        $user_ids = User::pluck('id')->toArray();
+        $applicant_id = $this->faker->randomElement($user_ids);
 
         return [
             'motivationContent' => $this->faker->text(),
             'status' => $this->faker->randomElement(['approved', 'denied', 'pending']),
             'reason' => $this->faker->text(),
-            'applicantID' => $applicantID,
+            'applicant_id' => $applicant_id,
         ];
     }
 }

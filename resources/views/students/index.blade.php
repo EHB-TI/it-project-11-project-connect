@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             @foreach ($users as $user )
-            <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='/user/{{$user->id}}';">
+            <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='{{ route('students.show', $user->id) }}';">
                 <td class="p-2">{{$user->name}}</td>
                 <td class="p-2">{{$user->role}} </td>
                 <td class="p-2">
