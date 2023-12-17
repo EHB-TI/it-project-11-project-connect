@@ -4,11 +4,11 @@
 @section('content')
 <body class="font-sans bg-gray-100">
 <form id="form_apply"method="post" enctype="multipart/form-data">
-@if (session('success'))
-    <div class="alert alert-success font-bold text-green-500">
-        {{ session('success') }}
+    @if (session('status'))
+    <div class="bg-blue-500 text-white px-4 py-3 mb-2 rounded relative" role="alert">
+        <span class="block sm:inline">{{ session('status') }}</span>
     </div>
-@endif
+    @endif
 
     <div class="max-w-4xl mx-auto p-4">
 

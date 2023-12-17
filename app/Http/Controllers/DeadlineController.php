@@ -37,7 +37,7 @@ class DeadlineController extends Controller
             'spaceID' => 1,
         ]);
 
-        return redirect()->route('deadlines.index');
+        return redirect()->route('deadlines.index')->with('status', 'Deadline Created!');
     }
 
     public function create()
