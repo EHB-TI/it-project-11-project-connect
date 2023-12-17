@@ -9,7 +9,7 @@ class ProjectDetailsItems
         'members' => 'members',
         'feedback' => 'feedback',
         'applications' => 'applications',
-        'teacher discussion' => 'teacher-discussion',
+        //'teacher discussion' => 'teacher-discussion',
     ];
 
     const STUDENT = [

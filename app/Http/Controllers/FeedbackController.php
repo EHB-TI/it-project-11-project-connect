@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
-    public function store(Request $request, Project $project)
+    public function store(Request $request, $id)
     {
         $request->validate([
-            'message' => 'required|min:10|max:1000'
+            'message' => 'required'
         ]);
 
         $feedback = new Feedback();
         $feedback->message = $request->input('message');
         $feedback->user_id = auth()->id();
-        $feedback->project_id = $project->id;
+        $feedback->project_id = $id;
         $feedback->save();
 
-        return redirect()->route('projects.show', $request->input('project_id'));
+        return redirect()->route('projects.show', $id)->with('status', 'Feedback added successfully');
     }
 
     public function destroy(Feedback $feedback)

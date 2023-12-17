@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProjectDetailsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -121,7 +122,7 @@ Route::middleware(['auth'])->group(function () {
 
     //PROJECT DETAILS ROUTES
     //display the project details
-    Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('project.details');
+    Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('projects.show');
 
     //get the overview component of the project details
     Route::get('/projects/details/overview/{id}', [ProjectDetailsController::class, 'overview']);
@@ -172,6 +173,12 @@ Route::middleware(['auth'])->group(function () {
     //STUDENT INFORMATION ROUTES
     Route::get('/students/{id}', [UserController::class,'show'])->name('students.show');
     //
+
+
+    //FEEDBACK ROUTES
+    //store a new feedback
+    Route::post('/feedback/{id}', [FeedbackController::class, 'store'])->name('feedback.store');
+
 });
 
 

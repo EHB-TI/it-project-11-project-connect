@@ -29,7 +29,7 @@ class ProjectController extends Controller
             return redirect('/')->with('error', 'Project not found');
         }
 
-        return view('shared.project-details', ['project' => $project]);
+        return view('projects.show', ['project' => $project]);
     }
 
     /**
@@ -46,6 +46,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'Title' => 'required|max:100', // Assuming the input field name is 'Title'
             'content' => 'required', // Assuming the input field name is 'content'
