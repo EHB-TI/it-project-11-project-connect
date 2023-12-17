@@ -100,10 +100,10 @@ if (app()->environment('local')) {
 Route::middleware(['auth'])->group(function () {
     //DASHBOARD ROUTES
     //display the dashboard for students
-    Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'findMyProjectsAndApplications'])->name('dashboard.student')->middleware('role:student');
 
     //display the dashboard for docents
-    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard')->middleware('role:teacher');
+    Route::get('/docentboard', [UserController::class, 'findProjectsAndApplications'])->name('dashboard.teacher')->middleware('role:teacher');
 
 
     //PROJECT ROUTES
@@ -137,7 +137,6 @@ Route::middleware(['auth'])->group(function () {
     //APPLICATION ROUTES
     //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.index');
-    
     Route::get('/applicationpage', 'App\Http\Controllers\ApplicationController@show');
     Route::post('/applicationpage', 'App\Http\Controllers\ApplicationController@store');
 
