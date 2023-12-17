@@ -5,47 +5,26 @@
             <img src="{{ asset('LogoPC.png') }}" alt="Logo" class="w-8 h-8">
         </div>
 
-        <!-- Navigatiemenu van student -->
         <ul class="flex flex-col flex-grow">
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="{{ route('dashboard') }}" class="block">
-                </a>
-            </li>
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="{{ route('approvedProject') }}" class="block">
-                    Projects
-                </a>
-            </li>
-
-            <!-- HIERONDER IS DE NAV VOOR DOCENTEN, AUTHENTICATIE -->
-
-            <!--auth('')-->
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="{{ route('application.index') }}" class="block">
-                    Applicaties
-                </a>
-            </li>
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="{{ route('deadlines.index') }}" class="block">
-                    Deadlines
-                </a>
-            </li>
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="{{ route('studentsOverview') }}" class="block">
-                    Students
-                </a>
-            </li>
-            <!--endauth-->
-
-            <!-- Navigatiemenu van student -->
-            <li class="px-4 py-2 mb-2 hover:bg-gray-700">
-                <a href="#" class="block">
-                    Make your project
-                </a>
-            </li>
-            <!-- Voeg hier meer menu-items toe -->
-
+            @Auth
+                @php
+                    $navItems = [];
+                    if (Auth::user()->role == 'teacher') {
+                        $navItems = \App\Constants\NavItems::TEACHER;
+                    } elseif (Auth::user()->role == 'student') {
+                        $navItems = \App\Constants\NavItems::STUDENT;
+                    }
+                @endphp
+                @foreach ($navItems as $name => $route)
+                    <li class="px-4 py-2 mb-2 hover:bg-gray-700">
+                        <a href="{{ route($route) }}" class="block">
+                            {{ $name }}
+                        </a>
+                    </li>
+                @endforeach
+            @endauth
         </ul>
+
         <div class="bg-gray-900 p-4">
             @Auth
             <div class="flex items-center ">
