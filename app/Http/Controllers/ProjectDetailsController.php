@@ -21,22 +21,25 @@ class ProjectDetailsController extends Controller
 
     public function feedback($id)
     {
-        //$projectFeedback = find project feedback by id
+        $project = Project::find($id);
+        $projectFeedback = $project->feedback()->orderBy('created_at', 'desc')->get();
 
-        return view('projects.detail-sections.feedback', ['project_id' => $id]);
+        return view('projects.detail-sections.feedback', ['project' => $project, 'projectFeedback' => $projectFeedback]);
     }
 
     public function members($id)
     {
-        //$projectMembers = find project members by id
+        $project = Project::find($id);
+        $projectMembers = $project->members;
 
-        return view('projects.detail-sections.members', ['project_id' => $id]);
+        return view('projects.detail-sections.members', ['project' => $project, 'projectMembers' => $projectMembers]);
     }
 
     public function applications($id)
     {
-        //$projectApplications = find project applications by id
+        $project = Project::find($id);
+        $projectApplications = $project->applications;
 
-        return view('projects.detail-sections.applications',  ['project_id' => $id]);
+        return view('projects.detail-sections.applications',  ['project' => $project, 'projectApplications' => $projectApplications]);
     }
 }

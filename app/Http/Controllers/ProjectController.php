@@ -18,6 +18,21 @@ class ProjectController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $project = Project::find($id);
+
+        if ($project === null) {
+            // Redirect back or show an error message
+            return redirect('/')->with('error', 'Project not found');
+        }
+
+        return view('projects.show', ['project' => $project]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -31,6 +46,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'Title' => 'required|max:100', // Assuming the input field name is 'Title'
             'content' => 'required', // Assuming the input field name is 'content'
@@ -48,19 +64,6 @@ class ProjectController extends Controller
 
         // Optionally, you can redirect to a specific route after storing the project
         return redirect()->route('projects.show', ['project' => $project])->with('status', 'Project Created!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($Id) {
-        $project = Project::find($Id);
-        if ($project === null) {
-            // Redirect back or show an error message
-            return redirect('project.index')->with('error', 'Project not found');
-        } else {
-            return view('projects.show', ['project' => $project]);
-        }
     }
 
     /**

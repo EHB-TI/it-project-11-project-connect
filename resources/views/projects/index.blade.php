@@ -10,7 +10,7 @@
         <div class="project-card__container grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             @foreach ($projects as $project)
                 <div class="project-card rounded-xl overflow-hidden hover:cursor-pointer"
-                     onclick="window.location.href='{{ route('project.details', $project->id) }}'">
+                     onclick="window.location.href='{{ route('projects.show', $project->id) }}'">
                     <div class="project-card__image bg-cover bg-center w-full h-[200px] bg-amber-500" style="background-image: url( {{$project->name}} )"></div>
                     <div class="project-card__content rounded-b-xl border-2 border-t-0 p-4 flex flex-col gap-2">
                         <h2 class="project-card__title text-2xl font-bold">{{$project->name}}</h2>

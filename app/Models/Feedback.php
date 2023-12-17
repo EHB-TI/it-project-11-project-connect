@@ -20,11 +20,15 @@ class Feedback extends Model
     use HasFactory;
     protected $fillable = [
         'message'
-
     ];
 
     public function owner(): BelongsToAlias
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function project(): BelongsToAlias
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }
