@@ -2,10 +2,26 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use \Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
-
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
+/**
+ * Class User
+ *
+ * @package App\Models
+ *
+ * @property string $name
+ * @property string $role
+ * @property bool $available
+ *
+ * @property-read Collection|Application[] $applications
+ * @property-read Collection|Project[] $projects
+ * @property-read Collection|Feedback[] $feedback
+ * @property-read Collection|Chat[] $chat
+ * @property-read Collection|Notification[] $notifications
+ */
 class User extends Authenticatable
 {
     use HasFactory;
@@ -15,9 +31,9 @@ class User extends Authenticatable
         return $this->hasMany(Application::class, 'applicantID');
     }
 
-    public function projects(): HasManyAlias
+    public function projects(): belongsToManyAlias
     {
-        return $this->hasMany(Project::class, 'ownerID');
+        return $this->belongsToMany(Project::class);
     }
     public function feedback(): HasManyAlias
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Space;
 class SpaceController extends Controller
@@ -12,7 +13,7 @@ class SpaceController extends Controller
         $spaces = Space::all();
         return view('shared.space', compact('spaces'));
     }
-    
+
     public function store(Request $request){
     $validatedData = $request->validate([
         'name' => 'required|max:255',
@@ -30,7 +31,7 @@ class SpaceController extends Controller
     if ($space->save()) {
         return redirect('/space')->with('success', 'Space created successfully.');
     } else {
-        throw new \Exception('Failed to create space.');
+        throw new Exception('Failed to create space.');
     }
     }
 
