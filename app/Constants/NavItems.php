@@ -5,7 +5,7 @@ namespace App\Constants;
 class NavItems
 {
     const TEACHER = [
-        'Dashboard' => 'dashboard',
+        // 'Dashboard' => 'dashboard',
         'Projects' => 'projects.index',
         'Applications' => 'applications.index',
         'Deadlines' => 'deadlines.index',
@@ -14,7 +14,7 @@ class NavItems
     ];
 
     const STUDENT = [
-        'Dashboard' => 'dashboard',
+        // 'Dashboard' => 'dashboard',
         'Projects' => 'projects.index',
         'Make your project' => 'projects.create',
     ];

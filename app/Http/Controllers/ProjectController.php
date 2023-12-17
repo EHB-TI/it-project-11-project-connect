@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use Auth;
+
 class ProjectController extends Controller
 {
     /**
@@ -48,22 +51,21 @@ class ProjectController extends Controller
     {
 
         $validatedData = $request->validate([
-            'Title' => 'required|max:100', // Assuming the input field name is 'Title'
-            'content' => 'required', // Assuming the input field name is 'content'
-            'user' => 'required|numeric', // Assuming the input field name is 'user'
+            'name' => 'required|max:100',
+            'description' => 'required',
         ]);
 
         // Create a new project instance
         $project = new Project();
-        $project->name = $validatedData['Title'];
-        $project->description = $request->input('content');
-        $project->owner_id = $validatedData['user']; // Assuming 'user' corresponds to owner_id
+        $project->name = $validatedData['name'];
+        $project->description = $request->input('description');
+        $project->owner_id = Auth::user()->id;
 
         // Save the project to the database
         $project->save();
 
         // Optionally, you can redirect to a specific route after storing the project
-        return redirect()->route('projects.show', ['project' => $project])->with('status', 'Project Created!');
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Created!');
     }
 
     /**

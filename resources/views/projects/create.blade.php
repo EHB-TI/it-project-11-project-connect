@@ -14,13 +14,11 @@
     </div>
         <br><br><br>
         <div id="postModal" title="Create Project" class="p-5">
-            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" id="post-form"
-                data-route="{{ route('projects.store') }}" class="space-y-4">
-        
+            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" id="post-form" class="space-y-4">
                 @csrf
         
-                <label for="Title" class="block font-semibold">Project Title:</label>
-                <input type="text" id="Title" name="Title" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500">
+                <label for="name" class="block font-semibold">Name your project</label>
+                <input type="text" id="name" name="name" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500">
         
                 <label for="description" class="block font-semibold">Project Description:</label>
                 <textarea id="description" name="description" rows="4" cols="50" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"></textarea>
@@ -33,9 +31,7 @@
                 </div>
                 <input type="hidden" name="content" id="content">
                 -->
-        
-                <input type="number" name="user" id="user_id" style="display: none;" value="{{Auth::id()}}">
-        
+
                 <input type="submit" value="Create Project" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 cursor-pointer">
             </form>
         </div>
