@@ -3,6 +3,11 @@
 @section('content')
 
     <div class="flex gap-8">
+        @if (session('status'))
+        <div class="bg-blue-500 text-white px-4 py-3 mb-2 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('status') }}</span>
+        </div>
+        @endif
         <div class="w-1/4">
             <div class="rounded-xl border-2 overflow-hidden mb-8 p-4">
                 <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Next Deadline</h1>
@@ -73,8 +78,8 @@
 
     </div>
     <div id="postModal" title="Create Project" class="p-5">
-    <form action="{{ route('storeProjects') }}" method="POST" enctype="multipart/form-data" id="post-form"
-        data-route="{{ route('storeProjects') }}" class="space-y-4">
+    <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" id="post-form"
+        data-route="{{ route('projects.store') }}" class="space-y-4">
 
         @csrf
 

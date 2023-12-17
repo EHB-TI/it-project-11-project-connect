@@ -2,6 +2,12 @@
 @section('title', 'Home')
 @section('content')
 <div class="flex gap-8">
+    @if (session('status'))
+    <div class="bg-blue-500 text-white px-4 py-3 mb-2 rounded relative" role="alert">
+        <span class="block sm:inline">{{ session('status') }}</span>
+    </div>
+    @endif
+    
     <div class="w-3/4">
 
         <div class="w-1/4">

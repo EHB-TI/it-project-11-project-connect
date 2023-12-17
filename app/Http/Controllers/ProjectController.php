@@ -45,7 +45,7 @@ class ProjectController extends Controller
         $project->save();
 
         // Optionally, you can redirect to a specific route after storing the project
-        return redirect()->route('makeProject');
+        return redirect()->route('makeProject')->with('status', 'Project Created!');
     }
 
     /**
