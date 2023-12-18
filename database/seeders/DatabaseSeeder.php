@@ -25,11 +25,13 @@ class DatabaseSeeder extends Seeder
         user::factory(5)->create();
 
         //data in pivot table user_project
-        foreach ($users as $user) {
-            $user->projects()->attach(
-                $projects->random(rand(1, 5))->pluck('id')->toArray()
-            );
-        }
+
+//        foreach ($users as $user) {
+//            $user->projects()->attach(
+//                $projects->random(rand(1, 5))->pluck('id')->toArray()
+//            );
+//        }
+//
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

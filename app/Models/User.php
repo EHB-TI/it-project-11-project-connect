@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function applications(): HasManyAlias
     {
-        return $this->hasMany(Application::class, 'applicant_id');
+        return $this->hasMany(Application::class, 'user_id');
     }
 
     public function projects(): belongsToManyAlias
@@ -47,6 +47,11 @@ class User extends Authenticatable
     public function notifications(): HasManyAlias
     {
         return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    public function isMemberOfAnyProject(): bool
+    {
+        return $this->projects()->exists();
     }
 
 

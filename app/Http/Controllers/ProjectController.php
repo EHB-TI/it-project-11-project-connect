@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::all()->where('status', 'published' || 'pending' || 'approved' );
 
         return view('projects.index', ['projects' => $projects]);
     }
@@ -55,15 +56,24 @@ class ProjectController extends Controller
             'description' => 'required',
         ]);
 
+        $user = Auth::user();
+
         // Create a new project instance
         $project = new Project();
         $project->name = $validatedData['name'];
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
-        $project->owner_id = Auth::user()->id;
+        $project->user_id = $user->id;
 
         // Save the project to the database
         $project->save();
+
+        // Attach the authenticated user to the project
+        $project->users()->attach($user->id);
+
+        $user->isProductOwner = true;
+        $user->save();
+
 
         // Optionally, you can redirect to a specific route after storing the project
         return redirect()->route('projects.show', $project->id)->with('status', 'Project Created!');

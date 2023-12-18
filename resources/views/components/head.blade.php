@@ -8,6 +8,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    @vite('resources/js/markdown.js')
 </head>
 <body>
     {{--DEVELOPMENT TOOL--}}
@@ -36,6 +37,5 @@
             @yield('content')
         </div>
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ class UserController extends Controller
     // dd($closedProjects);
 
         $applications = Application::all();
-        //where('applicant_id', $user_id);
+        //where('user_id', $user_id);
         
         return view('dashboard', [
             'pendingProjects' => $pendingProjects, 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
+use \Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyAlias;
 
 /**
  * Class Project
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
  * @property string $name
  * @property string $brief
  * @property string $description
- * @property int $owner_id
+ * @property int $user_id
  * @property string $status
  *
  * @property-read User $owner
@@ -28,12 +29,12 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'owner_id', 'status'];
+    protected $fillable = ['name', 'description', 'user_id', 'status'];
 
 
     public function owner(): BelongsToAlias
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function space(): BelongsToAlias
@@ -46,9 +47,77 @@ class Project extends Model
         return $this->hasMany(Feedback::class);
     }
 
-    public function user()
+    public function users(): BelongsToManyAlias
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function applications(): HasManyAlias
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function applicationStatus(User $user): string
+    {
+        $application = $this->applications()->where('user_id', $user->id)->first();
+        if ($application === null) {
+            return 'could not find application status';
+        }
+
+        return $application->status;
+    }
+
+    public function isOwner(User $user): bool
+    {
+        // Check if the user is the owner of the project
+        if ($this->user_id === $user->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isMember(User $user): bool
+    {
+        if ($this->users()->where('user_id', $user->id)->exists()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    public function canApply(User $user): bool
+    {
+        // Check if the user is not the owner of the project or a teacher or a product owner
+        if ($this->isOwner($user) || $user->role === 'teacher' || $user->isProductOwner) {
+            return false;
+        }
+
+        // Check if the user has not already applied to the project
+        if ($this->applications()->where('user_id', $user->id)->exists()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function hasApplied(User $user): bool
+    {
+        // Check if the user is not the owner of the project or a teacher
+        if ($this->user_id === $user->id || $user->role === 'teacher') {
+            return false;
+        }
+
+        // Check if the user has already applied to the project
+        if ($this->applications()->where('user_id', $user->id)->exists()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 }
