@@ -24,7 +24,7 @@ class ApplicationController extends Controller
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
 
-        if (!$request->hasfile('file') || !$request->has('motivation')) {
+        if (!$request->hasfile('file') && !$request->has('motivation')) {
             return redirect()->back()->with('status', 'Please upload a file or write a motivation');
         }
 
@@ -34,7 +34,7 @@ class ApplicationController extends Controller
         }
 
         $application = new Application();
-        $application->fileurl = $filePath ?? null;
+        $application->file_path = $filePath ?? null;
         $application->motivation = $request->get('motivation') ?? null;
         $application->user_id = Auth::user()->id;
         $application->project_id = $project_id;
