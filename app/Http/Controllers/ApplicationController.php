@@ -33,7 +33,7 @@ class ApplicationController extends Controller
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
 
-        if (!$request->hasfile('file') || !$request->has('motivation')) {
+        if (!$request->hasfile('file') && !$request->has('motivation')) {
             return redirect()->back()->with('status', 'Please upload a file or write a motivation');
         }
 
