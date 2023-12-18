@@ -34,7 +34,7 @@ class ApplicationController extends Controller
         }
 
         $application = new Application();
-        $application->fileurl = $filePath ?? null;
+        $application->file_path = $filePath ?? null;
         $application->motivation = $request->get('motivation') ?? null;
         $application->user_id = Auth::user()->id;
         $application->project_id = $project_id;
