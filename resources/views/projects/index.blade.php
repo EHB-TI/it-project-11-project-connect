@@ -16,9 +16,9 @@
                     <p class="project-card__owner">Created By: {{ $project->owner->name }}</p>
                     <div class="project-card__members flex items-center gap-4">
                         <div class="icon_placeholder w-8 h-8 bg-indigo-950 rounded-full"></div>
-                        <p>3 / 5 Members</p>
+                        <p>{{ $project->users->count()}} / 5</p>
                     </div>
-                    <p class="project-card__description">{{$project->description}}</p>
+                    <p class="project-card__description">{{$project->brief}}</p>
                 </div>
             </div>
         @endforeach
