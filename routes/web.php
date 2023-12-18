@@ -23,9 +23,9 @@ use App\Http\Controllers\SpaceController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+
+
+Route::get('/', [SpaceController::class, 'index'])->name('welcome');
 
 
 //AUTH ROUTES

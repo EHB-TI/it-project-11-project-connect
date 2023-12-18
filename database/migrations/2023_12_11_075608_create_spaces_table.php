@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100)->unique();
             $table->unsignedBigInteger('canvasCourseId')->nullable();
-            $table->integer(('defaultTeamSize'));
+            $table->integer('defaultTeamSize');
             $table->timestamps();
     
         });
