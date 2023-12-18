@@ -25,7 +25,8 @@
                             </a>
                         </td>
                         <td class="p-2">
-                            <div class="bg-gray-300 rounded-lg w-fit py-1 px-2">
+                            <div class="rounded-lg w-fit py-1
+                            {{$application->status == "denied" ? "bg-red-300 text-red-800" : ($application->status == "approved" ? "bg-green-200 text-green-800" : "bg-gray-200 text-gray-800")  }} px-2">
                                 {{ $application->status }}
                             </div>
                         </td>
