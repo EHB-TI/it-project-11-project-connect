@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 @foreach ($applications as $application)
-                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer">
+                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='{{ route('applications.show', $application->id) }}';">
                         <td class="p-2">{{ $application->user->name }}</td>
                         <td class="p-2">
                             <a href="{{ route('projects.show', $application->project->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">

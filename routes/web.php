@@ -141,6 +141,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('/applications/create/{project_id}', [ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/applications/{project_id}', [ApplicationController::class, 'store'])->name('applications.store');
+    // bekijk daadwerkelijke content of application:
+    Route::get('applications/{user_id}', [ApplicationController::class, 'show'])->name('applications.show');
+
+
 
 
     // DEADLINE ROUTES

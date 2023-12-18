@@ -10,9 +10,14 @@ use Auth;
 
 class ApplicationController extends Controller
 {
-    function show(Request $request)
+    function show($id)
     {
-        // new show page
+        $application = Application::find($id);
+        if (!$application) {
+            return redirect()->back()->with('error', 'Application not found.');
+        }
+
+        return view('applications.show', compact('application'));
     }
 
 
@@ -63,6 +68,8 @@ class ApplicationController extends Controller
         $project = Project::find($project_id);
         return view('applications.student.create', ['project' => $project]);
     }
+
+    
 
 
     /**
