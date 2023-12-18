@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,12 +51,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        $deadline = Deadline::findDeadline('Create Project');
+
+        if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
+            return back()->with('status', 'You cannot create a project at this time.');
+        }         
+
         $validatedData = $request->validate([
             'name' => 'required|max:100',
             'description' => 'required',
         ]);
-
-        $user = Auth::user();
 
         // Create a new project instance
         $project = new Project();
@@ -63,6 +70,10 @@ class ProjectController extends Controller
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
         $project->user_id = $user->id;
+
+        if($user->hasRole('teacher')){
+            $project->status = 'approved';
+        }
 
         // Save the project to the database
         $project->save();

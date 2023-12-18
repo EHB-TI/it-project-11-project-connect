@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 use Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
+
+use Auth;
 /**
  * Class User
  *
@@ -52,6 +54,11 @@ class User extends Authenticatable
     public function isMemberOfAnyProject(): bool
     {
         return $this->projects()->exists();
+    }
+
+    public function hasRole($role): bool
+    {
+        return Auth::user()->role == $role;
     }
 
 

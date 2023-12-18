@@ -21,7 +21,6 @@ class DeadlineController extends Controller
 
         $validatedData = $request->validate([
             'title' => 'required|string',
-            'who' => 'required|string',
             'what' => 'required|string',
             'when_date' => 'required|date',
             'when_time' => 'required|date_format:H:i',
@@ -31,7 +30,6 @@ class DeadlineController extends Controller
 
         Deadline::create([
             'title' => $validatedData['title'],
-            'who' => $validatedData['who'],
             'what' => $validatedData['what'],
             'end_date' => $validatedData['when_date'] . ' ' . $validatedData['when_time'],
             'space_id' => 1,

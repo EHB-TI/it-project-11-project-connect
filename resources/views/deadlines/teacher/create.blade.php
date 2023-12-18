@@ -14,22 +14,16 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="who" class="block text-sm font-semibold mb-1">Who?</label>
-                    <select id="who" name="who" class="w-full p-2 bg-gray-200">
-                        <option>test</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
                     <label for="what" class="block text-sm font-semibold mb-1">What?</label>
                     <select id="what" name="what" class="w-full p-2 bg-gray-200">
-                        <option>test</option>
+                        <option>Create Project</option>
+                        <option>Apply For Projects</option>
                     </select>
                 </div>
 
                 <div class="mb-4">
                     <label for="when_date" class="block text-sm font-semibold mb-1">Date</label>
-                    <input type="date" id="when_date" name="when_date" class="w-full p-2 bg-gray-200">
+                    <input type="date" id="when_date" name="when_date" value="{{ now()->toDateString() }}"  min="{{ now()->toDateString() }}" max="{{ now()->endOfYear()->toDateString() }}" class="w-full p-2 bg-gray-200">
                 </div>
 
                 <div>
