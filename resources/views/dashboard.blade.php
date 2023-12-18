@@ -16,7 +16,7 @@
             
         </div>
     <div class="w-3/4">
-        @if ($pendingProjects->count()===0 && $publishedProjects->count()===0 && $approvedProjects->count()===0 && $closedProjects->count()===0 && $deniedProjects->count()===0 )
+        @if ($projects->count()===0)
         <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">Projects</h1>
             <hr>
             <p class="mb-4">There are not yet any project proposals. <br></p>

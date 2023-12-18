@@ -12,7 +12,7 @@
 <div class="grid grid-cols-3 gap-4">
     @foreach($spaces as $space)
         <div class="cursor-pointer bg-white border-2 hover:border-yellow-500 text-black font-bold py-4 px-4 mt-2 rounded">
-            <a href="">{{ $space->name }}</a>
+            <a href="{{ route('dashboard', $space->id)}}">{{ $space->name }}</a>
         </div>
     @endforeach
 </div>
