@@ -1,8 +1,6 @@
 @extends('components.head')
 @section('title', 'Home')
 @section('content')
-{{-- <script src="{{mix('/js/markdown.js')}}"></script> --}}
-{{-- <script src="/js/markdown.js"></script> --}}
 
 <div class="flex flex-col gap-2">
     <div class="w-1/2">
@@ -13,7 +11,7 @@
         </p>
     </div>
     <div>
-        <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-4">
+        <form id="form_apply_markdown" action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-4">
             @csrf
             <fieldset>
                 <label for="name" class="block font-semibold">Name your project</label>
@@ -23,25 +21,14 @@
                 <label for="brief" class="block font-semibold">Brief description:</label>
                 <textarea id="brief" name="brief" rows="7" class="w-1/2 resize-none border border-gray-300 rounded-md px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"> </textarea>
             </fieldset>
-            <fieldset>
-                <label for="description" class="block font-semibold">Project Description:</label>
-                <p class="mt-0 text-gray-500">Write down a detailed description of your project. Write this using markdown, use the editor to insert headings, links, text format and more.</p>
-                <textarea id="description" name="description" rows="10" cols="100" class="w-3/4 border border-gray-300 rounded-md px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"></textarea>
-            </fieldset>
-            {{-- This part is for Markdown --}}
-            <!--
             <div class="flex flex-col space-y-2">
-                <label for="editor" class="block font-semibold">Description:</label>
-                <div id="editor" class="block w-full rounded-md border border-gray-300 shadow-sm"></div>
+                <input type="hidden" id="content" name="description" class="hidden">
+                <label for="editor" class="text-gray-600 font-semibold">Write your motivation down below</label>
+                <div id="editor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
             </div>
-            <input type="hidden" name="content" id="content">
-            -->
 
             <input type="submit" value="Create Project" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 cursor-pointer w-fit">
         </form>
     </div>
-
 </div>
-<script src="{{ asset('resources/js/markdown.js')}}"></script>
-{{-- <script src="/js/markdown.js"></script> --}}
 @endsection

@@ -50,7 +50,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|max:100',
             'description' => 'required',
