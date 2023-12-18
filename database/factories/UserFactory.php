@@ -18,7 +18,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'role' => $this->faker->randomElement(['Teacher', 'Student']),
+            'role' => $this->faker->randomElement(['teacher', 'student']),
             'available' => $this->faker->boolean,
         ];
     }

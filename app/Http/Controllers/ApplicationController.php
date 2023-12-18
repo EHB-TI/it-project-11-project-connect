@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
 
+use App\Models\Deadline;
+
 use Auth;
 
 class ApplicationController extends Controller
@@ -18,6 +20,13 @@ class ApplicationController extends Controller
 
     public function store(Request $request, string $project_id)
     {
+
+        $deadline = Deadline::findDeadline('Apply For Projects');
+
+        if ($deadline === null || strtotime($deadline->end_date) < strtotime(now())) {
+            return back()->with('status', 'You cannot apply for a project at this time.');
+        } 
+
         $project = Project::find($project_id);
 
         if (!$project->canApply(Auth::user())) {
@@ -42,7 +51,7 @@ class ApplicationController extends Controller
 
         // Redirect or return response
         return redirect(route('projects.show', $project_id))->with('status', 'Application submitted successfully.');
-    }
+        }
 
     /**
      * Display a listing of the resource.
