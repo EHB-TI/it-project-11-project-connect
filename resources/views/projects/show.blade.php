@@ -34,7 +34,7 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
             @if($project->isMember(Auth::user()))
                 <x-application-box title="You are a member of this project!" message="Good luck, make something awesome!" />
             @elseif(Auth::user()->isMemberofAnyProject() && !$project->isMember(Auth::user()))
-                <x-application-box title="You are already a member of another project!" message="Here it is" route="projects.show" projectId="{{ Auth::user()->projects()->first()->id }}" buttonText="To your project" />
+                <x-application-box title="You are already a member of another project!" message="Here it is:" route="projects.show" projectId="{{ Auth::user()->projects()->first()->id }}" buttonText="To your project" />
             @endif
             <ul class="rounded-xl border-2 overflow-hidden">
                 @foreach($projectDetailItems as $projectDetailItem => $route)
