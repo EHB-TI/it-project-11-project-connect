@@ -2,7 +2,7 @@
 @section('title', 'Home')
 @section('content')
     <!-- Hier voeg je de content van de pagina toe -->
-    <form action="{{ route('space.create') }}" method="POST">
+    <form action="{{ route('spaces.store') }}" method="POST">
         @csrf
         <h1 style="font-size: 30px; font-weight: bold;">Create space</h1>
         <br>

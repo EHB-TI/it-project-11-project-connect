@@ -11,7 +11,7 @@ class SpaceController extends Controller
 
     public function index(){
         $spaces = Space::all();
-        return view('shared.space', compact('spaces'));
+        return view('spaces.index', compact('spaces'));
     }
 
     public function store(Request $request){
@@ -40,7 +40,7 @@ class SpaceController extends Controller
     }
 
     public function create(){
-        return view('spaces.create');
+        return view('spaces.teacher.create');
     }
 
 }
