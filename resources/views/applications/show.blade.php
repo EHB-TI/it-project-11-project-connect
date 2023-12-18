@@ -2,19 +2,21 @@
 @section('title', 'Home')
 
 @section('content')
-    <div>{{dd($application->user()->get())}}</div>
+    <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Applications</h2>
+    <h1 class="text-3xl font-bold mb-1">{{$application->project->name}}</h1>
+    <div>Written by: {{$application->user->first()->name}}</div>
     <!-- PDF Viewer OF motivation -->
     @if ($application ==! null)
         @if ($application->motivation)
             <div class="mt-8">
                 <h3 class="text-lg font-bold">Motivation</h3>
- 
+
                 <div class="bg-gray-200 p-4 rounded-lg mb-4">
                     <div class="container mx-auto">
                         <p class="text-gray-600">{{ $application->motivation }}</p>
                     </div>
                 </div>
- 
+
             </div>
         @endif
         @if ($application->file_path)
@@ -31,5 +33,5 @@
     @endif
 @endsection
 
-    
+
 
