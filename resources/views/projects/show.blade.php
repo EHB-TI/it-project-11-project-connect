@@ -17,6 +17,7 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
     <div class="flex gap-8">
         <div class="w-3/4">
             <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{ $project->name }}</h1>
+            <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Overview</h2>
             <div id="details-content">
                 @include('projects.detail-sections.overview', ['project' => $project])
             </div>
@@ -60,6 +61,7 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
         });
 
         let projectDetailsNavButtons = document.querySelectorAll('.projectDetails__navButton');
+        let subtitle = document.querySelector('.subtitle');
 
         projectDetailsNavButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -73,6 +75,9 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
 
                 // Add active classes to the clicked button
                 button.parentNode.classList.add(activeBgColor, activeTextColor);
+
+                // Update the subtitle
+                subtitle.textContent = button.textContent;
 
                 // Fetch the new content
                 fetch('/projects/details/' + section + '/' + project_id)
