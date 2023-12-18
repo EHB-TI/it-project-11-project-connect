@@ -8,12 +8,13 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    @vite('resources/js/markdown.js')
 </head>
 <body>
     {{--DEVELOPMENT TOOL--}}
     {{--only show in development environment--}}
     @if (app()->environment('local'))
-        <div class="test-auth fixed bottom-4 right-4 p-4 border-2 rounded-lg bg-indigo-950 text-white">
+        <div class="test-auth fixed bottom-4 right-4 p-4 border-2 rounded-lg bg-indigo-950 text-white z-50">
             <h1 class="text-2xl">Test authentication</h1>
             <p>login a user with the corresponding role</p>
             <div class="grid grid-cols-2 gap-2 mt-2">
@@ -36,6 +37,5 @@
             @yield('content')
         </div>
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

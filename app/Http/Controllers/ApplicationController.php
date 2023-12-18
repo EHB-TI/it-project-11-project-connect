@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
 
@@ -9,41 +10,46 @@ use Auth;
 
 class ApplicationController extends Controller
 {
- function show(Request $request)
- {
-   // new show page
- }
+    function show(Request $request)
+    {
+        // new show page
+    }
 
- 
- public function store(Request $request)
- {
-      
-      if(!$request->hasfile('fileurl')&& !$request->has('motivationcontent')){
-         return redirect()->back()->with('error','Please upload a file or write a motivation');  
-      }
 
-     // get path of file, store it
-     if ($request->hasFile('fileurl')) {
-         $filePath = $request->file('fileurl')->store('public');
-     }
+    public function store(Request $request, string $project_id)
+    {
+        $project = Project::find($project_id);
 
-     $application = new Application();
-     $application->fileurl = $filePath ?? null;
-     $application->motivationContent = $request->get('motivationcontent') ?? null;
-     $application->applicant_id = Auth::user()->id;
-     $application->save();
+        if (!$project->canApply(Auth::user())) {
+            return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
+        }
 
-     // Redirect or return response
-     return redirect()->back()->with('success', 'Application submitted successfully.');
-     
- } 
- 
+        if (!$request->hasfile('file') || !$request->has('motivation')) {
+            return redirect()->back()->with('status', 'Please upload a file or write a motivation');
+        }
+
+        // get path of file, store it
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('public');
+        }
+
+        $application = new Application();
+        $application->fileurl = $filePath ?? null;
+        $application->motivation = $request->get('motivation') ?? null;
+        $application->user_id = Auth::user()->id;
+        $application->project_id = $project_id;
+        $application->save();
+
+        // Redirect or return response
+        return redirect(route('projects.show', $project_id))->with('status', 'Application submitted successfully.');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $applications = Application::with('applicant')->get();
+        $applications = Application::with('user')->get();
 
         // Return the applications with user names to a view or as needed
         return view('applications.teacher.index', ['applications' => $applications]);
@@ -52,12 +58,12 @@ class ApplicationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($project_id)
     {
-        return view('applications.student.create');
+        $project = Project::find($project_id);
+        return view('applications.student.create', ['project' => $project]);
     }
 
-    
 
     /**
      * Show the form for editing the specified resource.

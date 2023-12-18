@@ -17,16 +17,26 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
     <div class="flex gap-8">
         <div class="w-3/4">
             <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{ $project->name }}</h1>
+            <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Overview</h2>
             <div id="details-content">
-
+                @include('projects.detail-sections.overview', ['project' => $project])
             </div>
         </div>
         <div class="w-1/4">
-            <div class="rounded-xl border-2 overflow-hidden mb-8 p-4">
-                <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Apply for this project</h1>
-                <p class="mb-4">Want to be part of this project?</p>
-                <a href="{{ route('applications.create') }}" class="project-detail__applyButton rounded-full px-4 py-2 border-2">Apply now</a>
-            </div>
+            @if($project->canApply(Auth::user()))
+                <x-application-box title="Apply for this project" message="Want to be part of this project?" route="applications.create" projectId="{{ $project->id }}" buttonText="Apply now" />
+            @endif
+            @if($project->hasApplied(Auth::user()))
+                <x-application-box title="You have applied for this project!" message="status of application:" status="{{ $project->applicationStatus(Auth::user()) }}" />
+            @endif
+            @if($project->isOwner(Auth::user()))
+                <x-application-box title="You are the owner of this project!" message="status of project:" status="{{ $project->status }}" />
+            @endif
+            @if($project->isMember(Auth::user()))
+                <x-application-box title="You are a member of this project!" message="Good luck, make something awesome!" />
+            @elseif(Auth::user()->isMemberofAnyProject() && !$project->isMember(Auth::user()))
+                <x-application-box title="You are already a member of another project!" message="Here it is:" route="projects.show" projectId="{{ Auth::user()->projects()->first()->id }}" buttonText="To your project" />
+            @endif
             <ul class="rounded-xl border-2 overflow-hidden">
                 @foreach($projectDetailItems as $projectDetailItem => $route)
                     <li class="border-b-2">
@@ -50,18 +60,30 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
                 });
         });
 
-        document.querySelectorAll('.projectDetails__navButton').forEach(button => {
+        let projectDetailsNavButtons = document.querySelectorAll('.projectDetails__navButton');
+        let subtitle = document.querySelector('.subtitle');
+
+        projectDetailsNavButtons.forEach(button => {
             button.addEventListener('click', function() {
                 let section = this.getAttribute('id');
-                let projectId = {{ $project->id }};
-                fetch('/projects/details/' + section + '/' + projectId)
+                let project_id = {{ $project->id }};
+
+                // Remove active classes from all buttons
+                projectDetailsNavButtons.forEach(button => {
+                    button.parentNode.classList.remove(activeBgColor, activeTextColor);
+                });
+
+                // Add active classes to the clicked button
+                button.parentNode.classList.add(activeBgColor, activeTextColor);
+
+                // Update the subtitle
+                subtitle.textContent = button.textContent;
+
+                // Fetch the new content
+                fetch('/projects/details/' + section + '/' + project_id)
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById('details-content').innerHTML = data;
-                        document.querySelectorAll('li').forEach(li => {
-                            li.classList.remove(activeBgColor, activeTextColor);
-                        });
-                        this.parentNode.classList.add(activeBgColor, activeTextColor);
                     });
             });
         });
