@@ -49,7 +49,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::with('applicant')->get();
+        $applications = Application::with('user')->get();
 
         // Return the applications with user names to a view or as needed
         return view('applications.teacher.index', ['applications' => $applications]);
