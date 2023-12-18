@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Application;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 use App\Models\User;
@@ -20,13 +21,16 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         $user_ids = User::pluck('id')->toArray();
-        $applicant_id = $this->faker->randomElement($user_ids);
+        $project_ids = Project::pluck('id')->toArray();
+        $user_id = $this->faker->randomElement($user_ids);
+        $project_id = $this->faker->randomElement($project_ids);
 
         return [
-            'motivationContent' => $this->faker->text(),
+            'motivation' => $this->faker->text(),
             'status' => $this->faker->randomElement(['approved', 'denied', 'pending']),
             'reason' => $this->faker->text(),
-            'applicant_id' => $applicant_id,
+            'user_id' => $user_id,
+            'project_id' => $project_id,
         ];
     }
 }

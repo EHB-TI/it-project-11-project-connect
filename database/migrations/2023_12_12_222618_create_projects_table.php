@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 100)->unique();
-            $table->longText('description')->nullable();
+            $table->text('brief');
+            $table->longText('description');
             $table->enum('status', ['pending', 'approved', 'closed', 'denied', 'published'])->default('pending');
             $table->string('filepath', 255)->nullable();
-            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('space_id')->nullable();
 
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('space_id')->references('id')->on('spaces');
         });
     }

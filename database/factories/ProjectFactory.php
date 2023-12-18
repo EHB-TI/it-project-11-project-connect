@@ -41,16 +41,17 @@ That's a **basic test**! _Good luck_ with your parser!
         ";
 
         $user_ids = User::pluck('id')->toArray();
-        $owner_id = $this->faker->randomElement($user_ids);
+        $user_id = $this->faker->randomElement($user_ids);
 
         $spaces = Space::pluck('id')->toArray();
         $space_id = $this->faker->randomElement($spaces);
 
         return [
          'name' => $this->faker->unique()->word,
+         'brief' => $this->faker->sentence,
          'description' => $markdownString,
          'status' => $this->faker->randomElement(['Pending', 'Approved', 'Denied', 'Closed', 'Published']),
-         'owner_id' => $owner_id,
+         'user_id' => $user_id,
          'space_id' => $space_id,
         ];
     }

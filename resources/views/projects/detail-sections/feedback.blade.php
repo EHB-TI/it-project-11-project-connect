@@ -1,6 +1,3 @@
-@php
-//    dd($projectFeedback);
-@endphp
 @foreach($projectFeedback as $feedback)
     <div class="feedback-card rounded-xl border-2 my-8">
         <div class="feedback-card__header flex justify-between border-b-2 p-4">
@@ -18,6 +15,13 @@
         </p>
     </div>
 @endforeach
+
+@if($projectFeedback->isEmpty())
+    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
+        <p class="font-bold">No Feedback</p>
+        <p>There is no feedback yet. @if(Auth::user()->role == 'teacher') Be the first to give feedback!@endif</p>
+    </div>
+@endif
 
 @if(Auth::user()->role == 'teacher')
     <form action="{{ route('feedback.store', $project->id ) }}" method="POST">

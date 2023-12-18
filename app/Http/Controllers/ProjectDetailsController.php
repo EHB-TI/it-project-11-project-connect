@@ -30,7 +30,7 @@ class ProjectDetailsController extends Controller
     public function members($id)
     {
         $project = Project::find($id);
-        $projectMembers = $project->members;
+        $projectMembers = $project->users;
 
         return view('projects.detail-sections.members', ['project' => $project, 'projectMembers' => $projectMembers]);
     }

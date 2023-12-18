@@ -11,20 +11,24 @@ use App\Models\User;
  */
 class ProjectUserFactory extends Factory
 {
-    /**
+
+   /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
-        $user_ids = User::pluck('id')->toArray();
-        $projectIds = Project::pluck('id')->toArray();
 
-        return [
-            'user_id' => $this->faker->randomElement($user_ids),
-            'project_id' => $this->faker->randomElement($projectIds),
+     public function definition(): array
+     {
 
-        ];
-    }
+         $user_ids = User::pluck('id')->toArray();
+         $projectIds = Project::pluck('id')->toArray();
+
+         return [
+             'user_id' => $this->faker->randomElement($user_ids),
+             'project_id' => $this->faker->randomElement($projectIds),
+
+         ];
+     }
+
 }

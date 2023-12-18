@@ -14,16 +14,19 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('motivationContent')-> nullable();
-            $table->text('fileUrl')->nullable();
+            $table->text('motivation')-> nullable();
+            $table->text('file_path')->nullable();
             $table->string('status')->default('pending');
             $table->string('reason')->nullable();
-           
-            $table->unsignedBigInteger('applicant_id')->nullable(false);
-            $table->foreign('applicant_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('user_id')->nullable(false);
+            $table->unsignedBigInteger('project_id')->nullable(false);
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
-    
+
 
     /**
      * Reverse the migrations.
