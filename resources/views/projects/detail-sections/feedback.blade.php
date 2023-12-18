@@ -1,6 +1,3 @@
-@php
-//    dd($projectFeedback);
-@endphp
 @foreach($projectFeedback as $feedback)
     <div class="feedback-card rounded-xl border-2 my-8">
         <div class="feedback-card__header flex justify-between border-b-2 p-4">
