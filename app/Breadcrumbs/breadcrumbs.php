@@ -12,7 +12,7 @@ Breadcrumbs::for('dashboard', function (Generator $trail) {
 
 // Projects
 Breadcrumbs::for('projects', function (Generator $trail) {
-    $trail->parent('dashboard'); // Assuming 'Projects' is accessible from the dashboard
+    $trail->parent('dashboard'); // projects page accessible from the dashboard
     $trail->push('Projects', route('projects.index'));
 });
 

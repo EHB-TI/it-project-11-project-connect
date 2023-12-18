@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'view' => 'breadcrumbs::bootstrap5',
+    'view' => 'breadcrumbs::tailwind',
 
     /*
     |--------------------------------------------------------------------------
@@ -71,5 +71,16 @@ return [
 
     // Generator
     'generator-class' => Diglactic\Breadcrumbs\Generator::class,
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Separator
+    |--------------------------------------------------------------------------
+    |
+    | The separator to use between segments of the breadcrumb path.
+    |
+    */
+    'separator' => ' > ',
 
 ];
