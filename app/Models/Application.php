@@ -27,7 +27,7 @@ class Application extends Model
     public $timestamps = true;
 
 
-    public function applicant(): BelongsToAlias
+    public function user(): BelongsToAlias
     {
         return $this->belongsTo(User::class, 'user_id');
     }

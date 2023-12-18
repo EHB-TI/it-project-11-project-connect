@@ -18,7 +18,7 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
         <div class="w-3/4">
             <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{ $project->name }}</h1>
             <div id="details-content">
-
+                @include('projects.detail-sections.overview', ['project' => $project])
             </div>
         </div>
         <div class="w-1/4">
@@ -32,9 +32,9 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
                 <x-application-box title="You are the owner of this project!" message="status of project:" status="{{ $project->status }}" />
             @endif
             @if($project->isMember(Auth::user()))
-                <x-application-box title="You are a member of this project!" message="status of project:" status="{{ $project->status }}" />
+                <x-application-box title="You are a member of this project!" message="Good luck, make something awesome!" />
             @elseif(Auth::user()->isMemberofAnyProject() && !$project->isMember(Auth::user()))
-                <x-application-box title="You are already a member of another project!" message="Here it is" route="projects.show" projectId="{{ Auth::user()->$project->id }}" status="{{ Auth::user()->$project->id }}" />
+                <x-application-box title="You are already a member of another project!" message="Here it is" route="projects.show" projectId="{{ Auth::user()->projects()->first()->id }}" buttonText="To your project" />
             @endif
             <ul class="rounded-xl border-2 overflow-hidden">
                 @foreach($projectDetailItems as $projectDetailItem => $route)
@@ -59,18 +59,26 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
                 });
         });
 
-        document.querySelectorAll('.projectDetails__navButton').forEach(button => {
+        let projectDetailsNavButtons = document.querySelectorAll('.projectDetails__navButton');
+
+        projectDetailsNavButtons.forEach(button => {
             button.addEventListener('click', function() {
                 let section = this.getAttribute('id');
-                let projectId = {{ $project->id }};
-                fetch('/projects/details/' + section + '/' + projectId)
+                let project_id = {{ $project->id }};
+
+                // Remove active classes from all buttons
+                projectDetailsNavButtons.forEach(button => {
+                    button.parentNode.classList.remove(activeBgColor, activeTextColor);
+                });
+
+                // Add active classes to the clicked button
+                button.parentNode.classList.add(activeBgColor, activeTextColor);
+
+                // Fetch the new content
+                fetch('/projects/details/' + section + '/' + project_id)
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById('details-content').innerHTML = data;
-                        document.querySelectorAll('li').forEach(li => {
-                            li.classList.remove(activeBgColor, activeTextColor);
-                        });
-                        this.parentNode.classList.add(activeBgColor, activeTextColor);
                     });
             });
         });
