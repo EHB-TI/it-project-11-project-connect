@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\StoreRoute;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Space;
 use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 use Auth;
+use Closure;
 
 class ProjectController extends Controller
 {
@@ -28,19 +31,23 @@ class ProjectController extends Controller
         return view('projects.index', ['projects' => $projects]);
     }
 
+    
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
         $project = Project::find($id);
-
+ 
         if ($project === null) {
             // Redirect back or show an error message
             return redirect('/')->with('error', 'Project not found');
         }
 
-        return view('projects.show', ['project' => $project]);
+        $previousRoute = $this->storeRoute();
+    
+        return view('projects.show', [ 'project' => $project, 'previousRoute' => $previousRoute]);
     }
 
     /**
@@ -141,6 +148,24 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+
+    public function storeRoute()
+    {
+        $request = request();
+    $routes = Route::getRoutes();
+
+    $referrer = $request->header('referer');
+    $referrer = str_replace("http://localhost:8000/", '', $referrer);
+    foreach ($routes as $route) {
+        if ($referrer === $route->uri()) {
+            // If it matches, retrieve the route name and return it
+            $routeName = $route->getName();
+            return $routeName;
+        }
+    }
+    
     }
 
 }

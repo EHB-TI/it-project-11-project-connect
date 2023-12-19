@@ -28,6 +28,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use \App\Http\Middleware\StoreRoute;
 
 class Kernel extends HttpKernel
 {
@@ -46,6 +47,9 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        StoreRoute::class,
+        StartSession::class,
+       
     ];
 
     /**
@@ -57,10 +61,13 @@ class Kernel extends HttpKernel
         'web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
+            StoreRoute::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+
+
         ],
 
         'api' => [
@@ -90,6 +97,7 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'role' => HasRole::class,
+        'store.route' => StoreRoute::class,
         'set.current.space' => SetCurrentSpaceMiddleware::class,
     ];
 }
