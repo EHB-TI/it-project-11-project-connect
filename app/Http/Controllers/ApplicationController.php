@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 use Auth;
 
@@ -28,6 +30,22 @@ class ApplicationController extends Controller
         if (!$project->canApply(Auth::user())) {
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
+
+        // Prepare the data for validation
+      $input = ['attachment' => $request->file('file')];
+
+      $messages = [
+        'attachment.mimes' => 'The file must be a PDF, DOCX, or TXT.',
+    ];
+
+     // Perform the validation
+        Validator::validate($input, [
+            'attachment' => [
+                'sometimes', 
+                'mimes:pdf,docx,txt'
+            ],
+        ],$messages);
+        
 
         if (!$request->hasfile('file') || !$request->has('motivation')) {
             return redirect()->back()->with('status', 'Please upload a file or write a motivation');
