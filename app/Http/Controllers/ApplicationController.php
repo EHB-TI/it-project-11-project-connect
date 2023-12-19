@@ -31,25 +31,13 @@ class ApplicationController extends Controller
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
 
-        // Prepare the data for validation
-      $input = ['attachment' => $request->file('file')];
-
-      $messages = [
-        'attachment.mimes' => 'The file must be a PDF, DOCX, or TXT.',
-    ];
-
-     // Perform the validation
-        Validator::validate($input, [
-            'attachment' => [
-                'sometimes', 
-                'mimes:pdf,docx,txt'
-            ],
-        ],$messages);
+        $request->validate([
+            'motivation' => 'required_without:file',
+            'file' => 'required_without:motivation|mimes:pdf,doc,docx',
+        ]);
         
 
-        if (!$request->hasfile('file') || !$request->has('motivation')) {
-            return redirect()->back()->with('status', 'Please upload a file or write a motivation');
-        }
+        
 
         // get path of file, store it
         if ($request->hasFile('file')) {
