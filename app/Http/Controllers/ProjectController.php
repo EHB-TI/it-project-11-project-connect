@@ -22,8 +22,10 @@ class ProjectController extends Controller
     public function index()
     {
         $space_id = session('current_space_id');
+        $space = Space::find($space_id);
         //authenticatie teacher for all projects
         if (Auth::user()->role == 'teacher'){
+            session('space_id');
             $projects = Space::find($space_id)->projects()->get();
         }else{
             $projects = Space::find($space_id)->projects()->where('status', 'published')->get();
