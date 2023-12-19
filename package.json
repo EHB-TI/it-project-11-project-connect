@@ -18,7 +18,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@esbuild/darwin-arm64": "^0.19.9",
         "@toast-ui/editor": "^3.2.2",
         "codemirror": "^6.0.1",
         "laravel-mix": "^6.0.49"
