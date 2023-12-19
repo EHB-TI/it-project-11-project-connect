@@ -33,10 +33,8 @@ class ApplicationController extends Controller
 
         $request->validate([
             'motivation' => 'required_without:file',
-            'file' => 'required_without:motivation|mimes:pdf,doc,docx',
+            'file' => 'required_without:motivation|mimes:pdf,doc,docx,txts',
         ]);
-        
-
         
 
         // get path of file, store it
