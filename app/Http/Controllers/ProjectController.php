@@ -18,10 +18,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
-
-        $space_id = session('current_space_id');
-        $projects = Space::find($space_id)->projects;
-
+        //authenticatie teacher for all projects
+        if (Auth::user()->role == 'teacher'){
+            $projects = Space::find($space_id)->projects();
+        }else{
+            $projects = Space::find($space_id)->projects()->where('status', 'published');
+        }
         return view('projects.index', ['projects' => $projects]);
     }
 
@@ -93,6 +95,24 @@ class ProjectController extends Controller
         return redirect()->route('projects.show', $project->id)->with('status', 'Project Created!');
     }
 
+
+    public function publish(Request $request){
+        $project = Project::find($request->project_id);
+        if($project){
+            $project->status = 'published';
+            $project->save();
+        }
+       
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
+    }
+
+    public function unpublish(Request $request , Project $project){
+        $project->status  = 'denied';
+        $project->save();
+
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Unpublished!');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -117,5 +137,9 @@ class ProjectController extends Controller
         //
     }
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 }

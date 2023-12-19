@@ -16,7 +16,8 @@ class ApplicationController extends Controller
 {
     function show(Request $request)
     {
-        // new show page
+        $application = Application::find($request->id);
+        return view('applications.teacher.show', ['application' => $application]);
     }
 
 
