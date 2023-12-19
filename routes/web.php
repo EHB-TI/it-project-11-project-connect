@@ -105,7 +105,12 @@ Route::middleware(['auth'])->group(function () {
 
     //DASHBOARD ROUTES
     //display the dashboard for students
-    Route::get('/dashboard/{space_id}', [DashboardController::class, 'show'])->name('dashboard');
+
+    Route::middleware(['set.current.space'])->group(function () {
+        Route::get('/dashboard/{space_id}', [DashboardController::class, 'show'])->name('dashboard');
+    });
+
+
 
 
     //PROJECT ROUTES
