@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Deadline;
+use App\Models\Space;
 
 class DeadlineController extends Controller
 {
     public function index()
     {
-        $deadlines = Deadline::latest()->get();
+        $space_id = session('current_space_id');
+       // $deadlines = Deadline::latest()->get();
+        $deadlines = Space::find($space_id)->deadlines()->latest()->get();
 
         return view('deadlines.teacher.index', compact('deadlines'));
     }
@@ -26,13 +29,11 @@ class DeadlineController extends Controller
             'when_time' => 'required|date_format:H:i',
         ]);
 
-        // Need space ID from user
-
         Deadline::create([
             'title' => $validatedData['title'],
             'what' => $validatedData['what'],
             'end_date' => $validatedData['when_date'] . ' ' . $validatedData['when_time'],
-            'space_id' => 1,
+            'space_id' => session('current_space_id'),
         ]);
 
         return redirect()->route('deadlines.index')->with('status', 'Deadline Created!');

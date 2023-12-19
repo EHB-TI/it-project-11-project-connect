@@ -1,15 +1,18 @@
 @extends('components.head')
 @section('title', 'Home')
 @section('content')
-    <!-- Hier voeg je de content van de pagina toe -->
-    <div onclick="window.location.href='{{ route('spaces.create') }}'" class="btn btn-primary btn-block" style="width: 100%; max-width: 1319px; height: 50px; flex-shrink: 0; border-radius: 22px; border: 1px solid #3D3D3D;">
 
-        <span style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <span style="font-size: 2em;">
-                +
-            </span>
-        </span>
-    </div>
+@if(Auth::check() && Auth::user()->hasRole('teacher'))
+    <a href="{{ route('spaces.create') }}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Create New Space
+    </a>
+@endif
 
-    
+
+<div class="grid grid-cols-3 gap-4">
+    @foreach($spaces as $space)
+        <a class="cursor-pointer text-center bg-white border-2 hover:border-yellow-500 text-black font-bold py-4 px-4 mt-2 rounded" href="{{ route('dashboard', ['space_id' => $space->id]) }}">{{ $space->name }}</a>
+    @endforeach
+</div>
+
 @endsection

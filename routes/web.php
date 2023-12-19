@@ -23,9 +23,9 @@ use App\Http\Controllers\SpaceController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+
+
+Route::get('/', [SpaceController::class, 'index'])->name('welcome');
 
 
 //AUTH ROUTES
@@ -105,7 +105,12 @@ Route::middleware(['auth'])->group(function () {
 
     //DASHBOARD ROUTES
     //display the dashboard for students
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+
+    Route::middleware(['set.current.space'])->group(function () {
+        Route::get('/dashboard/{space_id}', [DashboardController::class, 'show'])->name('dashboard');
+    });
+
+
 
 
     //PROJECT ROUTES

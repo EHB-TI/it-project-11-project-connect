@@ -9,31 +9,29 @@ use App\Models\Space;
 class SpaceController extends Controller
 {
 
-    public function index(){
+    public function index() {
         $spaces = Space::all();
-        return view('spaces.index', compact('spaces'));
+        return view('spaces.index', ['spaces' => $spaces]);
     }
+    
 
-    public function store(Request $request){
-    $validatedData = $request->validate([
-        'name' => 'required|max:255',
-        'space_id' => 'required|unique:spaces',
-        'course' => 'required',
-        'default_teamsize' => 'required|integer',
-    ]);
-    $space = new Space;
-    $space->name = $validatedData['name'];
-    $space->space_id = $validatedData['space_id'];
-    $space->course = $validatedData['course'];
-    $space->default_teamsize = $validatedData['default_teamsize'];
-    $space->save();
-
-    if ($space->save()) {
-        return redirect('/space')->with('success', 'Space created successfully.');
-    } else {
-        throw new Exception('Failed to create space.');
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'canvasCourseId' => 'required',
+            'defaultTeamSize' => 'required|integer',
+        ]);
+    
+        Space::create([
+            'name' => $validatedData['name'],
+            'canvasCourseId' => $validatedData['canvasCourseId'],
+            'defaultTeamSize' => $validatedData['defaultTeamSize'],
+        ]);
+    
+        return redirect()->route('spaces.index')->with('success', 'Space created successfully.');
     }
-    }
+    
 
     public function show($id){
     //

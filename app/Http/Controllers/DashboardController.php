@@ -7,16 +7,19 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+use App\Models\Project;
+
 class DashboardController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        $user_id = auth()->id();
-        $projects =  User::find(10)->projects()->where('status', 'approved')->get();
-        
+        $space_id = session('current_space_id');
 
-        $applications = User::find(3)->applications()->get();
-        
-        return view('/dashboard', ['projects' => $projects, 'applications' => $applications]);
+        $user_id = auth()->id();
+    
+        $projects = Project::all()->where('space_id', $space_id);
+    
+        return view('/dashboard', ['projects' => $projects]);
     }
+    
 }

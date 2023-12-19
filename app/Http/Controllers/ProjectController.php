@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Space;
 use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +18,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all()->where('status', 'published' || 'pending' || 'approved' );
         //authenticatie teacher for all projects
         if (Auth::user()->role == 'teacher'){
-            $projects = Project::all();
+            $projects = Space::find($space_id)->projects();
         }else{
-            $projects = Project::where('status', 'published')->get();
+            $projects = Space::find($space_id)->projects()->where('status', 'published');
         }
         return view('projects.index', ['projects' => $projects]);
     }
@@ -75,6 +75,7 @@ class ProjectController extends Controller
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
         $project->user_id = $user->id;
+        $project->space_id = session('current_space_id');
 
         if($user->hasRole('teacher')){
             $project->status = 'approved';
