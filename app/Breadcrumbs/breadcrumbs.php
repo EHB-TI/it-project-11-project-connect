@@ -16,8 +16,22 @@ Breadcrumbs::for('projects', function (Generator $trail) {
     $trail->push('Projects', route('projects.index'));
 });
 
+//Create Project
+Breadcrumbs::for('projects_create', function (Generator $trail) {
+    $trail->parent('dashboard'); 
+    $trail->push('Create Project', route('projects.create'));
+});
+
 // Project Details
-Breadcrumbs::for('project_details', function (Generator $trail, $id) {
+Breadcrumbs::for('project_details_routeA', function (Generator $trail, $id) {
+    $project = Project::findOrFail($id); // Fetch project details using your model
+    // $trail->parent('dashboard');
+    $trail->parent('applications');
+    // $trail->parent('projects');
+    $trail->push($project->name, route('projects.show', $id));
+});
+
+Breadcrumbs::for('project_details_routeB', function (Generator $trail, $id) {
     $project = Project::findOrFail($id); // Fetch project details using your model
     $trail->parent('projects');
     $trail->push($project->name, route('projects.show', $id));
@@ -33,6 +47,11 @@ Breadcrumbs::for('applications', function (Generator $trail) {
 Breadcrumbs::for('deadlines', function (Generator $trail) {
     $trail->parent('dashboard'); // Assuming 'Deadlines' is accessible from the dashboard
     $trail->push('Deadlines', route('deadlines.index'));
+});
+
+Breadcrumbs::for('deadlines_create', function (Generator $trail) {
+    $trail->parent('deadlines'); // Assuming 'Deadlines' is accessible from the dashboard
+    $trail->push('Create Deadline', route('deadlines.create'));
 });
 
 // Spaces

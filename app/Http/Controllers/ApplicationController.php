@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
-
 use Auth;
+
+
+
 
 class ApplicationController extends Controller
 {
@@ -49,6 +51,8 @@ class ApplicationController extends Controller
      */
     public function index()
     {
+       
+
         $applications = Application::with('user')->get();
 
         // Return the applications with user names to a view or as needed
