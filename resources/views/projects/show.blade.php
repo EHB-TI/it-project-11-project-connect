@@ -13,7 +13,24 @@ $projectDetailItems = ProjectDetailsItemsAlias::PRODUCT_OWNER;
 } elseif (Auth::user()->role == 'student') {
 $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
 }
+
+
+   
 @endphp
+
+
+@if($previousRoute === "applications.index")
+    <div class="breadcrumbs">
+        {!! Breadcrumbs::render('project_details_routeA', $project->id) !!}
+    </div>
+
+@else
+    <div class="breadcrumbs">
+        {!! Breadcrumbs::render('project_details_routeB', $project->id) !!}
+    </div>
+@endif
+
+
     <div class="flex gap-8">
         <div class="w-3/4">
             <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{ $project->name }}</h1>

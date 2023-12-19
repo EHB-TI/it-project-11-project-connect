@@ -12,6 +12,9 @@ use App\Models\Space;
 
 use Auth;
 
+
+
+
 class ApplicationController extends Controller
 {
     function show(Request $request)
@@ -74,6 +77,9 @@ class ApplicationController extends Controller
      */
     public function index()
     {
+       
+
+        $applications = Application::with('user')->get();
         $currentSpaceId = session('current_space_id');
 
         $applications = Application::with('user', 'project.space')

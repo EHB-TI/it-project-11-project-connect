@@ -2,6 +2,9 @@
 @section('title', 'Incoming Applications')
 
 @section('content')
+<div class="breadcrumbs">
+    {!! Breadcrumbs::render('applications') !!}
+</div>
     @if ($applications->isEmpty())
         <h1>There are no applications yet.</h1>
     @else
