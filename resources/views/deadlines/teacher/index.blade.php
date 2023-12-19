@@ -12,11 +12,6 @@
                     <h1 class="text-lg font-semibold mb-2">{{ $deadline->title }}</h1>
 
                     <div class="mb-2">
-                        <strong class="text-gray-700">Who?</strong>
-                        <p>{{ $deadline->who }}</p>
-                    </div>
-
-                    <div class="mb-2">
                         <strong class="text-gray-700">What?</strong>
                         <p>{{ $deadline->what }}</p>
                     </div>

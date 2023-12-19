@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyAlias;
  *
  * @property-read Collection|Project[] $projects
  * @property-read Collection|User[] $users
+ * @property-read Collection|Deadline[] $deadlines
  */
 class Space extends Model
 {
@@ -38,6 +39,11 @@ class Space extends Model
     public function users(): BelongsToManyAlias
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function deadlines(): HasManyAlias
+    {
+        return $this->hasMany(Deadline::class);
     }
 
 

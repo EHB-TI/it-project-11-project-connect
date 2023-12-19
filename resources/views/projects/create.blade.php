@@ -1,5 +1,5 @@
 @extends('components.head')
-@section('title', 'Home')
+@section('title', 'Create Project')
 @section('content')
 <div class="breadcrumbs">
     {!! Breadcrumbs::render('projects_create') !!}

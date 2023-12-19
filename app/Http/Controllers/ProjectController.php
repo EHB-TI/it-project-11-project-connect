@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\StoreRoute;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Space;
+use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Routing\Route;
@@ -19,8 +21,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all()->where('status', 'published' || 'pending' || 'approved' );
-
+        $space_id = session('current_space_id');
+        //authenticatie teacher for all projects
+        if (Auth::user()->role == 'teacher'){
+            $projects = Space::find($space_id)->projects();
+        }else{
+            $projects = Space::find($space_id)->projects()->where('status', 'published');
+        }
         return view('projects.index', ['projects' => $projects]);
     }
 
@@ -57,12 +64,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        $deadline = Deadline::findDeadline('Create Project');
+
+        if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
+            return back()->with('status', 'You cannot create a project at this time.');
+        }         
+
         $validatedData = $request->validate([
             'name' => 'required|max:100',
             'description' => 'required',
         ]);
-
-        $user = Auth::user();
 
         // Create a new project instance
         $project = new Project();
@@ -70,6 +83,11 @@ class ProjectController extends Controller
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
         $project->user_id = $user->id;
+        $project->space_id = session('current_space_id');
+
+        if($user->hasRole('teacher')){
+            $project->status = 'approved';
+        }
 
         // Save the project to the database
         $project->save();
@@ -83,6 +101,24 @@ class ProjectController extends Controller
 
         // Optionally, you can redirect to a specific route after storing the project
         return redirect()->route('projects.show', $project->id)->with('status', 'Project Created!');
+    }
+
+
+    public function publish(Request $request){
+        $project = Project::find($request->project_id);
+        if($project){
+            $project->status = 'published';
+            $project->save();
+        }
+       
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
+    }
+
+    public function unpublish(Request $request , Project $project){
+        $project->status  = 'denied';
+        $project->save();
+
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Unpublished!');
     }
 
     /**
@@ -109,6 +145,10 @@ class ProjectController extends Controller
         //
     }
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 
     public function storeRoute()

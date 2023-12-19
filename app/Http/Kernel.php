@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HasRole;
+use App\Http\Middleware\SetCurrentSpaceMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
@@ -97,5 +98,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'role' => HasRole::class,
         'store.route' => StoreRoute::class,
+        'set.current.space' => SetCurrentSpaceMiddleware::class,
     ];
 }
