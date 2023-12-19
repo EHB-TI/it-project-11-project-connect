@@ -4,7 +4,7 @@
 
     <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Projects
     </h2>
-    @if ($projects->isEmpty())
+    @if ($projects->count() > 0)
         <p class="mb-4">Nothing here yet, come back later or start your own project.</p>
     @else
         <div class="project-card__container grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">

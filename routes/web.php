@@ -124,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 
     //publish route for teachers
-    Route::post('/projects', [ProjectController::class, 'publish'])->name('projects.publish')->middleware('role:teacher');
+    Route::post('/projects/publish', [ProjectController::class, 'publish'])->name('projects.publish')->middleware('role:teacher');
     //unpublish route for teachers
     Route::post('/projects/{project}/unpublish', [ProjectController::class, 'unpublish'])->name('projects.unpublish') ->middleware('role:teacher');
 

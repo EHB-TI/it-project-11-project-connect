@@ -1,6 +1,7 @@
 @extends('components.head')
-@section('title', 'Home')
+@section('title', 'Create Project')
 @section('content')
+
 <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Create project</h2>
 <div class="flex flex-col gap-2">
     <div class="w-1/2">
