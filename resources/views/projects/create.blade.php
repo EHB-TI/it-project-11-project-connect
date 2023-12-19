@@ -1,8 +1,13 @@
 @extends('components.head')
-@section('title', 'Home')
+@section('title', 'Create Project')
 @section('content')
+<div class="breadcrumbs">
+    {!! Breadcrumbs::render('projects_create') !!}
+</div>
+
 <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Create project</h2>
 <div class="flex flex-col gap-2">
+    
     <div class="w-1/2">
         <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Project Information</h1>
         <p class="mb-4">Describe why your idea will help fulfill an existing need. Make sure and explain where there is room for
