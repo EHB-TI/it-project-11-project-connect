@@ -126,4 +126,24 @@ class ApplicationController extends Controller
     {
         //
     }
+
+    public function approve(Request $request)
+    {
+        $application = Application::find($request->id);
+        $application->status = 'approved';
+        $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
+        $application->save();
+
+        $application->project->users()->attach($application->user->id);
+
+        return redirect()->route('applications.index')->with('status', 'Application Approved!');
+    }
+
+    public function reject(Request $request)
+    {
+        $application = Application::find($request->id);
+        $application->status = 'rejected';
+        $application->save();
+        return redirect()->route('applications.index')->with('status', 'Application Rejected!');
+    }
 }
