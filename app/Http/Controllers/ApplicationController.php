@@ -20,7 +20,7 @@ class ApplicationController extends Controller
     function show(Request $request)
     {
         $application = Application::find($request->id);
-        return view('applications.teacher.show', ['application' => $application]);
+        return view('applications.show', ['application' => $application]);
     }
 
 
