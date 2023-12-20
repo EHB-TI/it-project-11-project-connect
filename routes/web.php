@@ -107,7 +107,8 @@ Route::middleware(['auth'])->group(function () {
     //display the dashboard for students
 
     Route::middleware(['set.current.space'])->group(function () {
-        Route::get('/dashboard/{space_id}', [DashboardController::class, 'show'])->name('dashboard');
+        Route::post('/dashboard', [DashboardController::class, 'show'])->name('dashboard.space');
+        Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     });
 
 
