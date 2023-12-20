@@ -67,8 +67,12 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $space_id = session('current_space_id');
 
-        $deadline = Deadline::findDeadline('Create Project');
+        $deadline = Space::findOrFail($space_id)
+        ->deadlines()
+        ->where('title', 'Create Project')
+        ->first();
 
         if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
             return back()->with('status', 'You cannot create a project at this time.');
@@ -79,11 +83,17 @@ class ProjectController extends Controller
             'description' => 'required',
         ]);
 
+        // get path of file, store it
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('public');
+        }
+
         // Create a new project instance
         $project = new Project();
         $project->name = $validatedData['name'];
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
+        $project->file_path = $filePath;
         $project->user_id = $user->id;
         $project->space_id = session('current_space_id');
 

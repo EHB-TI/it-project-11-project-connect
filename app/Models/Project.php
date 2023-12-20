@@ -29,7 +29,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'user_id', 'status'];
+    protected $fillable = ['name', 'description', 'user_id', 'status','file_path'];
 
 
     public function owner(): BelongsToAlias

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('brief');
             $table->longText('description');
             $table->enum('status', ['pending', 'approved', 'closed', 'denied', 'published'])->default('pending');
-            $table->string('filepath', 255)->nullable();
+            $table->string('file_path', 255)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('space_id')->nullable();
 

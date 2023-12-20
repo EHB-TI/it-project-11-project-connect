@@ -8,7 +8,7 @@
     </thead>
     <tbody>
         @foreach($projectApplications as $application)
-            <tr class="border-b-2 transition duration-200 hover:bg-gray-100">
+            <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='{{ route('applications.show', $application->id) }}'">
                 <td class="p-2">{{ $application->user->name }}</td>
                 <td class="p-2">
                     <div class="bg-gray-300 rounded-lg w-fit py-1 px-2">
