@@ -25,7 +25,6 @@ class ProjectController extends Controller
         $space = Space::find($space_id);
         //authenticatie teacher for all projects
         if (Auth::user()->role == 'teacher'){
-            session('space_id');
             $projects = Space::find($space_id)->projects()->get();
         }else{
             $projects = Space::find($space_id)->projects()->where('status', 'published')->get();
@@ -33,7 +32,7 @@ class ProjectController extends Controller
         return view('projects.index', ['projects' => $projects]);
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -41,14 +40,14 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
- 
+
         if ($project === null) {
             // Redirect back or show an error message
             return redirect('/')->with('error', 'Project not found');
         }
 
         $previousRoute = $this->storeRoute();
-    
+
         return view('projects.show', [ 'project' => $project, 'previousRoute' => $previousRoute]);
     }
 
@@ -72,7 +71,7 @@ class ProjectController extends Controller
 
         if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
             return back()->with('status', 'You cannot create a project at this time.');
-        }         
+        }
 
         $validatedData = $request->validate([
             'name' => 'required|max:100',
@@ -112,7 +111,7 @@ class ProjectController extends Controller
             $project->status = 'published';
             $project->save();
         }
-       
+
         return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
     }
 
@@ -167,7 +166,7 @@ class ProjectController extends Controller
             return $routeName;
         }
     }
-    
+
     }
 
 }

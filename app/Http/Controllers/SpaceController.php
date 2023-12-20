@@ -13,7 +13,7 @@ class SpaceController extends Controller
         $spaces = Space::all();
         return view('spaces.index', ['spaces' => $spaces]);
     }
-    
+
 
     public function store(Request $request)
     {
@@ -22,16 +22,19 @@ class SpaceController extends Controller
             'canvasCourseId' => 'required',
             'defaultTeamSize' => 'required|integer',
         ]);
-    
-        Space::create([
+
+        $space = Space::create([
             'name' => $validatedData['name'],
             'canvasCourseId' => $validatedData['canvasCourseId'],
             'defaultTeamSize' => $validatedData['defaultTeamSize'],
         ]);
-    
+
+        $courseId = $validatedData['canvasCourseId'];
+        $users = $space->getCourseUsers($courseId);
+
         return redirect()->route('spaces.index')->with('success', 'Space created successfully.');
     }
-    
+
 
     public function show($id){
     //

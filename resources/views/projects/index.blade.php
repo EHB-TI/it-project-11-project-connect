@@ -86,8 +86,6 @@
         </table>
     @endif
     <hr>
-
-    @endif
     <div class="project-page__end border-t-2 pt-8">
         <h2 class="text-2xl leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl mb-4">That's it!</h2>
         <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">Found nothing
@@ -103,5 +101,4 @@
         <button onclick="window.location.href='{{ route('projects.create') }}'"
             class="project-detail__applyButton rounded-full px-4 py-2 border-2">Transform my idea into reality
         </button>
-        @endif
     @endsection
