@@ -1,5 +1,5 @@
 @extends('components.head')
-@section('title', 'Application')
+@section('title', 'Application - ' . $application->user->name)
 
 @section('content')
 
