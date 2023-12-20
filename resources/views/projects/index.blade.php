@@ -2,7 +2,7 @@
 @section('title', 'Home')
 @section('content')
 
-    <div class="breadcrumbs">
+    <div class="breadcrumbs w-full">
         {!! Breadcrumbs::render('projects') !!}
     </div>
 
