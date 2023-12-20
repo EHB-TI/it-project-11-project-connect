@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 use App\Models\Deadline;
 
@@ -17,10 +19,14 @@ use Auth;
 
 class ApplicationController extends Controller
 {
-    function show(Request $request)
+    function show($id)
     {
-        $application = Application::find($request->id);
-        return view('applications.show', ['application' => $application]);
+        $application = Application::find($id);
+        if (!$application) {
+            return redirect()->back()->with('error', 'Application not found.');
+        }
+
+        return view('applications.show', compact('application'));
     }
 
 
@@ -45,16 +51,14 @@ class ApplicationController extends Controller
         if (!$project->canApply(Auth::user())) {
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
-    
-        // Check if either a file or a motivation is provided
-        if (!$request->hasFile('file') && !$request->has('motivation')) {
-            return redirect()->back()->with('status', 'Please upload a file or write a motivation.');
-        }
-    
-        // Initialize filePath variable
-        $filePath = null;
-    
-        // Check if a file is provided and store it
+
+        $request->validate([
+            'motivation' => 'required_without:file',
+            'file' => 'required_without:motivation|mimes:pdf,doc,docx,txts',
+        ]);
+        
+
+        // get path of file, store it
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('public');
         }
@@ -101,6 +105,8 @@ class ApplicationController extends Controller
         $project = Project::find($project_id);
         return view('applications.student.create', ['project' => $project]);
     }
+
+    
 
 
     /**
