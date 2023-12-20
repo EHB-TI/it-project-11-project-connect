@@ -18,6 +18,16 @@
                         <label for="file" class="block text-sm font-medium text-gray$-700">Upload File:</label>
                         <input type="file" id="file" name="file" class="mt-1 py-2 px-4 border rounded-full border-gray-300">
                     </div>
+                    @if ($errors->any())
+                    <div class="alert alert-danger text-red-500 font-bold">
+                        <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <h2 class="font-bold my-2">OR</h2>
                     <div class="flex flex-col space-y-2">
                         <input type="hidden" id="content" name="motivation" class="hidden">
