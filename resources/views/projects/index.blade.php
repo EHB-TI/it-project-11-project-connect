@@ -27,13 +27,78 @@
             </div>
         @endforeach
     </div>
-@endif
 
-<!--publish projects table-->
-@if (Auth::user()->role == 'teacher')
-    <table class="table-auto w-full text-left">
-        <thead>
-            <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">
-            <!-- Rest of your code -->
+    <!--publish projects table-->
+    @if (Auth::user()->role == 'teacher')
+        <table class="table-auto w-full text-left">
+            <thead>
+                <h2
+                    class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl"> Publish projects
+                </h2>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Product-Owner</th>
+                    <th>Status</th>
+                    <th>publish</th>
+                    <th>unpublish</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($projects as $project)
+                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer">
+                        <td class="p-2">
+                            <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                {{ $project->name }}
+                            </a>
+                        </td>
+                        <td class="p-2">{{ $project->owner->name }}</td>
+                        <td class="p-2">
+                            <div
+                                class="rounded-lg w-fit py-1 px-2
+                                {{ $project->status == 'denied' || $project->status == 'closed' ? 'bg-red-300 text-red-800' : ($project->status == 'approved' || $project->status == 'published' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-800') }}">
+                                {{ $project->status }}
+                            </div>
+                        </td>
+                        <!--publish button-->
+                        <td class="p-2">
+                            @if ($project->status != 'published')
+                                <form action="{{ route('projects.publish') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                    <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Publish</button>
+                                </form>
+                            @endif
+                        </td>
+                        <td class="p-2">
+                            @if ($project->status == 'published')
+                                <form action="{{ route('projects.unpublish', ['project' => $project->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Unpublish</button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 @endif
-@endsection
+    <hr>
+
+    <div class="project-page__end border-t-2 pt-8">
+        <h2 class="text-2xl leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl mb-4">That's it!</h2>
+        <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">Found nothing
+            that appeals to you?</h1>
+        <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl mb-4">Become a
+            Product Owner.</h1>
+        <p class="mb-4">Do you have a brilliant idea waiting to come to life?
+            This is your chance to become the leader you've always wanted to be.
+            Apply as a Product Owner and lead your project to success with a dedicated
+            team assembled by us. Let your idea change the world!
+        </p>
+
+        <button onclick="window.location.href='{{ route('projects.create') }}'"
+            class="project-detail__applyButton rounded-full px-4 py-2 border-2">Transform my idea into reality
+        </button>
+    @endsection

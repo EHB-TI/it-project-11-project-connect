@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'user_id');
     }
 
+    public function spaces(): BelongsToManyAlias
+    {
+        return $this->belongsToMany(Space::class);
+    }
+
     public function isMemberOfAnyProject(): bool
     {
         return $this->projects()->exists();

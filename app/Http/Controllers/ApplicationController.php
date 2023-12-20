@@ -36,7 +36,7 @@ class ApplicationController extends Controller
         // Find the deadline for applying to projects in the current space
         $deadline = Space::findOrFail($space_id)
             ->deadlines()
-            ->where('name', 'Apply For Projects')
+            ->where('title', 'Apply For Projects')
             ->first();
     
         // Check if the deadline is not found or has expired
@@ -131,5 +131,25 @@ class ApplicationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function approve(Request $request)
+    {
+        $application = Application::find($request->id);
+        $application->status = 'approved';
+        $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
+        $application->save();
+
+        $application->project->users()->attach($application->user->id);
+
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Approved!');
+    }
+
+    public function reject(Request $request)
+    {
+        $application = Application::find($request->id);
+        $application->status = 'rejected';
+        $application->save();
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
     }
 }
