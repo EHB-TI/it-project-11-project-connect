@@ -53,7 +53,7 @@ class Space extends Model
         $client = new Client();
 
         // Mock API endpoint - replace with actual Canvas API endpoint
-        $url = 'https://mock-canvas-api.com/courses/' . $courseId . '/users';
+        $url = 'https://localhost:8000/api/courses/' . $courseId . '/users';
 
         try {
             $response = $client->request('GET', $url);

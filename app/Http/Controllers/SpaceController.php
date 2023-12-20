@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Space;
@@ -31,6 +32,17 @@ class SpaceController extends Controller
 
         $courseId = $validatedData['canvasCourseId'];
         $users = $space->getCourseUsers($courseId);
+
+        foreach ($users as $userData) {
+            // Check if a user with the same access card ID already exists
+            $user = User::firstOrCreate(
+                ['access_card_id' => $userData['access_card_id']],
+                ['name' => $userData['name'], 'role' => $userData['role']]
+            );
+
+            // Attach the user to the space
+            $space->users()->attach($user);
+        }
 
         return redirect()->route('spaces.index')->with('success', 'Space created successfully.');
     }
