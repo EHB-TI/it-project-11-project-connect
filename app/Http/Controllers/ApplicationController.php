@@ -136,7 +136,7 @@ class ApplicationController extends Controller
 
         $application->project->users()->attach($application->user->id);
 
-        return redirect()->route('project.show', $application->project->id)->with('status', 'Application Approved!');
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Approved!');
     }
 
     public function reject(Request $request)
@@ -144,6 +144,6 @@ class ApplicationController extends Controller
         $application = Application::find($request->id);
         $application->status = 'rejected';
         $application->save();
-        return redirect()->route('project.show', $application->project->id)->with('status', 'Application Rejected!');
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
     }
 }
