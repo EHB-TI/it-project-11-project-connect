@@ -20,7 +20,6 @@
     <div>
         <canvas id="pieChart" width="400" height="400"></canvas>
         <canvas id="barChart" width="400" height="400"></canvas>
-
     </div>
 
 
@@ -63,76 +62,77 @@
         );
 
         // Bar Chart
-        const barLabels = ['approved', 'denied', 'closed', 'pending', 'published'];
+        const barLabels = ['projects'];
         const barData = {
             labels: barLabels,
-            
-            datasets: [{
-                label: 'approved',
-            data: [{{$approvedProjects}}],
-            backgroundColor: 'rgb(75, 192, 192)',
-            borderColor: 'rgb(75, 192, 192)',
-            borderWidth: 1
-        }
-        , 
-        {
-            label: 'denied',
-            data: [{{$deniedProjects}}],
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            borderWidth: 1
-        }, {
-            label: 'closed',
-            data: [{{$closedProjects}}],
-            backgroundColor: 'rgb(54, 162, 235)',
-            borderColor: 'rgb(54, 162, 235)',
-            borderWidth: 1
-        }, {
-            label: 'pending',
-            data: [{{$pendingProjects}}],
-            backgroundColor: 'rgb(255, 205, 86)',
-            borderColor: 'rgb(255, 205, 86)',
-            borderWidth: 1
-        }, {
-            label: 'published',
-            data: [{{$publishedProjects}}],
-            backgroundColor: 'rgb(153, 102, 255)',
-            borderColor: 'rgb(153, 102, 255)',
-            borderWidth: 1
-        }
+            datasets: [
+                {
+                    label: 'Approved',
+                    data: [{{$approvedProjects}}],
+                    backgroundColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Denied',
+                    data: [{{$deniedProjects}}],
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Closed',
+                    data: [{{$closedProjects}}],
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Pending',
+                    data: [{{$pendingProjects}}],
+                    backgroundColor: 'rgb(255, 205, 86)',
+                    borderColor: 'rgb(255, 205, 86)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Published',
+                    data: [{{$publishedProjects}}],
+                    backgroundColor: 'rgb(153, 102, 255)',
+                    borderColor: 'rgb(153, 102, 255)',
+                    borderWidth: 1
+                }
             ]
         };
 
-
         const barConfig = {
-                                type: 'bar',
-                                data: barData,
-                                options: {
-                                    responsive: true,
-                                    indexAxis: 'y',
-                                    plugins: {
-                                        title: {
-                                            display: true,
-                                            text: 'Projects Status'
-                                        }
-                                    },
-                                    scales: {
-                                        x: {
-                                            max: {{$allProjects}},
-                                            beginAtZero: true 
-                                            },
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                           };
+            type: 'bar',
+            data: barData,
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Projects Status'
+                    }
+                },
+                scales: {
+                    x: {
+                        max: {{$allProjects}},
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
 
         const barChart = new Chart(
             document.getElementById('barChart'),
             barConfig
         );
-        
+
     </script>
 
     {{-- <div class="w-3/4">
