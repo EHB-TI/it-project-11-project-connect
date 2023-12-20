@@ -145,6 +145,10 @@ Route::middleware(['auth'])->group(function () {
     //get the applications component of the project details
     Route::get('/projects/details/applications/{id}', [ProjectDetailsController::class, 'applications']);
 
+    //get the edit component of the project details
+    Route::get('/projects/details/edit/{id}', [ProjectDetailsController::class, 'edit']) ->name('projects.edit')->middleware('checkProjectOwner');
+    //update the project details
+    Route::put('/projects/details/edit/{id}', [ProjectDetailsController::class, 'update'])->name('projects.update')->middleware('checkProjectOwner');
 
     //APPLICATION ROUTES
     //display the page of a specific application

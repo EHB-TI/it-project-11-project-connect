@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
         ConvertEmptyStringsToNull::class,
         StoreRoute::class,
         StartSession::class,
-       
+        'checkProjectOwner' => \App\Http\Middleware\CheckProjectOwner::class,
     ];
 
     /**

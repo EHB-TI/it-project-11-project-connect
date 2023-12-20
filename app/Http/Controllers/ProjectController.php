@@ -128,7 +128,15 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        //check if the user is the owner of the project
+        if (Auth::user()->id !== $project->user_id) {
+            return redirect('/')->with('error', 'You are not the product-Owner');
+        }
+
+        
+
+
+       return view('projects.detail-sections.edit', ['project' => $project]);
     }
 
     /**
@@ -136,7 +144,25 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+         //valideren van de date 
+         $request -> validate([
+            'brief'=>'required',
+            'description'=>'required',
+         ]);
+        
+        //check if the user is the owner of the project
+         if (Auth::user()->id !== $project->user_id) {
+            return redirect('/')->with('error', 'You are not the product-Owner');
+        }
+
+        //update the project
+        $project->brief = $request->brief;
+        $project->description = $request->description;
+        $project->save();
+
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Updated!');
+
+
     }
 
     /**
