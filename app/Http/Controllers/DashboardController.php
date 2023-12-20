@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
         $user_id = auth()->id();
     
-        $projects = Project::all()->where('space_id', $space_id);
+        $projects = Project::all()->where('space_id', $space_id, 'user_id', $user_id);
     
         return view('/dashboard', ['projects' => $projects]);
     }
