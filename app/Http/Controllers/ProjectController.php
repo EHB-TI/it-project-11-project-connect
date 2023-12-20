@@ -67,8 +67,12 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $space_id = session('current_space_id');
 
-        $deadline = Deadline::findDeadline('Create Project');
+        $deadline = Space::findOrFail($space_id)
+        ->deadlines()
+        ->where('title', 'Create Project')
+        ->first();
 
         if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
             return back()->with('status', 'You cannot create a project at this time.');

@@ -30,7 +30,7 @@ class ApplicationController extends Controller
         // Find the deadline for applying to projects in the current space
         $deadline = Space::findOrFail($space_id)
             ->deadlines()
-            ->where('name', 'Apply For Projects')
+            ->where('title', 'Apply For Projects')
             ->first();
     
         // Check if the deadline is not found or has expired
