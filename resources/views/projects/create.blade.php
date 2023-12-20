@@ -31,6 +31,10 @@
                 <label for="editor" class="text-gray-600 font-semibold">Write a detailed description down below</label>
                 <div id="editor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
             </div>
+            <div class="mt-4">
+                <label for="file" class="block text-sm font-medium text-gray$-700">Upload image:</label>
+                <input type="file" id="file" name="file" class="mt-1 py-2 px-4 border rounded-full border-gray-300">
+            </div>
 
             <input type="submit" value="Create Project" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 cursor-pointer w-fit">
         </form>
