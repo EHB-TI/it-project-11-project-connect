@@ -8,13 +8,17 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Application;
 use App\Models\Project;
+use App\Models\Deadline;
+
 
 class DashboardController extends Controller
 {
     public function show(Request $request)
     {
+        //GETTING THE DEADLINE INFORMATION
         $space_id = session('current_space_id');
-
+        
+        $deadline = Deadline::nextDeadlineForSpace($space_id);
         $user_id = auth()->id();
     
         $projects = Project::all()->where('space_id', $space_id);
@@ -34,7 +38,7 @@ class DashboardController extends Controller
         $pendingProjects = Project:: where('status', 'pending')->count();
         $allProjects = Project:: all()->count();
 
-        return view('/dashboard', [
+        return view('/dashboard', ['deadline' => $deadline,
             'projects' => $projects, 'applicants' => $applicants, 'allProjects' => $allProjects,
             'inactiveStudents' => $inactiveStudents, 'po' => $po,
             'pendingProjects' => $pendingProjects, 'spaceUsers' => $spaceUsers,

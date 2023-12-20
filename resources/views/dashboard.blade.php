@@ -5,15 +5,19 @@
 <div class="flex gap-8">
 
     <div class="w-1/4">
+        @if ($deadline === null)
+
+        @else
         <div class="rounded-xl border-2 overflow-hidden mb-8 p-4">
             <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">
                 Next Deadline</h1>
-            <p class="mb-4">Potential product owner: Pitch your creative concept</p>
-            <p class="mb-4"> <strong>Who?</strong> </p>
-            <p class="mb-4"><strong>When?</strong></p>
-            {{-- <p class="mb-4">hier komt deadline</p> --}}
-
+            <p class="mb-4">{{$deadline->title}}</p>
+            <p class="mb-4"> <strong>What?</strong> <br> {{$deadline->what}} </p>
+            <p class="mb-4"><strong>When?</strong> <br> {{$deadline->end_date}}</p>
+            <div id="timer"><p id="count"></p></div>
         </div>
+        @endif
+
 
     </div>
 
@@ -24,8 +28,32 @@
 
 
 </div>
+@if($deadline !== null)
+    <script>
+        //TIMER
+        const divTimer = document.getElementById("timer");
+        const deadlineEndDate = new Date('{{ $deadline->end_date }}');
+        setInterval(updateTimer, 1000);
 
+        function updateTimer() {
+            const currentDate = new Date();
+
+            const timeDifference = deadlineEndDate - currentDate;
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            const timer = document.getElementById('count');
+            timer.innerHTML = `Time left: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            
+        }
+        
+    </script>
+@endif
 <script>
+    
     // Pie Chart
     let labels = ['Product Owner', 'Applicants', 'Inactive Students'];
     let itemData = [{{$po}}, {{$applicants}}, {{$inactiveStudents}}];
