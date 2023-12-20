@@ -30,10 +30,10 @@ class UserController extends Controller
         $pendingProjects = Project:: where('status', 'pending')->get();
 
     // dd($closedProjects);
-
-        $applications = Application::all();
-        //where('user_id', $user_id);
-
+        $users = User::where('isProductOwner', true)->count();    
+        $applicants = Application::groupBy('user_id')->count();
+        $inactiveStudents = User::all()->count() - $applicants - $users;
+        dd(User::all()->count(), $applicants, $users, $inactiveStudents);
         return view('dashboard', [
             'pendingProjects' => $pendingProjects,
             'publishedProjects' => $publishedProjects,
