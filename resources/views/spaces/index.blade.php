@@ -8,11 +8,14 @@
     </a>
 @endif
 
-
-<div class="grid grid-cols-3 gap-4">
-    @foreach($spaces as $space)
-        <a class="cursor-pointer text-center bg-white border-2 hover:border-yellow-500 text-black font-bold py-4 px-4 mt-2 rounded" href="{{ route('dashboard', ['space_id' => $space->id]) }}">{{ $space->name }}</a>
-    @endforeach
-</div>
+    <div class="grid grid-cols-3 gap-4">
+        @foreach($spaces as $space)
+            <form action="{{ route('dashboard.space') }}" method="POST">
+                @csrf
+                <input name="space_id" value="{{ $space->id }}" class="hidden" />
+                <input type="submit" class="cursor-pointer text-center bg-white border-2 hover:border-yellow-500 text-black font-bold py-4 px-4 mt-2 rounded" value="{{ $space->name }}">
+            </form>
+        @endforeach
+    </div>
 
 @endsection
