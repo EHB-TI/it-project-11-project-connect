@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Space;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProjectDetailsController extends Controller
 {
@@ -50,5 +51,17 @@ class ProjectDetailsController extends Controller
         $projectApplications = $project->applications;
 
         return view('projects.detail-sections.applications',  ['project' => $project, 'projectApplications' => $projectApplications]);
+    }
+
+    public function edit($id)
+    {
+        $project = Project::find($id);
+    
+        // Controleer of de gebruiker de eigenaar van het project is
+        if (Auth::user()->id !== $project->user_id) {
+            return redirect() ->route('projects.show',['id' => $id])->with('error', 'You are not the owner of this project.');
+        }
+    
+        return view('projects.detail-sections.edit', compact('project'));
     }
 }

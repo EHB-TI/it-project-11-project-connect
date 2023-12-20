@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
         ConvertEmptyStringsToNull::class,
         StoreRoute::class,
         StartSession::class,
-       
+    
     ];
 
     /**
@@ -99,5 +99,6 @@ class Kernel extends HttpKernel
         'role' => HasRole::class,
         'store.route' => StoreRoute::class,
         'set.current.space' => SetCurrentSpaceMiddleware::class,
+        'checkProjectOwner' => \App\Http\Middleware\CheckProjectOwner::class,
     ];
 }

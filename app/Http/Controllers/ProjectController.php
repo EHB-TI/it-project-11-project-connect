@@ -83,11 +83,17 @@ class ProjectController extends Controller
             'description' => 'required',
         ]);
 
+        // get path of file, store it
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('public');
+        }
+
         // Create a new project instance
         $project = new Project();
         $project->name = $validatedData['name'];
         $project->brief = $request->input('brief');
         $project->description = $request->input('description');
+        $project->file_path = $filePath;
         $project->user_id = $user->id;
         $project->space_id = session('current_space_id');
 
@@ -130,17 +136,47 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit($id)
     {
-        //
+        $project = Project::find($id);
+    
+        
+        // Controleer of de gebruiker de eigenaar van het project is
+        if (Auth::user()->id !== $project->user_id) {
+            return redirect() ->route('projects.show',['id' => $id])->with('error', 'You are not the owner of this project.');
+        }
+    
+        return view('projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        $project = Project::find($id);
+        
+         //valideren van de date 
+         $request -> validate([
+            'name'=>'required',
+            'brief'=>'required',
+            'description'=>'required',
+         ]);
+        
+        //check if the user is the owner of the project
+         if (Auth::user()->id !== $project->user_id) {
+            return redirect('/projects')->with('error', 'You are not the product-Owner');
+        }
+
+        //update the project
+        $project->name = $request->name;
+        $project->brief = $request->brief;
+        $project->description = $request->description;
+        $project->save();
+
+        return redirect()->route('projects.show', $project->id)->with('status', 'Project Updated!');
+
+
     }
 
     /**
