@@ -30,25 +30,28 @@
 </div>
 @if($deadline !== null)
     <script>
-        //TIMER
-        const divTimer = document.getElementById("timer");
-        const deadlineEndDate = new Date('{{ $deadline->end_date }}');
-        setInterval(updateTimer, 1000);
+        (function() {
+    //TIMER
+    const divTimer = document.getElementById("timer");
+    const deadlineEndDate = new Date('{{ $deadline->end_date }}');
+    updateTimer(); // Call the function initially
 
-        function updateTimer() {
-            const currentDate = new Date();
+    setInterval(updateTimer, 60000);
 
-            const timeDifference = deadlineEndDate - currentDate;
+    function updateTimer() {
+        const currentDate = new Date();
 
-            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+        const timeDifference = deadlineEndDate - currentDate;
 
-            const timer = document.getElementById('count');
-            timer.innerHTML = `Time left: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-            
-        }
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        //const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        const timer = document.getElementById('count');
+        timer.innerHTML = `Time left: ${days} days, ${hours} hours, ${minutes} minutes`;
+    }
+})();
         
     </script>
 @endif
