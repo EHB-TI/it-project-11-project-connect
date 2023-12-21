@@ -47,17 +47,14 @@
                         </svg>
                     </button>
                 </div>
-            
-                <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <select onchange="window.location.href=this.value;">
-                            @foreach ($spaces as $space)
-                                <option value="{{ route('spaces.show', $space->id) }}">
-                                    {{ $space->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div
+                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    @foreach ($spaces as $space)
+                        <a href="{{ route('spaces.show', $space->id) }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            role="menuitem">{{ $space->name }}</a>
+                    @endforeach
                 </div>
             </div>
             </div>
