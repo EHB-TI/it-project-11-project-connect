@@ -168,6 +168,9 @@ Route::middleware(['auth','set.current.space'])->group(function () {
     // bekijk daadwerkelijke content of application:
     Route::get('applications/{user_id}', [ApplicationController::class, 'show'])->name('applications.show');
 
+    Route::post('/applications/approve/{id}', [ApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/reject/{id}', [ApplicationController::class, 'reject'])->name('applications.reject');
+
 
 
 
