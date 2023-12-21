@@ -42,10 +42,8 @@ class DashboardController extends Controller
             'projects' => $projects, 'applicants' => $applicants, 'allProjects' => $allProjects,
             'inactiveStudents' => $inactiveStudents, 'po' => $po,
             'pendingProjects' => $pendingProjects, 'spaceUsers' => $spaceUsers,
-            'publishedProjects' => $publishedProjects,
-            'approvedProjects' => $approvedProjects,
-            'closedProjects' => $closedProjects,
-            'deniedProjects' => $deniedProjects
+            'publishedProjects' => $publishedProjects,'approvedProjects' => $approvedProjects,
+            'closedProjects' => $closedProjects,'deniedProjects' => $deniedProjects
         ]);
     }
     

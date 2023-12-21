@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Feedback;
 use App\Models\Project;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 class FeedbackController extends Controller
 {
     public function store(Request $request, $id)
@@ -19,8 +19,8 @@ class FeedbackController extends Controller
         $feedback->user_id = auth()->id();
         $feedback->project_id = $id;
         $feedback->save();
-
-        return redirect()->route('projects.show', $id)->with('status', 'Feedback added successfully');
+        
+        return redirect()->route('projects.show', $id)->with('status', 'Feedback successfully send');
     }
 
     public function destroy(Feedback $feedback)
