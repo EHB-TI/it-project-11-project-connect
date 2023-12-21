@@ -86,20 +86,29 @@ class Project extends Model
         return false;
     }
 
-
-
     public function canApply(User $user): bool
     {
-        // Check if the user is not the owner of the project or a teacher or a product owner
-        if ($this->isOwner($user) || $user->role === 'teacher' || $user->isProductOwner) {
+        // Check if the user is part of the same space as the project
+        if (!$user->spaces->contains($this->space_id)) {
             return false;
         }
-
+    
+        // Check if the user is the owner of the project or a teacher
+        if ($this->isOwner($user) || $user->role === 'teacher') {
+            return false;
+        }
+    
+        // Check if the user is a product owner of any project in the same space as the project
+        $isProductOwnerInSpace = $user->spaces()->where('space_id', $this->space_id)->first()->projects()->where('product_owner_id', $user->id)->exists();
+        if ($isProductOwnerInSpace) {
+            return false;
+        }
+    
         // Check if the user has not already applied to the project
         if ($this->applications()->where('user_id', $user->id)->exists()) {
             return false;
         }
-
+    
         return true;
     }
 
