@@ -112,16 +112,11 @@ class Project extends Model
 
     public function hasApplied(User $user): bool
     {
-        // Check if the user is not the owner of the project or a teacher
-        if ($this->user_id === $user->id || $user->role === 'teacher') {
-            return false;
-        }
-
         // Check if the user has already applied to the project
         if ($this->applications()->where('user_id', $user->id)->exists()) {
             return true;
         }
-
+    
         return false;
     }
 
