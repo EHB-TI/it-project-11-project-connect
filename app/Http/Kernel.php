@@ -47,9 +47,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
-        StoreRoute::class,
-        StartSession::class,
-    
+       // StoreRoute::class,    
     ];
 
     /**
@@ -61,13 +59,11 @@ class Kernel extends HttpKernel
         'web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
-            StoreRoute::class,
-            StartSession::class,
+            //StoreRoute::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-
-
+            StartSession::class,
         ],
 
         'api' => [
