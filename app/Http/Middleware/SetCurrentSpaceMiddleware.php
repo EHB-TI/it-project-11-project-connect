@@ -15,14 +15,12 @@ class SetCurrentSpaceMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $spaceId = $request->input('space_id');
+        $spaceId = session('current_space_id');
 
         if (!$spaceId) {
             return redirect()->route('spaces.index');
         }
 
-        session(['current_space_id' => $spaceId]);
-    
         return $next($request);
     }
 }
