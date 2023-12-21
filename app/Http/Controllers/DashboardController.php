@@ -47,7 +47,7 @@ class DashboardController extends Controller
     
         //GETTING ALL STUDENTS THAT ARE MEMBERS OF A PROJECT
         // Iterate through each project to count the number of members and sum them up
-        $totalMembersCount = 0;
+        $totalMembersCount = [];
         foreach ($projects as $project) {
             $totalMembersCount[$project->name] = $project->users()->count();
         }

@@ -172,7 +172,7 @@
     const barLabels2 = ['members'];
     const datasets2 = [];
     
-    let members = {{$members}};
+    let members = {!! json_encode($members) !!};
 for(let projectName in members) {
     let memberCount = members[projectName];
     datasets2.push({
