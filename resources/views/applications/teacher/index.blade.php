@@ -2,9 +2,10 @@
 @section('title', 'Incoming Applications')
 
 @section('content')
-<div class="breadcrumbs">
-    {!! Breadcrumbs::render('applications') !!}
-</div>
+@php
+    use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
     @if ($applications->isEmpty())
         <h1>There are no applications yet.</h1>
     @else

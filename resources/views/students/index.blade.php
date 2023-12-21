@@ -1,7 +1,10 @@
 @extends('components.head')
 @section('title', 'Home')
 @section('content')
-@include('components.breadcrumb', ['breadcrumbName' => 'students', 'id' => null])
+    @php
+        use App\Http\Middleware\StoreRoute;
+    @endphp
+    @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
 {{-- <div class="breadcrumbs">
     {!! Breadcrumbs::render('students') !!}
 </div> --}}

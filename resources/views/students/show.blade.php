@@ -2,6 +2,10 @@
 @section('title', 'Home')
 
 @section('content')
+@php
+    use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => $user->id])
     <!-- Overzicht student -->
     <div class="container mx-auto">
         <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Student

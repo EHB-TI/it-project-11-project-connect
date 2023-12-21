@@ -115,7 +115,7 @@ if (app()->environment('local')) {
 
 //AUTH PROTECTED ROUTES
 //only authenticated users can access these routes
-Route::middleware(['auth','set.current.space'])->group(function () {
+Route::middleware(['auth','set.current.space', 'store.route'])->group(function () {
 
     //DASHBOARD ROUTES
     //display the dashboard for students
