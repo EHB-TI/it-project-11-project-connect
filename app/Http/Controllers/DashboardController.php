@@ -24,10 +24,17 @@ class DashboardController extends Controller
     
         // Fetch deadline
         $deadline = Deadline::nextDeadlineForSpace($space_id);
-    
-        // Calculate user counts
+
+        //SELECTING THE PRODUCT OWNERS
         $po = $spaceUsers->where('isProductOwner', true)->count();
-        $applicants = Application::groupBy('user_id')->count();
+
+        // GET THE APPLICANTS OF THE CORRECT SPACE 
+        $projects = Project::where('space_id', $space_id)->get();
+        $projectIds = $projects->pluck('id')->toArray();
+        $applications = Application::whereIn('project_id', $projectIds)->get();
+        $applicants = $applications->groupBy('user_id')->count();
+
+        // Calculate user counts
         $inactiveStudents = $spaceUsers->count() - $applicants - $po;
     
         // Calculate project counts
@@ -38,6 +45,12 @@ class DashboardController extends Controller
         $pendingProjects = $projects->where('status', 'pending')->count();
         $allProjects = $projects->count();
     
+        //GETTING ALL STUDENTS THAT ARE MEMBERS OF A PROJECT
+        // Iterate through each project to count the number of members and sum them up
+        $totalMembersCount = 0;
+        foreach ($projects as $project) {
+            $totalMembersCount[$project->name] = $project->users()->count();
+        }
         // Data for the view
         $data = [
             'deadline' => $deadline,
@@ -51,7 +64,8 @@ class DashboardController extends Controller
             'publishedProjects' => $publishedProjects,
             'approvedProjects' => $approvedProjects,
             'closedProjects' => $closedProjects,
-            'deniedProjects' => $deniedProjects
+            'deniedProjects' => $deniedProjects,
+            'members' => $totalMembersCount,
         ];
     
         // Return the view with the data
