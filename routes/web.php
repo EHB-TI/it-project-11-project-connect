@@ -254,17 +254,6 @@ Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('de
 Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
 
 
-// SPACE ROUTES
-// display a list of spaces
-Route::get('/spaces', [SpaceController::class,'index'])->name('spaces.index');
-
-// show the form to create a new space
-Route::get('/spaces/create', [SpaceController::class,'create'])->name('spaces.create')->middleware('role:teacher');
-
-//store a new space
-Route::post('/spaces', [SpaceController::class,'store'])->name('spaces.store')->middleware('role:teacher');
-
-
 //STUDENTS OVERVIEW ROUTES
 //display  page of students
 Route::get('/students',[UserController::class,'index'])->name('students.index');
