@@ -19,7 +19,7 @@ Breadcrumbs::for('projects', function (Generator $trail) {
 //Create Project
 Breadcrumbs::for('projects_create', function (Generator $trail) {
     $trail->parent('dashboard'); 
-    $trail->push('Create Project', route('projects.create'));
+    $trail->push('Create', route('projects.create'));
 });
 
 // Project Details
@@ -51,7 +51,7 @@ Breadcrumbs::for('deadlines', function (Generator $trail) {
 
 Breadcrumbs::for('deadlines_create', function (Generator $trail) {
     $trail->parent('deadlines'); // Assuming 'Deadlines' is accessible from the dashboard
-    $trail->push('Create Deadline', route('deadlines.create'));
+    $trail->push('Create', route('deadlines.create'));
 });
 
 // Spaces

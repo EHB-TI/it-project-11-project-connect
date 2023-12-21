@@ -47,7 +47,8 @@ $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
                 <x-application-box title="You have applied for this project!" message="status of application:" status="{{ $project->applicationStatus(Auth::user()) }}" />
             @endif
             @if($project->isOwner(Auth::user()))
-                <x-application-box title="You are the owner of this project!" message="status of project:" status="{{ $project->status }}" />
+                <x-application-box title="You are the owner of this project!" message="status of project:" status="{{ $project->status }}"  route="projects.edit"  projectId="{{$project->id }}" buttonText="Edit project"  />
+                    
             @endif
             @if($project->isMember(Auth::user()))
                 <x-application-box title="You are a member of this project!" message="Good luck, make something awesome!" />

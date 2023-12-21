@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Project;
 
-class SetCurrentSpaceMiddleware
+class CheckProjectOwner
 {
     /**
      * Handle an incoming request.
@@ -15,14 +16,12 @@ class SetCurrentSpaceMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $spaceId = $request->input('space_id');
+        $project = Project::findOrFail($request->id);
 
-        if (!$spaceId) {
-            return redirect()->route('spaces.index');
+        if($request->user()->id !== $project->user_id){
+            return redirect()->route('projects.index')->with('error', 'You are not authorized to view this page');
         }
-
-        session(['current_space_id' => $spaceId]);
-    
+        
         return $next($request);
     }
 }

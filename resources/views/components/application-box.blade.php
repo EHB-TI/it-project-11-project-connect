@@ -3,9 +3,12 @@
     <p class="mb-1">{{ $message }}</p>
     @if($route)
         <a href="{{ route($route, $projectId) }}" class="project-detail__applyButton block w-fit rounded-full px-4 py-2 border-2">{{ $buttonText }}</a>
-    @elseif($status)
+    @endif
+    @if($status)
         <div class="bg-gray-300 rounded-lg w-fit py-1 px-2">
             {{ $status }}
         </div>
     @endif
+    
+   
 </div>
