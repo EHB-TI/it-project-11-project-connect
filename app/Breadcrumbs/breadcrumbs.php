@@ -24,7 +24,7 @@ Breadcrumbs::for('projects.create', function (Generator $trail) {
 });
 
 // Project Details
-Breadcrumbs::for('project_details_routeA', function (Generator $trail, $id) {
+Breadcrumbs::for('applications.index2', function (Generator $trail, $id) {
     $project = Project::findOrFail($id); // Fetch project details using your model
     // $trail->parent('dashboard');
     $trail->parent('applications');
@@ -32,9 +32,9 @@ Breadcrumbs::for('project_details_routeA', function (Generator $trail, $id) {
     $trail->push($project->name, route('projects.show', $id));
 });
 
-Breadcrumbs::for('project_details_routeB', function (Generator $trail, $id) {
+Breadcrumbs::for('projects.index2', function (Generator $trail, $id) {
     $project = Project::findOrFail($id); // Fetch project details using your model
-    $trail->parent('projects');
+    $trail->parent('projects.index');
     $trail->push($project->name, route('projects.show', $id));
 });
 
