@@ -14,9 +14,20 @@ $projectDetailItems = ProjectDetailsItemsAlias::PRODUCT_OWNER;
 $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
 }
 use App\Http\Middleware\StoreRoute;
-$route = StoreRoute::getPreviousRouteName();
+$storedPreviousRoute;
+session_start(); // Start the session
 
-// dd($route,StoreRoute::getCurrentRouteName() );
+// Store $previousRoute in a session variable
+$_SESSION['previousRoute'] = $previousRoute;
+
+// To retrieve the value later
+if (isset($_SESSION['previousRoute'])) {
+    $previousRoute = $_SESSION['previousRoute'];
+    
+} else {
+    
+}
+
 @endphp
 
 
