@@ -7,7 +7,8 @@ use App\Models\User;
 
 // Dashboard
 Breadcrumbs::for('dashboard', function (Generator $trail) {
-    $trail->push('Dashboard', route('dashboard', session('current_space_id')));
+    // $trail->push('Dashboard', route('dashboard',['space_id' => session('current_space_id')]));
+    $trail->push('Dashboard', route('dashboard', ['space_id' => session('current_space_id')]));
 });
 
 // Projects
