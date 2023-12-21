@@ -138,6 +138,9 @@ class ApplicationController extends Controller
     public function approve($id)
     {
         $application = Application::find($id);
+        if($application->status == 'approved'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Approved!');
+        }
         $application->status = 'approved';
         $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
         $application->save();
@@ -152,6 +155,9 @@ class ApplicationController extends Controller
     public function reject($id)
     {
         $application = Application::find($id);
+        if($application->status == 'rejected'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Rejected!');
+        }
         $application->status = 'rejected';
         $application->save();
         return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
