@@ -49,7 +49,7 @@ class Space extends Model
     }
 
     public function getCourseUsers($courseId) {
-        // Use Guzzle to create a mock API request
+        /*// Use Guzzle to create a mock API request
         $client = new Client();
 
         // Mock API endpoint - replace with actual Canvas API endpoint
@@ -68,7 +68,29 @@ class Space extends Model
 
             // Return an empty array as a fallback
             return [];
+        }*/
+
+        $users = [];
+
+        for ($i = 1; $i <= 20; $i++) {
+            $access_card_id = rand(10000000, 99999999);
+
+            // Check if a user with the same access card ID already exists
+            $existingUser = User::where('access_card_id', $access_card_id)->first();
+
+            if (!$existingUser) {
+                // If the user does not exist, create a new user
+                $users[] = [
+                    'name' => 'User ' . $i,
+                    'email' => 'user' . $i . '@example.com',
+                    'role' => 'student',
+                    'access_card_id' => $access_card_id,
+                    // Add more properties as needed
+                ];
+            }
         }
+
+        return $users;
     }
 
 
