@@ -15,38 +15,46 @@ class DashboardController extends Controller
 {
     public function show(Request $request)
     {
-        //GETTING THE DEADLINE INFORMATION
+        // Fetch space and related data
         $space_id = session('current_space_id');
-        
-        $deadline = Deadline::nextDeadlineForSpace($space_id);
-        $user_id = auth()->id();
+        $space = Space::find($space_id);
+        $spaceUsers = $space->users;
+        $projects = $space->projects;
     
-        $projects = Project::all()->where('space_id', $space_id);
-        //CHARTS 1 LOGIC 
-        $spaceUsers = User::all();
-        $po = User::where('isProductOwner', true)->count();    
+        // Fetch deadline
+        $deadline = Deadline::nextDeadlineForSpace($space_id);
+    
+        // Calculate user counts
+        $po = $spaceUsers->where('isProductOwner', true)->count();
         $applicants = Application::groupBy('user_id')->count();
-        $inactiveStudents = User::all()->count() - $applicants - $po;
-        // dd(User::all()->count(), $applicants, $po, $inactiveStudents);
-
-
-        //CHART 2 LOGIC
-        $publishedProjects = Project:: where('status', 'published')->count();
-        $approvedProjects = Project:: where('status', 'approved')->count();
-        $closedProjects = Project:: where('status', 'closed')->count();
-        $deniedProjects = Project:: where('status', 'denied')->count();
-        $pendingProjects = Project:: where('status', 'pending')->count();
-        $allProjects = Project:: all()->count();
-
-        return view('/dashboard', ['deadline' => $deadline,
-            'projects' => $projects, 'applicants' => $applicants, 'allProjects' => $allProjects,
-            'inactiveStudents' => $inactiveStudents, 'po' => $po,
-            'pendingProjects' => $pendingProjects, 'spaceUsers' => $spaceUsers,
+        $inactiveStudents = $spaceUsers->count() - $applicants - $po;
+    
+        // Calculate project counts
+        $publishedProjects = $projects->where('status', 'published')->count();
+        $approvedProjects = $projects->where('status', 'approved')->count();
+        $closedProjects = $projects->where('status', 'closed')->count();
+        $deniedProjects = $projects->where('status', 'denied')->count();
+        $pendingProjects = $projects->where('status', 'pending')->count();
+        $allProjects = $projects->count();
+    
+        // Data for the view
+        $data = [
+            'deadline' => $deadline,
+            'projects' => $projects,
+            'applicants' => $applicants,
+            'allProjects' => $allProjects,
+            'inactiveStudents' => $inactiveStudents,
+            'po' => $po,
+            'pendingProjects' => $pendingProjects,
+            'spaceUsers' => $spaceUsers,
             'publishedProjects' => $publishedProjects,
             'approvedProjects' => $approvedProjects,
             'closedProjects' => $closedProjects,
             'deniedProjects' => $deniedProjects
-        ]);
+        ];
+    
+        // Return the view with the data
+        return view('/dashboard', $data);
     }
     
 }
