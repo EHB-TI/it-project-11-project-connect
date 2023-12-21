@@ -27,6 +27,20 @@ use App\Http\Controllers\SpaceController;
 
 Route::get('/', [SpaceController::class, 'index'])->name('welcome');
 
+// SPACE ROUTES
+// display a list of spaces
+Route::get('/spaces', [SpaceController::class,'index'])->name('spaces.index')->middleware('auth');
+
+// show the form to create a new space
+Route::get('/spaces/create', [SpaceController::class,'create'])->name('spaces.create')->middleware('role:teacher', 'auth');
+
+//store a new space
+Route::post('/spaces', [SpaceController::class,'store'])->name('spaces.store')->middleware('role:teacher', 'auth');
+
+Route::post('/spaces/select', [SpaceController::class, 'select'])->name('spaces.select')->middleware('auth');
+
+
+
 
 //AUTH ROUTES
 //Authentication for production
@@ -101,16 +115,11 @@ if (app()->environment('local')) {
 
 //AUTH PROTECTED ROUTES
 //only authenticated users can access these routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','set.current.space'])->group(function () {
 
     //DASHBOARD ROUTES
     //display the dashboard for students
-
-    Route::middleware(['set.current.space'])->group(function () {
-        Route::get('/dashboard/{space_id}', [DashboardController::class, 'show'])->name('dashboard');
-    });
-
-
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 
     //PROJECT ROUTES
@@ -128,7 +137,7 @@ Route::middleware(['auth'])->group(function () {
     //unpublish route for teachers
     Route::post('/projects/{project}/unpublish', [ProjectController::class, 'unpublish'])->name('projects.unpublish') ->middleware('role:teacher');
 
-    
+
     //PROJECT DETAILS ROUTES
     //display the project details
     Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('projects.show');
@@ -159,6 +168,9 @@ Route::middleware(['auth'])->group(function () {
     // bekijk daadwerkelijke content of application:
     Route::get('applications/{user_id}', [ApplicationController::class, 'show'])->name('applications.show');
 
+    Route::post('/applications/approve/{id}', [ApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/reject/{id}', [ApplicationController::class, 'reject'])->name('applications.reject');
+
 
 
 
@@ -173,17 +185,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/deadlines', [DeadlineController::class, 'store'])->name('deadlines.store')->middleware('role:teacher');
 
 
-    // SPACE ROUTES
-    // display a list of spaces
-    Route::get('/spaces', [SpaceController::class,'index'])->name('spaces.index');
-
-    // show the form to create a new space
-    Route::get('/spaces/create', [SpaceController::class,'create'])->name('spaces.create')->middleware('role:teacher');
-
-    //store a new space
-    Route::post('/spaces', [SpaceController::class,'store'])->name('spaces.store')->middleware('role:teacher');
-
-
     //STUDENTS OVERVIEW ROUTES
     //display  page of students
     Route::get('/students',[UserController::class,'index'])->name('students.index');
@@ -196,6 +197,7 @@ Route::middleware(['auth'])->group(function () {
     //FEEDBACK ROUTES
     //store a new feedback
     Route::post('/feedback/{id}', [FeedbackController::class, 'store'])->name('feedback.store');
+
 });
 
 

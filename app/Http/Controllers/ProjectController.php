@@ -25,8 +25,7 @@ class ProjectController extends Controller
         $space_id = session('current_space_id');
         $space = Space::find($space_id);
         //authenticatie teacher for all projects
-        if (Auth::user()->role == 'teacher') {
-            session('space_id');
+        if (Auth::user()->role == 'teacher'){
             $projects = Space::find($space_id)->projects()->get();
         } else {
             $projects = Space::find($space_id)->projects()->where('status', 'published')->get();
@@ -71,9 +70,9 @@ class ProjectController extends Controller
         $space_id = session('current_space_id');
 
         $deadline = Space::findOrFail($space_id)
-            ->deadlines()
-            ->where('title', 'Create Project')
-            ->first();
+        ->deadlines()
+        ->where('what', 'Create Project')
+        ->first();
 
         if ($user->hasRole('student') && (($deadline !== null && strtotime($deadline->end_date) < strtotime(now())) || $deadline === null)) {
             return back()->with('status', 'You cannot create a project at this time.');
@@ -125,7 +124,7 @@ class ProjectController extends Controller
             $project->save();
         }
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
+        return back()->with('status', 'Project Published!');
     }
 
     public function unpublish(Request $request, Project $project)
@@ -133,7 +132,7 @@ class ProjectController extends Controller
         $project->status  = 'denied';
         $project->save();
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Unpublished!');
+        return back()->with('status', 'Project Unpublished!');
     }
 
     /**
@@ -159,12 +158,12 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
 
-        //valideren van de date 
-        $request->validate([
-            'name' => 'required',
-            'brief' => 'required',
-            'description' => 'required',
-        ]);
+         //valideren van de date
+         $request -> validate([
+            'name'=>'required',
+            'brief'=>'required',
+            'description'=>'required',
+         ]);
 
         //check if the user is the owner of the project
         if (Auth::user()->id !== $project->user_id) {
@@ -209,4 +208,7 @@ class ProjectController extends Controller
             }
         }
     }
+
+    }
+
 }

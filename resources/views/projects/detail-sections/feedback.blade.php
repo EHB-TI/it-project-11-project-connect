@@ -13,7 +13,7 @@
                 <div class="date-info__time h-fit">{{ $feedback->created_at->format('H:i') }}</div>
             </div>
         </div>
-        <p class="feedback-card__body p-4">
+        <p class="feedback-card__body p-4 break-words">
             {{ $feedback->message }}
         </p>
     </div>

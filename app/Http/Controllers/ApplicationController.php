@@ -34,35 +34,37 @@ class ApplicationController extends Controller
     {
         $space_id = session('current_space_id');
         // Find the deadline for applying to projects in the current space
-        $deadline = Space::findOrFail($space_id)
-            ->deadlines()
-            ->where('title', 'Apply For Projects')
-            ->first();
-    
+
+
+        $space = Space::find($space_id);
+        $allDeadlines = $space->deadlines()->get();
+        $deadline = $space->deadlines()->get()->where('what', 'Apply For Projects')->first();
+
         // Check if the deadline is not found or has expired
         if (!$deadline || strtotime($deadline->end_date) < strtotime(now())) {
             return back()->with('status', 'You cannot apply for a project at this time.');
-        } 
-    
+        }
+
         // Find the project
         $project = Project::findOrFail($project_id);
-    
+
         // Check if the user can apply for the project
         if (!$project->canApply(Auth::user())) {
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
 
+
         $request->validate([
             'motivation' => 'required_without:file',
             'file' => 'required_without:motivation|mimes:pdf,doc,docx,txts',
         ]);
-        
+
 
         // get path of file, store it
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('public');
         }
-    
+
         // Create a new application
         $application = new Application();
         $application->file_path = $filePath;
@@ -70,18 +72,18 @@ class ApplicationController extends Controller
         $application->user_id = Auth::user()->id;
         $application->project_id = $project_id;
         $application->save();
-    
+
         // Redirect with success message
         return redirect(route('projects.show', $project_id))->with('status', 'Application submitted successfully.');
     }
-    
+
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       
+
 
         $applications = Application::with('user')->get();
         $currentSpaceId = session('current_space_id');
@@ -91,7 +93,7 @@ class ApplicationController extends Controller
                 $query->where('space_id', $currentSpaceId);
             })
             ->get();
-        
+
 
         // Return the applications with user names to a view or as needed
         return view('applications.teacher.index', ['applications' => $applications]);
@@ -106,7 +108,7 @@ class ApplicationController extends Controller
         return view('applications.student.create', ['project' => $project]);
     }
 
-    
+
 
 
     /**
@@ -133,21 +135,29 @@ class ApplicationController extends Controller
         //
     }
 
-    public function approve(Request $request)
+    public function approve($id)
     {
-        $application = Application::find($request->id);
+        $application = Application::find($id);
+        if($application->status == 'approved'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Approved!');
+        }
         $application->status = 'approved';
         $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
         $application->save();
+
+
 
         $application->project->users()->attach($application->user->id);
 
         return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Approved!');
     }
 
-    public function reject(Request $request)
+    public function reject($id)
     {
-        $application = Application::find($request->id);
+        $application = Application::find($id);
+        if($application->status == 'rejected'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Rejected!');
+        }
         $application->status = 'rejected';
         $application->save();
         return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
