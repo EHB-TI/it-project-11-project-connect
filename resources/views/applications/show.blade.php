@@ -32,7 +32,7 @@
         @if ($application->file_path)
             <div class="mt-4">
                 <h3 class="text-lg font-bold">PDF Application</h3>
-                <iframe src="{{ asset('storage/' . $application->file_path) }}" width="100%" height="600px"></iframe>
+                <iframe src="{{ Storage::url($application->file_path) }}" width="100%" height="600px"></iframe>
             </div>
         @endif
     @else
@@ -41,10 +41,6 @@
             <p>The selected student did not yet upload an application.</p>
         </div>
     @endif
-
-
-
-    
 
     @if(Auth::user()->id == $application->project->owner->id && $application->status == 'pending')
     <div class="rounded-xl border-2 overflow-hidden mb-8 p-4 flex flex-col">
