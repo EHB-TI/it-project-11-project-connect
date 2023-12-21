@@ -24,7 +24,7 @@ class DashboardController extends Controller
     
         // Fetch deadline
         $deadline = Deadline::nextDeadlineForSpace($space_id);
-        
+
         //SELECTING THE PRODUCT OWNERS
         $po = $spaceUsers->where('isProductOwner', true)->count();
 
@@ -45,6 +45,12 @@ class DashboardController extends Controller
         $pendingProjects = $projects->where('status', 'pending')->count();
         $allProjects = $projects->count();
     
+        //GETTING ALL STUDENTS THAT ARE MEMBERS OF A PROJECT
+        // Iterate through each project to count the number of members and sum them up
+        $totalMembersCount = 0;
+        foreach ($projects as $project) {
+            $totalMembersCount[$project->name] = $project->users()->count();
+        }
         // Data for the view
         $data = [
             'deadline' => $deadline,
@@ -58,7 +64,8 @@ class DashboardController extends Controller
             'publishedProjects' => $publishedProjects,
             'approvedProjects' => $approvedProjects,
             'closedProjects' => $closedProjects,
-            'deniedProjects' => $deniedProjects
+            'deniedProjects' => $deniedProjects,
+            'members' => $totalMembersCount,
         ];
     
         // Return the view with the data

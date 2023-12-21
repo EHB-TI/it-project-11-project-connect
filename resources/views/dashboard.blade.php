@@ -24,6 +24,8 @@
     <div>
         <canvas id="pieChart" width="400" height="400"></canvas>
         <canvas id="barChart" width="400" height="400"></canvas>
+        <canvas id="barChart2" width="400" height="400"></canvas>
+
     </div>
 
 
@@ -162,6 +164,57 @@
     const barChart = new Chart(
         document.getElementById('barChart'),
         barConfig
+    );
+
+
+
+     // Bar Chart 2
+    const barLabels2 = ['members'];
+    const datasets2 = [];
+    
+    let members = {{$members}};
+for(let projectName in members) {
+    let memberCount = members[projectName];
+    datasets2.push({
+        label: projectName,
+        data: [memberCount],
+        backgroundColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 1
+    });
+}
+    const barData2 = {
+        labels: barLabels2,
+        datasets:datasets2
+    };
+
+    const barConfig2 = {
+                            type: 'bar',
+                            data: barData2,
+                            options: {
+                                responsive: true,
+                                indexAxis: 'y',
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Formed Teams'
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        max: 14, //should be the max of members for groups
+                                        beginAtZero: true 
+                                        },
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                       };
+
+    const barChart2 = new Chart(
+        document.getElementById('barChart2'),
+        barConfig2
     );
     
 </script>
