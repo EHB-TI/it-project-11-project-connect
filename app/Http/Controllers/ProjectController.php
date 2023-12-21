@@ -122,14 +122,14 @@ class ProjectController extends Controller
             $project->save();
         }
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
+        return back()->with('status', 'Project Published!');
     }
 
     public function unpublish(Request $request , Project $project){
         $project->status  = 'denied';
         $project->save();
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Unpublished!');
+        return back()->with('status', 'Project Unpublished!');
     }
 
     /**
