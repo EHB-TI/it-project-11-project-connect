@@ -24,10 +24,17 @@ class DashboardController extends Controller
     
         // Fetch deadline
         $deadline = Deadline::nextDeadlineForSpace($space_id);
-    
-        // Calculate user counts
+        
+        //SELECTING THE PRODUCT OWNERS
         $po = $spaceUsers->where('isProductOwner', true)->count();
-        $applicants = Application::groupBy('user_id')->count();
+
+        // GET THE APPLICANTS OF THE CORRECT SPACE 
+        $projects = Project::where('space_id', $space_id)->get();
+        $projectIds = $projects->pluck('id')->toArray();
+        $applications = Application::whereIn('project_id', $projectIds)->get();
+        $applicants = $applications->groupBy('user_id')->count();
+
+        // Calculate user counts
         $inactiveStudents = $spaceUsers->count() - $applicants - $po;
     
         // Calculate project counts
