@@ -37,6 +37,8 @@ Route::get('/spaces/create', [SpaceController::class,'create'])->name('spaces.cr
 //store a new space
 Route::post('/spaces', [SpaceController::class,'store'])->name('spaces.store')->middleware('role:teacher', 'auth');
 
+Route::post('/spaces/select', [SpaceController::class, 'select'])->name('spaces.select')->middleware('auth');
+
 
 
 
@@ -117,7 +119,6 @@ Route::middleware(['auth','set.current.space'])->group(function () {
 
     //DASHBOARD ROUTES
     //display the dashboard for students
-    Route::post('/dashboard', [DashboardController::class, 'show'])->name('dashboard.space');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 

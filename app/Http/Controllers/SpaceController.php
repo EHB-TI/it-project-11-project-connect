@@ -56,6 +56,17 @@ class SpaceController extends Controller
         return view('spaces.teacher.create');
     }
 
+    public function select(Request $request)
+    {
+        $request->validate([
+            'space_id' => 'required|exists:spaces,id',
+        ]);
+
+        session(['current_space_id' => $request->space_id]);
+
+        return redirect()->route('dashboard');
+    }
+
 }
 
 
