@@ -13,21 +13,25 @@ $projectDetailItems = ProjectDetailsItemsAlias::PRODUCT_OWNER;
 } elseif (Auth::user()->role == 'student') {
 $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
 }
+use App\Http\Middleware\StoreRoute;
+$storedPreviousRoute;
+session_start(); // Start the session
+
+// Store $previousRoute in a session variable
+$_SESSION['previousRoute'] = $previousRoute;
+
+// To retrieve the value later
+if (isset($_SESSION['previousRoute'])) {
+    $previousRoute = $_SESSION['previousRoute'];
+    
+} else {
+    
+}
 
 @endphp
 
 
-@if($previousRoute === "applications.index")
-<div class="breadcrumbs">
-    {!! Breadcrumbs::render('project_details_routeA', $project->id) !!}
-</div>
-
-@else
-<div class="breadcrumbs">
-    {!! Breadcrumbs::render('project_details_routeB', $project->id) !!}
-</div>
-@endif
-
+@include('components.breadcrumb', ['breadcrumbName' => $previousRoute . '2', 'id' => $project->id])
 
 <div class="flex gap-8">
     <div class="w-3/4">

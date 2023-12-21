@@ -2,9 +2,10 @@
 @section('title', 'Deadlines')
 
 @section('content')
-        <div class="breadcrumbs">
-            {!! Breadcrumbs::render('deadlines') !!}
-        </div>
+@php
+use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
         <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Deadlines</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach ($deadlines as $deadline)

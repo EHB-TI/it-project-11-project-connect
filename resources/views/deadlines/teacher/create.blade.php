@@ -3,9 +3,10 @@
 
 @section('content')
     <div class="container mx-auto p-4">
-        <div class="breadcrumbs">
-            {!! Breadcrumbs::render('deadlines_create') !!}
-        </div>
+        @php
+    use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
         <h1 class="font-bold text-2xl mb-4">Create Deadline</h1>
 
         <form action="{{ route('deadlines.store') }}" method="POST" class="grid grid-cols-2 gap-4">
