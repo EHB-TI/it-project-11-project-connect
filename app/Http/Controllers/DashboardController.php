@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Application;
 use App\Models\Project;
 use App\Models\Deadline;
+use App\Models\Space;
 
 
 class DashboardController extends Controller
