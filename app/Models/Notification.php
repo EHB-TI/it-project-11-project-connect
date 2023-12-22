@@ -25,6 +25,14 @@ class Notification extends Model
         return $this->hasMany(NotificationUserStatus::class);
     }
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'notification_user_statuses')
+                ->using(NotificationUserStatus::class)
+                ->withPivot('seen')
+                ->withTimestamps();
+}
+
     protected $fillable = [
         'content',
     ];
