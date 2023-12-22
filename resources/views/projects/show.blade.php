@@ -5,6 +5,8 @@
 @php
 use Illuminate\Support\Facades\Auth;
 use \App\Constants\ProjectDetailsItems as ProjectDetailsItemsAlias;
+use App\Http\Middleware\StoreRoute;
+
 $projectDetailItems = [];
 if (Auth::user()->role == 'teacher') {
 $projectDetailItems = ProjectDetailsItemsAlias::TEACHER;
@@ -13,25 +15,14 @@ $projectDetailItems = ProjectDetailsItemsAlias::PRODUCT_OWNER;
 } elseif (Auth::user()->role == 'student') {
 $projectDetailItems = ProjectDetailsItemsAlias::STUDENT;
 }
-use App\Http\Middleware\StoreRoute;
-$storedPreviousRoute;
-session_start(); // Start the session
 
-// Store $previousRoute in a session variable
-$_SESSION['previousRoute'] = $previousRoute;
-
-// To retrieve the value later
-if (isset($_SESSION['previousRoute'])) {
-    $previousRoute = $_SESSION['previousRoute'];
-    
-} else {
-    
-}
+$previousRoute = session('previousRoute', StoreRoute::getPreviousRouteName());
+session(['previousRoute' => $previousRoute]);
 
 @endphp
 
 
-@include('components.breadcrumb', ['breadcrumbName' => $previousRoute . '2', 'id' => $project->id])
+@include('components.breadcrumb', ['breadcrumbName' => $previousRoute, 'id' => $project->id])
 
 <div class="flex gap-8">
     <div class="w-3/4">
@@ -81,7 +72,7 @@ if (isset($_SESSION['previousRoute'])) {
     let activeTextColor = 'text-white';
     let projectId = {{ $project->id }};
     let section;
-    
+
     const updateContentAndClasses = (content, button) => {
         document.getElementById('details-content').innerHTML = content;
         const parentNode = button.parentNode;
@@ -94,7 +85,7 @@ if (isset($_SESSION['previousRoute'])) {
             }
         });
     };
-    
+
     console.log(`section before if that should redirect after submit ${section}`);
     let storedSection = localStorage.getItem('section');
     console.log(`here is the stored value: ${storedSection}`);
@@ -109,7 +100,7 @@ if (isset($_SESSION['previousRoute'])) {
                 subtitle.textContent = storedSection;
                 updateContentAndClasses(data, document.getElementById('feedback'));
             });
-    
+
     }
     else{
         console.log(`section in else that should redirect when not submit ${section}`);

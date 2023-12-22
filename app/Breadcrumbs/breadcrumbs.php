@@ -19,7 +19,7 @@ Breadcrumbs::for('projects.index', function (Generator $trail) {
 
 //Create Project
 Breadcrumbs::for('projects.create', function (Generator $trail) {
-    $trail->parent('dashboard'); 
+    $trail->parent('dashboard');
     $trail->push('Create Project', route('projects.create'));
 });
 
@@ -33,6 +33,13 @@ Breadcrumbs::for('applications.index2', function (Generator $trail, $id) {
 });
 
 Breadcrumbs::for('projects.index2', function (Generator $trail, $id) {
+    $project = Project::findOrFail($id); // Fetch project details using your model
+    $trail->parent('projects.index');
+    $trail->push($project->name, route('projects.show', $id));
+});
+
+// Project Details
+Breadcrumbs::for('projects.show', function (Generator $trail, $id) {
     $project = Project::findOrFail($id); // Fetch project details using your model
     $trail->parent('projects.index');
     $trail->push($project->name, route('projects.show', $id));
@@ -75,7 +82,7 @@ Breadcrumbs::for('students.show', function (Generator $trail, $id) {
     $trail->push($student->name, route('students.show', $id));
 });
 
-// Feedback 
+// Feedback
 
 
 
