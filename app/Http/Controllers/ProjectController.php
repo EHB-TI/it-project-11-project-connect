@@ -82,10 +82,12 @@ class ProjectController extends Controller
             'name' => 'required|max:100',
             'description' => 'required',
         ]);
+
         $filePath = '';
         // get path of file, store it
         if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('public');
+            $filePath = $request->file('file')->storePublicly('public');
+            $filePath = str_replace('public/', '', $filePath);
         }
 
         // Create a new project instance
