@@ -16,10 +16,6 @@
         <div class="mt-8">
                 <div class="mt-6">
                     <h2 class="text-2xl font-semibold mb-2">Motivation</h2>
-                    <a href=""
-                       class="inline-block border border-black rounded-xl py-2 px-4 mb-4">
-                        Download File
-                    </a>
                     
                     <div class="bg-gray-200 p-4 rounded-lg mb-4">
                         <div class="container mx-auto">

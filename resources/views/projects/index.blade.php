@@ -68,7 +68,7 @@ use App\Http\Middleware\StoreRoute;
             </thead>
             <tbody>
                 @foreach ($projects as $project)
-                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer">
+                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='{{ route('projects.show', $project->id) }}'">
                         <td class="p-2">
                             <a href="{{ route('projects.show', ['id' => $project->id]) }}">
                                 {{ $project->name }}
