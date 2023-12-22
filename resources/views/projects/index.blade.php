@@ -32,6 +32,23 @@ use App\Http\Middleware\StoreRoute;
                 @endforeach
             </div>
         @endif
+
+        <div class="project-page__end border-t-2 pt-8">
+            <h2 class="text-2xl leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl mb-4">That's it!</h2>
+            <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">Found nothing
+                that appeals to you?</h1>
+            <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl mb-4">Become a
+                Product Owner.</h1>
+            <p class="mb-4">Do you have a brilliant idea waiting to come to life?
+                This is your chance to become the leader you've always wanted to be.
+                Apply as a Product Owner and lead your project to success with a dedicated
+                team assembled by us. Let your idea change the world!
+            </p>
+
+            <button onclick="window.location.href='{{ route('projects.create') }}'"
+                    class="project-detail__applyButton rounded-full px-4 py-2 border-2">Transform my idea into reality
+            </button>
+        </div>
     @endif
     <!--publish projects table-->
     @if (Auth::user()->role == 'teacher')
@@ -89,21 +106,4 @@ use App\Http\Middleware\StoreRoute;
             </tbody>
         </table>
     @endif
-    <hr>
-
-    <div class="project-page__end border-t-2 pt-8">
-        <h2 class="text-2xl leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl mb-4">That's it!</h2>
-        <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">Found nothing
-            that appeals to you?</h1>
-        <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl mb-4">Become a
-            Product Owner.</h1>
-        <p class="mb-4">Do you have a brilliant idea waiting to come to life?
-            This is your chance to become the leader you've always wanted to be.
-            Apply as a Product Owner and lead your project to success with a dedicated
-            team assembled by us. Let your idea change the world!
-        </p>
-
-        <button onclick="window.location.href='{{ route('projects.create') }}'"
-            class="project-detail__applyButton rounded-full px-4 py-2 border-2">Transform my idea into reality
-        </button>
     @endsection
