@@ -51,6 +51,13 @@ Breadcrumbs::for('applications.index', function (Generator $trail) {
     $trail->push('Applications', route('applications.index'));
 });
 
+// Application Details
+Breadcrumbs::for('applications.show', function (Generator $trail, $id) {
+    $application = \App\Models\Application::findOrFail($id); // Fetch application details using your model
+    $trail->parent('projects.show', $application->project_id);
+    $trail->push($application->user->name, route('applications.show', $id));
+});
+
 // Deadlines
 Breadcrumbs::for('deadlines.index', function (Generator $trail) {
     $trail->parent('dashboard'); // Assuming 'Deadlines' is accessible from the dashboard
