@@ -41,7 +41,6 @@ Route::post('/spaces/select', [SpaceController::class, 'select'])->name('spaces.
 
 
 
-
 //AUTH ROUTES
 //Authentication for production
 Route::get('/login', function() {

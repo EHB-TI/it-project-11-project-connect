@@ -21,6 +21,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
+        // Make sure no indentation is used in the string below or the markdown parser will not work
         $markdownString = "
 # Markdown Test String
 
