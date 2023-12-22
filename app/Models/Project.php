@@ -101,6 +101,11 @@ class Project extends Model
                 return false;
             }
         }
+
+        // Check if the user is already a member of a project
+        if ($user->isMemberOfAnyProject()) {
+            return false;
+        }
     
         // Check if the user has not already applied to the project
         if ($this->applications()->where('user_id', $user->id)->exists()) {
