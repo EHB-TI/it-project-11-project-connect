@@ -50,10 +50,10 @@ class DashboardController extends Controller
         }
 
         if (Auth::user()->hasRole('teacher')) {
-            $spaceUsers = $spaceUsers->where('isTeacher', false);
+            $spaceUsers = $spaceUsers->where('role', 'student');
 
             //SELECTING THE PRODUCT OWNERS
-            $po = $spaceUsers->where('isProductOwner', true)->count();
+            $po = $space->projects->where('user_id', Auth::user())->count();
 
             // GET THE APPLICANTS OF THE CORRECT SPACE
             $projects = Project::where('space_id', $space_id)->get();

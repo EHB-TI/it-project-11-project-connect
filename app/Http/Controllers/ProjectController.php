@@ -110,8 +110,6 @@ class ProjectController extends Controller
 
         // Attach the authenticated user to the project
         $project->users()->attach($user->id);
-
-        $user->isProductOwner = true;
         $user->save();
 
 

@@ -106,7 +106,7 @@ class Project extends Model
         // Check if the user is a product owner of any project in the same space as the project
         $space = $user->spaces()->where('space_id', $this->space_id)->first();
         if ($space) {
-            $isProductOwnerInSpace = $space->projects()->where('product_owner_id', $user->id)->exists();
+            $isProductOwnerInSpace = $space->projects()->where('user_id', $user->id)->exists();
             if ($isProductOwnerInSpace) {
                 return false;
             }
