@@ -57,6 +57,11 @@ class Project extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function discussions(): HasManyAlias
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
     public function applicationStatus(User $user): string
     {
         $application = $this->applications()->where('user_id', $user->id)->first();

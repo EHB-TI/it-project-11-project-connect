@@ -12,7 +12,7 @@ class Discussion extends Model
         'message'
     ];
 
-    public function owner()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
