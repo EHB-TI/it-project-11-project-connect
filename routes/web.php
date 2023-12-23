@@ -159,6 +159,10 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     //update the project details
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
 
+    // get the discussion between teachers 
+    Route::get('/projects/details/discussion/{id}', [ProjectDetailsController::class, 'discussion']) ->name('projects.discussion') ->middleware('role:teacher');
+    //update the discussionboard for teachers 
+    Route::post('/projects/{project}/discussions', [App\Http\Controllers\DiscussionController::class, 'store'])->name('discussions.store');
     //APPLICATION ROUTES
     //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
