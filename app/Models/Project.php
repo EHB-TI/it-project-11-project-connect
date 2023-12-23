@@ -57,6 +57,11 @@ class Project extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function discussions(): HasManyAlias
+    {
+        return $this->hasMany(Discussion::class);
+
+    }
     public function reviews(): HasManyAlias
     {
         return $this->hasMany(Review::class);

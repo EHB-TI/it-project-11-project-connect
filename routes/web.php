@@ -166,11 +166,15 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     Route::get('/projects/details/applications/{id}', [ProjectDetailsController::class, 'applications']);
 
     //get the edit component of the project details
-    Route::get('/projects/edit/{id}', [ProjectController::class, 'edit']) ->name('projects.edit')->middleware('checkProjectOwner');
+    Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit')->middleware('checkProjectOwner');
 
     //update the project details
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
 
+    // get the discussion between teachers 
+    Route::get('/projects/details/discussion/{id}', [ProjectDetailsController::class, 'discussion'])->name('projects.discussion')->middleware('role:teacher');
+    //update the discussionboard for teachers 
+    Route::post('/projects/{project}/discussions', [App\Http\Controllers\DiscussionController::class, 'store'])->name('discussions.store')->middleware('role:teacher');
     //store a new review
     Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review')->middleware('role:teacher');
 
