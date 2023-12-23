@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Deadline;
 use App\Models\Space;
+use App\Models\Notification;
+use App\Models\User;
 
 class DeadlineController extends Controller
 {
@@ -35,6 +37,18 @@ class DeadlineController extends Controller
             'end_date' => $validatedData['when_date'] . ' ' . $validatedData['when_time'],
             'space_id' => session('current_space_id'),
         ]);
+
+        $space_name = Space::find(session('current_space_id'))->name;
+
+        $notification = Notification::create([
+            'content' => $space_name . ': a new deadline has been created: ' . $validatedData['what'] . ' on ' . $validatedData['when_date'] . ' at ' . $validatedData['when_time']	,
+        ]);
+
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $user->notifications()->attach($notification->id, ['seen' => false]);
+        }
 
         return redirect()->route('deadlines.index')->with('status', 'Deadline Created!');
     }

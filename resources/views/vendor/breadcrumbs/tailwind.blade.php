@@ -1,6 +1,7 @@
 @unless ($breadcrumbs->isEmpty())
     <nav class="w-full mb-8">
-        <ol class="p-4  w-full flex flex-wrap border-b-2 text-sm text-gray-800">
+        <ol class="p-4  w-full flex flex-wrap border-b-2 text-sm text-gray-800 justify-between">
+            <div class="flex">
             @foreach ($breadcrumbs as $breadcrumb)
 
                 @if ($breadcrumb->url && !$loop->last)
@@ -22,6 +23,11 @@
                 @endif
 
             @endforeach
+                </div>
+            <div>
+                <x-notification-bell :notifications="$notifications" />
+            </div>
         </ol>
+        
     </nav>
 @endunless

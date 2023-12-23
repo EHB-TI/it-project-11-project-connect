@@ -30,10 +30,10 @@
         @endunless
         <div class="bg-gray-900 p-4">
             @Auth
-                <div class="flex items-center ">
-                    <div class="user-image w-10 h-10 rounded-full bg-white"></div>
-                    <span class="ml-2">{{ Auth::user()->name }}</span>
-                </div>
+            <div class="flex items-center ">
+                <div class="user-image w-10 h-10 rounded-full bg-white"></div>
+                <span class="ml-2">{{ Auth::user()->name }}</span>
+            </div>
 
                 <div>
                     <a href="{{ route('logout') }}" class="block mt-2 hover:underline">Logout</a>
