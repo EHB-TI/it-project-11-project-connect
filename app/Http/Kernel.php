@@ -29,6 +29,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use \App\Http\Middleware\StoreRoute;
+use \App\Http\Middleware\ShareNotifications;
 
 class Kernel extends HttpKernel
 {
@@ -64,6 +65,7 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             StartSession::class,
+            ShareNotifications::class,
         ],
 
         'api' => [

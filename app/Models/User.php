@@ -46,14 +46,21 @@ class User extends Authenticatable
         return $this->hasMany(Chat::class);
     }
 
-    public function notifications(): HasManyAlias
+    public function notifications()
     {
-        return $this->hasMany(Notification::class, 'user_id');
+        return $this->belongsToMany(Notification::class, 'Notification_user_status', 'user_id', 'notification_id')
+                    ->withPivot('seen')
+                    ->withTimestamps();
     }
 
     public function spaces(): BelongsToManyAlias
     {
         return $this->belongsToMany(Space::class);
+    }
+
+    public function reviews(): HasManyAlias
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function isMemberOfAnyProject(): bool

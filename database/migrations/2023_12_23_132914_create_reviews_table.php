@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status');
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
-
-            $table->string('content');
-            $table->string('route')->nullable();
-
-            $table->unsignedBigInteger('space_id');
-
-            $table->foreign('space_id')->references('id')->on('spaces');
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('review');
     }
 };

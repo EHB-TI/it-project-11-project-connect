@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProjectDetailsController;
+use App\Http\Controllers\ReviewController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeadlineController;
 use App\Http\Controllers\SpaceController;
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -116,6 +118,13 @@ if (app()->environment('local')) {
 //only authenticated users can access these routes
 Route::middleware(['auth','set.current.space', 'store.route'])->group(function () {
 
+    Route::post('/change-space', function (Request $request) {
+        if (session('current_space_id') != $request->input('space_id')) {
+            session(['current_space_id' => $request->input('space_id')]);
+        }
+        return redirect($request->input('route'));
+    })->name('space.change');
+
     //DASHBOARD ROUTES
     //display the dashboard for students
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
@@ -135,6 +144,9 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     Route::post('/projects/publish', [ProjectController::class, 'publish'])->name('projects.publish')->middleware('role:teacher');
     //unpublish route for teachers
     Route::post('/projects/{project}/unpublish', [ProjectController::class, 'unpublish'])->name('projects.unpublish') ->middleware('role:teacher');
+
+    Route::post('/projects/{project}/approve', [ProjectController::class, 'approve'])->name('projects.approve') ->middleware('role:teacher');
+    Route::post('/projects/{project}/reject', [ProjectController::class, 'reject'])->name('projects.reject') ->middleware('role:teacher');
 
 
     //PROJECT DETAILS ROUTES
@@ -163,6 +175,10 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     Route::get('/projects/details/discussion/{id}', [ProjectDetailsController::class, 'discussion']) ->name('projects.discussion') ->middleware('role:teacher');
     //update the discussionboard for teachers 
     Route::post('/projects/{project}/discussions', [App\Http\Controllers\DiscussionController::class, 'store'])->name('discussions.store');
+    //store a new review
+    Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review')->middleware('role:teacher');
+
+
     //APPLICATION ROUTES
     //display the page of a specific application
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
