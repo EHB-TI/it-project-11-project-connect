@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Space::class);
     }
 
+    public function reviews(): HasManyAlias
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function isMemberOfAnyProject(): bool
     {
         return $this->projects()->exists();
