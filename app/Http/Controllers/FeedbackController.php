@@ -33,7 +33,9 @@ class FeedbackController extends Controller
 
 
         $notification = Notification::create([
-            'content' => $space_name . ': ' . Auth::user()->name . ' has left feedback for: ' . $project->title,
+            'content' => $space_name . ': ' . Auth::user()->name . ' has left feedback for: ' . $project->name,
+            'route' => route('projects.show', $id),
+            'space_id' => session('current_space_id'),
         ]);
 
         $user = User::find($project->user_id);

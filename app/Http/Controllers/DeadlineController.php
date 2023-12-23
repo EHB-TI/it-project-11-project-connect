@@ -38,15 +38,15 @@ class DeadlineController extends Controller
             'space_id' => session('current_space_id'),
         ]);
 
-        $space_name = Space::find(session('current_space_id'))->name;
+        $space = Space::find(session('current_space_id'));
 
         $notification = Notification::create([
-            'content' => $space_name . ': a new deadline has been created: ' . $validatedData['what'] . ' on ' . $validatedData['when_date'] . ' at ' . $validatedData['when_time']	,
+            'content' => $space->name . ': a new deadline has been created: ' . $validatedData['what'] . ' on ' . $validatedData['when_date'] . ' at ' . $validatedData['when_time']	,
             'route' => route('dashboard'),
             'space_id' => session('current_space_id'),
         ]);
 
-        $users = User::all()->where('role', 'student');
+        $users = User::where('role', 'student', 'space_id', $space->id)->get();
 
         foreach ($users as $user) {
             $user->notifications()->attach($notification->id, ['seen' => false]);

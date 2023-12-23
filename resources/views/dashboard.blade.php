@@ -1,6 +1,10 @@
 @extends('components.head')
 @section('title', 'Home')
 @section('content')
+@php
+    use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <div class="flex gap-8">
 
