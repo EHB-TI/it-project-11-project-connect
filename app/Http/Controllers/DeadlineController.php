@@ -42,9 +42,11 @@ class DeadlineController extends Controller
 
         $notification = Notification::create([
             'content' => $space_name . ': a new deadline has been created: ' . $validatedData['what'] . ' on ' . $validatedData['when_date'] . ' at ' . $validatedData['when_time']	,
+            'route' => route('dashboard'),
+            'space_id' => session('current_space_id'),
         ]);
 
-        $users = User::all();
+        $users = User::all()->where('role', 'student');
 
         foreach ($users as $user) {
             $user->notifications()->attach($notification->id, ['seen' => false]);
