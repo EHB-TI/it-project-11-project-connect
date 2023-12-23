@@ -93,6 +93,25 @@
                     </li>
                 @endforeach
             </ul>
+
+            @if(Auth::user()->role == 'teacher' && $project->status != 'published')
+            <div class="rounded-xl border-2 overflow-hidden mb-8 p-4 mt-4">
+                <h2 class="mb-4 text-2xl">Adjust status: {{$project->status}}</h2>
+                <div class="flex">
+                    <form action="{{ route('projects.approve', ['project' => $project->id]) }}"
+                          method="POST">
+                        @csrf
+                        <button type="submit" class="block w-fit rounded-full px-4 py-2 border-2 text-white bg-green-800">approve</button>
+                    </form>
+                    <form action="{{ route('projects.reject', ['project' => $project->id]) }}"
+                          method="POST">
+                        @csrf
+                        <button type="submit" class="block w-fit rounded-full px-4 py-2 border-2 text-white bg-red-800">reject</button>
+                    </form>
+                </div>
+            </div>
+            @endif
+
         </div>
     </div>
     <script>
