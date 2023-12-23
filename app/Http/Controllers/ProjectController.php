@@ -237,6 +237,23 @@ class ProjectController extends Controller
         return back()->with('status', 'Review submitted successfully!');
     }
 
+    public function approve(Project $project)
+    {
+        $project->status = 'approved';
+        $project->save();
+
+        return back()->with('status', 'Project Approved!');
+
     }
+
+    public function reject(Project $project)
+    {
+        $project->status = 'denied';
+        $project->save();
+
+        return back()->with('status', 'Project Rejected!');
+    }
+
+}
 
 
