@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProjectDetailsController;
+use App\Http\Controllers\ReviewController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -166,6 +167,10 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
 
     //update the project details
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
+
+    //store a new review
+    Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review')->middleware('role:teacher');
+
 
     //APPLICATION ROUTES
     //display the page of a specific application

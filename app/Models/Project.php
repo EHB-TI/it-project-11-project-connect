@@ -57,6 +57,11 @@ class Project extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function reviews(): HasManyAlias
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function applicationStatus(User $user): string
     {
         $application = $this->applications()->where('user_id', $user->id)->first();
@@ -92,7 +97,7 @@ class Project extends Model
         if ($this->isOwner($user) || $user->role === 'teacher') {
             return false;
         }
-    
+
         // Check if the user is a product owner of any project in the same space as the project
         $space = $user->spaces()->where('space_id', $this->space_id)->first();
         if ($space) {
@@ -106,12 +111,12 @@ class Project extends Model
         if ($user->isMemberOfAnyProject()) {
             return false;
         }
-    
+
         // Check if the user has not already applied to the project
         if ($this->applications()->where('user_id', $user->id)->exists()) {
             return false;
         }
-    
+
         return true;
     }
 
@@ -121,7 +126,7 @@ class Project extends Model
         if ($this->applications()->where('user_id', $user->id)->exists()) {
             return true;
         }
-    
+
         return false;
     }
 

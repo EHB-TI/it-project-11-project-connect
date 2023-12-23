@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\StoreRoute;
 use App\Models\Project;
+use App\Models\Review;
 use App\Models\User;
 use App\Models\Space;
 use App\Models\Deadline;
@@ -209,6 +210,31 @@ class ProjectController extends Controller
                 return $routeName;
             }
         }
+    }
+
+    public function review(Request $request, $id, $status)
+    {
+        // Convert the status parameter to a boolean value
+        $status = $status === 'approve';
+
+        // Fetch the existing review for the project and user
+        $review = Review::where('project_id', $id)->where('user_id', Auth::user()->id)->first();
+
+        // If a review exists, update its status. If not, create a new review.
+        if ($review) {
+            $review->status = $status;
+        } else {
+            $review = new Review([
+                'status' => $status,
+                'project_id' => $id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+
+        // Save the review to the database
+        $review->save();
+
+        return back()->with('status', 'Review submitted successfully!');
     }
 
     }
