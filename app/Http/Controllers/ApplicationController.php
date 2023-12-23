@@ -75,10 +75,12 @@ class ApplicationController extends Controller
         $application->project_id = $project_id;
         $application->save();
 
-        $space_name = Space::find(session('current_space_id'))->name;
+        $space = Space::find(session('current_space_id'));
 
         $notification = Notification::create([
-            'content' => $space_name . ': ' . Auth::user()->name . ' has applied for your project: ' . $project->title,
+            'content' => $space->name . ': ' . Auth::user()->name . ' has applied for your project: ' . $project->name,
+            'route' => route('applications.show', $application->id),
+            'space_id' => session('current_space_id'),
         ]);
 
         $user = User::find($project->user_id);

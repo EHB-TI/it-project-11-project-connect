@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeadlineController;
 use App\Http\Controllers\SpaceController;
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,6 +116,13 @@ if (app()->environment('local')) {
 //AUTH PROTECTED ROUTES
 //only authenticated users can access these routes
 Route::middleware(['auth','set.current.space', 'store.route'])->group(function () {
+
+    Route::post('/change-space', function (Request $request) {
+        if (session('current_space_id') != $request->input('space_id')) {
+            session(['current_space_id' => $request->input('space_id')]);
+        }
+        return redirect($request->input('route'));
+    })->name('space.change');
 
     //DASHBOARD ROUTES
     //display the dashboard for students
