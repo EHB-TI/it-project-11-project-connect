@@ -19,6 +19,7 @@
         $previousRoute = session('previousRoute', StoreRoute::getPreviousRouteName());
         session(['previousRoute' => $previousRoute]);
 
+        $reviews = $project->reviews;
     @endphp
 
 
@@ -37,18 +38,29 @@
         </div>
         <div class="w-1/4">
             @if(Auth::user()->role == 'teacher')
-                <div>
-                    <h2>Review this project</h2>
-                    <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'approve']) }}"
-                          method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-success">Approve</button>
-                    </form>
-                    <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'disapprove']) }}"
-                          method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Disapprove</button>
-                    </form>
+                <div class="flex flex-col gap-4 mb-8">
+                    <h2>Reviews</h2>
+                    @foreach($reviews as $review)
+                        <div class="flex justify-between">
+                            <h3>{{ $review->user->name }}</h3>
+                            <p>{{ $review->status ? 'Approved' : 'Disapproved' }}</p>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="rounded-xl border-2 overflow-hidden mb-8 p-4">
+                    <h2 class="mb-4 text-2xl">Review this project</h2>
+                    <div class="flex">
+                        <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'approve']) }}"
+                              method="POST">
+                            @csrf
+                            <button type="submit" class="block w-fit rounded-full px-4 py-2 border-2 text-white bg-green-800">Looks good</button>
+                        </form>
+                        <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'disapprove']) }}"
+                              method="POST">
+                            @csrf
+                            <button type="submit" class="block w-fit rounded-full px-4 py-2 border-2 text-white bg-red-800">Needs work</button>
+                        </form>
+                    </div>
                 </div>
             @endif
             @if($project->canApply(Auth::user()))
