@@ -161,7 +161,7 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
 
     //store a new review
-    Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review');
+    Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review')->middleware('role:teacher');
 
 
     //APPLICATION ROUTES
