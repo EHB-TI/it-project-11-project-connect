@@ -4,8 +4,8 @@ This guide will help you set up the Laravel project on a Windows system.
 
 ## Prerequisites
 
-- **Install XAMPP**: Ensure you have XAMPP installed with at least PHP version 8.1. You can download it from [the official XAMPP website](https://www.apachefriends.org/index.html).
-- **Install Composer**: After installing XAMPP, install the latest version of Composer. Download it from [the Composer website](https://getcomposer.org/).
+- **Install XAMPP**: Ensure you have XAMPP installed with at least PHP version 8.3. You can download it from [the official XAMPP website](https://www.apachefriends.org/index.html).
+- **Install Composer**: After installing XAMPP, install the latest version of Composer. Download it from [the Composer website](https://getcomposer.org/). When prompted in the installer, select the php.exe file that is located in the xampp/php folder (composer usually selects this by default).
 - Ensure you have Git installed on your system.
 - **Install Node.js**: Ensure you have Node.js version 18 installed. Download it from [the Node.js website](https://nodejs.org/).
 
