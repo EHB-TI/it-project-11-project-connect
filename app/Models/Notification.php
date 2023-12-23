@@ -20,12 +20,27 @@ class Notification extends Model
 {
     use HasFactory;
 
+    public function space()
+    {
+        return $this->belongsTo(Space::class);
+    }
+
     public function statuses(): HasManyAlias
     {
         return $this->hasMany(NotificationUserStatus::class);
     }
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'notification_user_statuses')
+                ->using(NotificationUserStatus::class)
+                ->withPivot('seen')
+                ->withTimestamps();
+}
+
     protected $fillable = [
         'content',
+        'route',
+        'space_id',
     ];
 }

@@ -10,6 +10,9 @@ use Illuminate\Validation\Rules\File;
 
 use App\Models\Deadline;
 
+use App\Models\Notification;
+use App\Models\User;
+
 use App\Models\Space;
 
 use Auth;
@@ -37,7 +40,6 @@ class ApplicationController extends Controller
 
 
         $space = Space::find($space_id);
-        $allDeadlines = $space->deadlines()->get();
         $deadline = $space->deadlines()->get()->where('what', 'Apply For Projects')->first();
 
         // Check if the deadline is not found or has expired
@@ -72,6 +74,19 @@ class ApplicationController extends Controller
         $application->user_id = Auth::user()->id;
         $application->project_id = $project_id;
         $application->save();
+
+        $space = Space::find(session('current_space_id'));
+
+        $notification = Notification::create([
+            'content' => $space->name . ': ' . Auth::user()->name . ' has applied for your project: ' . $project->name,
+            'route' => route('applications.show', $application->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($project->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
+
 
         // Redirect with success message
         return redirect(route('projects.show', $project_id))->with('status', 'Application submitted successfully.');
@@ -145,9 +160,21 @@ class ApplicationController extends Controller
         $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
         $application->save();
 
-
-
         $application->project->users()->attach($application->user->id);
+
+        $space_name = Space::find(session('current_space_id'))->name;
+
+        $project = Project::find($application->project->id);
+
+        $notification = Notification::create([
+            'content' => $space_name . ': ' . Auth::user()->name . ' has approved your application for: ' . $project->title,
+            'route' => route('project.show', $project->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($application->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
 
         return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Approved!');
     }
@@ -160,6 +187,21 @@ class ApplicationController extends Controller
         }
         $application->status = 'rejected';
         $application->save();
+
+        $space_name = Space::find(session('current_space_id'))->name;
+
+        $project = Project::find($application->project->id);
+
+        $notification = Notification::create([
+            'content' => $space_name . ': ' . Auth::user()->name . ' has rejected your application for: ' . $project->title,
+            'route' => route('application.show', $application->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($application->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
+
         return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
     }
 }
