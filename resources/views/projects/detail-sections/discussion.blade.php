@@ -35,6 +35,7 @@
                 <button id="btn" type="submit" class="px-4 py-2 bg-indigo-950 text-white rounded-xl">Submit message</button>
             </div>
         </div>
+        <p class="text-red-500">NOTE: Your comment is ONLY visible for fellow teachers!</p>
     </form>
 @endif
 
