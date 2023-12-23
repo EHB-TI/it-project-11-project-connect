@@ -36,6 +36,19 @@ session(['previousRoute' => $previousRoute]);
         </div>
     </div>
     <div class="w-1/4">
+        @if(Auth::user()->role == 'teacher')
+            <div>
+                <h2>Review this project</h2>
+                <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'approve']) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+                <form action="{{ route('projects.review', ['id' => $project->id, 'status' => 'disapprove']) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Disapprove</button>
+                </form>
+            </div>
+        @endif
         @if($project->canApply(Auth::user()))
         <x-application-box title="Apply for this project" message="Want to be part of this project?"
             route="applications.create" projectId="{{ $project->id }}" buttonText="Apply now" />
