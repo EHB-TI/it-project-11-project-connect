@@ -20,7 +20,7 @@ class ShareNotifications
 public function handle($request, Closure $next)
 {
     if (Auth::check()) {
-        $notifications = Auth::user()->notifications()->latest()->get();
+        $notifications = Auth::user()->notifications()->latest()->take(10)->get();
         View::share('notifications', $notifications);
     }
 
