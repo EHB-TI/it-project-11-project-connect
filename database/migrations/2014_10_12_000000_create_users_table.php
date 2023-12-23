@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('last_name', 50)->nullable();
             $table->string('role');
             $table->boolean('available')->default(true);
-            $table->boolean('isProductOwner')->default(false);
             $table->string('access_card_id', 12)->nullable();
             $table->rememberToken();
             $table->timestamps();
