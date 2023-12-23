@@ -14,6 +14,7 @@ class NavItems
     ];
 
     const STUDENT = [
+        'Dashboard' => 'dashboard',
         'Projects' => 'projects.index',
         'Make your project' => 'projects.create',
     ];

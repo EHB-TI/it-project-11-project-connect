@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Auth;
 use Closure;
 
@@ -26,7 +27,7 @@ class ProjectController extends Controller
         //authenticatie teacher for all projects
         if (Auth::user()->role == 'teacher'){
             $projects = Space::find($space_id)->projects()->get();
-        }else{
+        } else {
             $projects = Space::find($space_id)->projects()->where('status', 'published')->get();
         }
         return view('projects.index', ['projects' => $projects]);
@@ -48,7 +49,7 @@ class ProjectController extends Controller
 
         $previousRoute = $this->storeRoute();
 
-        return view('projects.show', [ 'project' => $project, 'previousRoute' => $previousRoute]);
+        return view('projects.show', ['project' => $project, 'previousRoute' => $previousRoute]);
     }
 
     /**
@@ -82,9 +83,11 @@ class ProjectController extends Controller
             'description' => 'required',
         ]);
 
+        $filePath = '';
         // get path of file, store it
         if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('public');
+            $filePath = $request->file('file')->storePublicly('public');
+            $filePath = str_replace('public/', '', $filePath);
         }
 
         // Create a new project instance
@@ -96,7 +99,7 @@ class ProjectController extends Controller
         $project->user_id = $user->id;
         $project->space_id = session('current_space_id');
 
-        if($user->hasRole('teacher')){
+        if ($user->hasRole('teacher')) {
             $project->status = 'approved';
         }
 
@@ -115,21 +118,23 @@ class ProjectController extends Controller
     }
 
 
-    public function publish(Request $request){
+    public function publish(Request $request)
+    {
         $project = Project::find($request->project_id);
-        if($project){
+        if ($project) {
             $project->status = 'published';
             $project->save();
         }
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Published!');
+        return back()->with('status', 'Project Published!');
     }
 
-    public function unpublish(Request $request , Project $project){
+    public function unpublish(Request $request, Project $project)
+    {
         $project->status  = 'denied';
         $project->save();
 
-        return redirect()->route('projects.show', $project->id)->with('status', 'Project Unpublished!');
+        return back()->with('status', 'Project Unpublished!');
     }
 
     /**
@@ -142,7 +147,7 @@ class ProjectController extends Controller
 
         // Controleer of de gebruiker de eigenaar van het project is
         if (Auth::user()->id !== $project->user_id) {
-            return redirect() ->route('projects.show',['id' => $id])->with('error', 'You are not the owner of this project.');
+            return redirect()->route('projects.show', ['id' => $id])->with('error', 'You are not the owner of this project.');
         }
 
         return view('projects.edit', compact('project'));
@@ -163,7 +168,7 @@ class ProjectController extends Controller
          ]);
 
         //check if the user is the owner of the project
-         if (Auth::user()->id !== $project->user_id) {
+        if (Auth::user()->id !== $project->user_id) {
             return redirect('/projects')->with('error', 'You are not the product-Owner');
         }
 
@@ -174,8 +179,6 @@ class ProjectController extends Controller
         $project->save();
 
         return redirect()->route('projects.show', $project->id)->with('status', 'Project Updated!');
-
-
     }
 
     /**
@@ -195,18 +198,19 @@ class ProjectController extends Controller
     public function storeRoute()
     {
         $request = request();
-    $routes = Route::getRoutes();
+        $routes = Route::getRoutes();
 
-    $referrer = $request->header('referer');
-    $referrer = str_replace("http://localhost:8000/", '', $referrer);
-    foreach ($routes as $route) {
-        if ($referrer === $route->uri()) {
-            // If it matches, retrieve the route name and return it
-            $routeName = $route->getName();
-            return $routeName;
+        $referrer = $request->header('referer');
+        $referrer = str_replace("http://localhost:8000/", '', $referrer);
+        foreach ($routes as $route) {
+            if ($referrer === $route->uri()) {
+                // If it matches, retrieve the route name and return it
+                $routeName = $route->getName();
+                return $routeName;
+            }
         }
     }
 
     }
 
-}
+
