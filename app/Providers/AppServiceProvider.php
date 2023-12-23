@@ -22,9 +22,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         require app_path('Breadcrumbs/breadcrumbs.php');
-
-        View::composer('components.nav-bar', function ($view) {
-            $view->with('spaces', Auth::user()->spaces);
-        });
     }
 }
