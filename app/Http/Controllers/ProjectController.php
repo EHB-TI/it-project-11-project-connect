@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Space;
+use App\Models\Notification;
 use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -126,6 +127,18 @@ class ProjectController extends Controller
             $project->status = 'published';
             $project->save();
         }
+
+        $space_name = Space::find(session('current_space_id'))->name;
+
+        $notification = Notification::create([
+            'content' => $space_name . ': ' . 'Your Project has been published: ' . $project->name,
+            'route' => route('projects.show', $project->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($project->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
 
         return back()->with('status', 'Project Published!');
     }
