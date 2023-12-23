@@ -16,6 +16,11 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('content');
+            $table->string('route')->nullable();
+
+            $table->unsignedBigInteger('space_id');
+
+            $table->foreign('space_id')->references('id')->on('spaces');
         });
     }
 
