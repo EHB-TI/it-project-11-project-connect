@@ -64,4 +64,14 @@ class ProjectDetailsController extends Controller
     
         return view('projects.detail-sections.edit', compact('project'));
     }
+
+
+    public function discussion($project_id)
+    {
+        $space_id = session('current_space_id');
+        $project = Space::find($space_id)->projects()->find($project_id);
+        $projectDiscussions = $project->discussions()->orderBy('created_at', 'desc')->get();
+
+        return view('projects.detail-sections.discussion', ['project' => $project, 'projectDiscussions' => $projectDiscussions]);
+    }
 }
