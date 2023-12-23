@@ -217,12 +217,22 @@ class ProjectController extends Controller
         // Convert the status parameter to a boolean value
         $status = $status === 'approve';
 
-        // Create a new Review instance and save it to the database
-        $review = Review::create([
-            'status' => $status,
-            'project_id' => $id,
-            'user_id' => Auth::user()->id,
-        ]);
+        // Fetch the existing review for the project and user
+        $review = Review::where('project_id', $id)->where('user_id', Auth::user()->id)->first();
+
+        // If a review exists, update its status. If not, create a new review.
+        if ($review) {
+            $review->status = $status;
+        } else {
+            $review = new Review([
+                'status' => $status,
+                'project_id' => $id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+
+        // Save the review to the database
+        $review->save();
 
         return back()->with('status', 'Review submitted successfully!');
     }
