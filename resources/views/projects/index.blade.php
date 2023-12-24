@@ -17,7 +17,7 @@ use App\Http\Middleware\StoreRoute;
                 @foreach ($projects as $project)
                     <div class="project-card rounded-xl overflow-hidden hover:cursor-pointer"
                         onclick="window.location.href='{{ route('projects.show', $project->id) }}'">
-                        <div class="project-card__image bg-cover bg-center w-full md:h-[200px] xl:h-[500px] bg-amber-500"
+                        <div class="project-card__image bg-cover bg-center w-full md:h-[200px] bg-amber-500"
                             style="background-image: url( {{ Storage::url($project->file_path) }} )"></div>
                         <div class="project-card__content rounded-b-xl border-2 border-t-0 p-4 flex flex-col gap-2">
                             <h2 class="project-card__title text-2xl font-bold">{{ $project->name }}</h2>
