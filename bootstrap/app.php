@@ -43,6 +43,19 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
+| Set Storage Path
+|--------------------------------------------------------------------------
+|
+| Here we will set the storage path in the application. This directory
+| is used by Laravel for various storage functions like logs and cache.
+| On Google App Engine, we'll use the /tmp directory for this.
+|
+*/
+
+$app->useStoragePath(env('STORAGE_PATH', base_path() . '/storage'));
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |

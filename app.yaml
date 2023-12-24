@@ -9,6 +9,7 @@ env_variables:
   DB_USERNAME: root
   DB_PASSWORD: 4b5&m8@nG&k!eFJr
   DB_SOCKET: "/cloudsql/project-connect-409018:europe-west1:project-connect"
+  STORAGE_PATH: "/tmp"
 
 beta_settings:
   # For Cloud SQL
