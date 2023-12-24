@@ -7,7 +7,8 @@
 
         @unless (Route::currentRouteName() === 'spaces.index' ||
                 Route::currentRouteName() === 'spaces.create' ||
-                Route::currentRouteNamed('welcome'))
+                Route::currentRouteNamed('welcome') ||
+                Route::currentRouteNamed('user.create'))
             <ul class="flex flex-col flex-grow">
                 @Auth
                     @php

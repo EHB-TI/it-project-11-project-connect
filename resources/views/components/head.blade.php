@@ -13,15 +13,12 @@
 <body>
     {{--DEVELOPMENT TOOL--}}
     {{--only show in development environment--}}
-    @if (app()->environment('local'))
+    @if (app()->environment('local') || app()->environment('staging'))
         <div id="test-auth" class="test-auth fixed bottom-4 right-4 p-4 border-2 rounded-lg bg-indigo-950 text-white z-50">
             <button id="close-button" onclick="toggleTestAuth()" class="absolute top-0 right-2 p-1 rounded-full text-3xl">x</button>
             <h1 class="text-2xl">Test authentication</h1>
             <p>login a user with the corresponding role</p>
-            <div class="grid grid-cols-2 gap-2 mt-2">
-                <button onclick="window.location.href='/login/student'" class="p-1 bg-white text-indigo-950 rounded-lg">Login as student</button>
-                <button onclick="window.location.href='/login/teacher'" class="p-1 bg-white text-indigo-950 rounded-lg">Login as teacher</button>
-            </div>
+            <button onclick="promptForUserId()" class="p-1 bg-white text-indigo-950 rounded-lg">Login with User ID</button>
         </div>
         <button id="test-auth__button" onclick="toggleTestAuth()" class="hidden fixed bottom-4 right-4 p-4 border-2 rounded-lg bg-indigo-950 text-white z-50">Auth</button>
     @endif
@@ -45,6 +42,13 @@
             const testAuthButton = document.getElementById('test-auth__button');
             testAuth.classList.toggle('hidden');
             testAuthButton.classList.toggle('hidden');
+        }
+
+        function promptForUserId() {
+            var userId = prompt("Please enter your User ID:");
+            if (userId) {
+                window.location.href = '/login/' + userId;
+            }
         }
     </script>
 </body>

@@ -85,26 +85,16 @@ Route::get('/logout', function() {
 
 
 //Mock authentication for development
-//This route is only available in the local environment
-if (app()->environment('local')) {
-    Route::get('/login/{role}', function($role) {
-        if (!in_array($role, ['student', 'teacher'])) {
-            return redirect('/');
+//This route is not available in the production environment
+if (app()->environment('local') || app()->environment('testing') || app()->environment('staging')) {
+    Route::get('/login/{id}', function($id) {
+        // Find the user by id
+        $user = User::find($id);
+
+        // If the user is not found, redirect to a form
+        if (!$user) {
+            return redirect('/user/create');
         }
-
-        $casUser = config('cas.cas_attributes.' . $role . '.name');
-        $attributes = config('cas.cas_attributes.' . $role . '.attributes');
-        $role = $attributes['role'] ?? 'student';
-
-        // Find existing user or create a new user
-        $user = User::firstOrCreate(
-            ['name' => $casUser],
-            ['role' => $role],
-            ['available' => 'true'],
-            ['access_card_id' => '123456789']
-        );
-
-        //user info should be updated
 
         // Log the user in
         Auth::login($user, true);
@@ -112,6 +102,9 @@ if (app()->environment('local')) {
         // Redirect the user to their intended page
         return redirect()->intended();
     });
+
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 }
 
 //AUTH PROTECTED ROUTES
@@ -171,9 +164,9 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     //update the project details
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
 
-    // get the discussion between teachers 
+    // get the discussion between teachers
     Route::get('/projects/details/discussion/{id}', [ProjectDetailsController::class, 'discussion'])->name('projects.discussion')->middleware('role:teacher');
-    //update the discussionboard for teachers 
+    //update the discussionboard for teachers
     Route::post('/projects/{project}/discussions', [App\Http\Controllers\DiscussionController::class, 'store'])->name('discussions.store')->middleware('role:teacher');
     //store a new review
     Route::post('/projects/{id}/review/{status}', [ProjectController::class, 'review'])->name('projects.review')->middleware('role:teacher');
