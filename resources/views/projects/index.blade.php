@@ -84,7 +84,7 @@ use App\Http\Middleware\StoreRoute;
                         </td>
                         <!--publish button-->
                         <td class="p-2">
-                            @if ($project->status != 'published')
+                            @if ($project->status == 'approved')
                                 <form action="{{ route('projects.publish') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="project_id" value="{{ $project->id }}">
