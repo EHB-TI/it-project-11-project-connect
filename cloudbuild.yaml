@@ -1,0 +1,18 @@
+steps:
+  # Install Composer dependencies
+  - name: 'gcr.io/cloud-builders/composer'
+    args: ['install']
+
+  # Install Node.js dependencies
+  - name: 'node:18.17.1'  # Use the node version that matches your environment
+    entrypoint: 'npm'
+    args: ['install']
+
+  # Build assets using Vite
+  - name: 'node:18.17.1'
+    entrypoint: 'npm'
+    args: ['run', 'build']  # This matches the script in your package.json
+
+  # Deploy to App Engine
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy']
