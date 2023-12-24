@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'stackdriver'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,6 +56,16 @@ return [
             'driver' => 'stack',
             'channels' => ['single'],
             'ignore_exceptions' => false,
+        ],
+
+        'stackdriver' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => \Monolog\Handler\ErrorLogHandler::class,
+            'handler_with' => [
+                'level' => \Monolog\Logger::DEBUG,
+                'bubble' => true,
+            ],
         ],
 
         'single' => [
