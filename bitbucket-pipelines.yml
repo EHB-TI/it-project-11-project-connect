@@ -1,8 +1,3 @@
-# This is an example Starter pipeline configuration
-# Use a skeleton to build, test and deploy using manual and parallel steps
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-
 image: php:8.2
 
 pipelines:
@@ -23,7 +18,7 @@ pipelines:
         name: Deploy to Google App Engine
         script:
           - apt-get update
-          - apt-get install -y php php-curl php-xml composer nodejs npm
+          - apt-get install -y composer nodejs npm
           - npm install
           - npm run build  # Update this if needed
           - composer install --no-dev --optimize-autoloader
