@@ -56,6 +56,11 @@ return [
             'throw' => false,
         ],
 
+        'tmp' => [
+            'driver' => 'local',
+            'root' => storage_path('framework/tmp'),
+        ],
+
     ],
 
     /*

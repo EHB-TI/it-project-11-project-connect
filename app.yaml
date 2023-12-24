@@ -3,13 +3,19 @@ runtime: php83
 env_variables:
   # Environment variables
   APP_LOG: errorlog
+  APP_ENV: staging
   APP_KEY: base64:uAbPOgKQ6dGnEch2n6Rl4Wk08ZVr41YWZbq0dSnxgO8=
+  APP_DEBUG: false
   STORAGE_DIR: /tmp
   DB_DATABASE: project-connect
   DB_USERNAME: root
   DB_PASSWORD: 4b5&m8@nG&k!eFJr
   DB_SOCKET: "/cloudsql/project-connect-409018:europe-west1:project-connect"
   STORAGE_PATH: "/tmp"
+  CACHE_DRIVER: file
+  SESSION_DRIVER: file
+  SESSION_PATH: /tmp
+  VIEW_COMPILED_PATH: /tmp/framework/views
 
 beta_settings:
   # For Cloud SQL
