@@ -46,7 +46,9 @@ class DeadlineController extends Controller
             'space_id' => session('current_space_id'),
         ]);
 
-        $users = User::where('role', 'student', 'space_id', $space->id)->get();
+        $users = User::where('role', 'student')->whereHas('spaces', function ($query) use ($space) {
+            $query->where('spaces.id', $space->id);
+        })->get();
 
         foreach ($users as $user) {
             $user->notifications()->attach($notification->id, ['seen' => false]);
