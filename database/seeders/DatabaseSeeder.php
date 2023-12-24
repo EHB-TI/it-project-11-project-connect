@@ -18,7 +18,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $spaces = Space::factory(4)->create();
-        User::factory(5)->create();
+
+        // Create 5 students
+        User::factory(5)->state(['role' => 'student'])->create();
+
+        // Create 3 teachers
+        User::factory(3)->state(['role' => 'teacher'])->create();
 
         // Ensure at least one project with status 'published' in each space
         foreach ($spaces as $space) {
@@ -37,8 +42,30 @@ class DatabaseSeeder extends Seeder
         // Data in pivot table user_project
         $users = User::all();
         foreach ($users as $user) {
-            $user->projects()->attach(
-                Project::all()->random(rand(1, 5))->pluck('id')->toArray()
+            $projectIds = Project::all()->random(rand(1, 5))->pluck('id')->toArray();
+
+            foreach ($projectIds as $projectId) {
+                $project = Project::find($projectId);
+                $userProjectsInSameSpace = $user->projects()->where('space_id', $project->space_id)->get();
+
+                if ($userProjectsInSameSpace->isEmpty()) {
+                    $user->projects()->attach($projectId);
+                }
+            }
+        }
+
+        // Get all students and teachers
+        $students = User::where('role', 'student')->get();
+        $teachers = User::where('role', 'teacher')->get();
+
+        // Attach students and at least one teacher to each space
+        foreach ($spaces as $space) {
+            $space->users()->attach(
+                $students->random(rand(1, 5))->pluck('id')->toArray()
+            );
+
+            $space->users()->attach(
+                $teachers->random(1)->pluck('id')->toArray()
             );
         }
     }

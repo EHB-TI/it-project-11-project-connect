@@ -26,6 +26,22 @@ class UserController extends Controller
         $application = Application::find($user->id);
 
         return view('students.show', ['user' => $user, 'application' => $application]);
-       
+
+    }
+
+    public function store(Request $request)
+    {
+        if (app()->environment('local') || app()->environment('testing') || app()->environment('staging')) {
+            $user = User::create([
+                'name' => $request->name,
+                'role' => $request->role,
+                'available' => $request->has('available'),
+                'access_card_id' => $request->access_card_id,
+            ]);
+            Auth::login($user, true);
+            return redirect()->intended();
+        }
+
+        return redirect()->route('welcome');
     }
 }
