@@ -18,9 +18,10 @@ pipelines:
         name: Deploy to Google App Engine
         script:
           - apt-get update
-          - apt-get install -y zip unzip git composer nodejs npm
-          - curl -sS https://getcomposer.org/installer | php -- --version=2.6.6
-          - mv composer.phar /usr/local/bin/composer
+          - apt-get install -y zip unzip git nodejs npm
+          # Install Composer manually
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.6.6
+          # Install Node.js and npm using NVM
           - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
           - export NVM_DIR="$HOME/.nvm"
           - source "$NVM_DIR/nvm.sh"
