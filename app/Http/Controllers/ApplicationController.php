@@ -168,7 +168,7 @@ class ApplicationController extends Controller
 
         $notification = Notification::create([
             'content' => $space->name . ': ' . Auth::user()->name . ' has approved your application for: ' . $project->title,
-            'route' => route('project.show', $project->id),
+            'route' => route('projects.show', $project->id),
             'space_id' => session('current_space_id'),
         ]);
 
@@ -194,7 +194,7 @@ class ApplicationController extends Controller
 
         $notification = Notification::create([
             'content' => $space->name . ': ' . Auth::user()->name . ' has rejected your application for: ' . $project->title,
-            'route' => route('application.show', $application->id),
+            'route' => route('applications.show', $application->id),
             'space_id' => session('current_space_id'),
         ]);
 
