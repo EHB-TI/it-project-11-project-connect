@@ -5,7 +5,7 @@ env_variables:
   APP_LOG: errorlog
   APP_ENV: staging
   APP_KEY: base64:uAbPOgKQ6dGnEch2n6Rl4Wk08ZVr41YWZbq0dSnxgO8=
-  APP_DEBUG: false
+  APP_DEBUG: true
   STORAGE_DIR: /tmp
   DB_DATABASE: project-connect
   DB_USERNAME: root
