@@ -56,6 +56,22 @@ $app->useStoragePath(env('STORAGE_PATH', base_path() . '/storage'));
 
 /*
 |--------------------------------------------------------------------------
+| Set Sessions Path
+|--------------------------------------------------------------------------
+|
+| Here we will set the sessions path in the application. This directory
+| is used by Laravel for storing session files. On Google App Engine,
+| we'll use the /tmp directory for this.
+|
+*/
+
+$sessionsPath = storage_path('framework/sessions');
+if (!file_exists($sessionsPath)) {
+    mkdir($sessionsPath, 0777, true);
+}
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |
