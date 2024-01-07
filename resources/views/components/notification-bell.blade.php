@@ -12,7 +12,9 @@
             <input type="hidden" name="space_id" value="{{ $notification->space_id }}">
             <input type="hidden" name="route" value="{{ $notification->route }}">
             <input type="hidden" name="notification_id" value="{{ $notification->id }}">
-            <button type="submit" class="{{ $notification->seen(Auth::id()) ? '' : 'font-bold' }}">{{ $notification->content }}</button>
+            <button type="submit" class="{{ $notification->seen(Auth::id()) ? '' : 'font-bold' }} block w-full text-left px-4 py-2 border-b last:border-0 hover:bg-gray-100 transition-colors duration-200">
+                {{ $notification->content }}
+            </button>
         </form>
     @endforeach
     </div>
