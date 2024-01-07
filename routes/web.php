@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProjectDetailsController;
 use App\Http\Controllers\ReviewController;
+use App\Models\NotificationUserStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -131,6 +132,13 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
         if (session('current_space_id') != $request->input('space_id')) {
             session(['current_space_id' => $request->input('space_id')]);
         }
+
+        $notificationStatus = NotificationUserStatus::where('notification_id', $request->input('notification_id'))
+            ->where('user_id', Auth::user()->id)
+            ->firstOrFail();
+
+        $notificationStatus->seen = true;
+        $notificationStatus->save();
         return redirect($request->input('route'));
     })->name('space.change');
 

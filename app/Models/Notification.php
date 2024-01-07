@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
+use Auth;
+
 /**
  * Class Notification
  *
@@ -32,10 +34,15 @@ class Notification extends Model
 
     public function users()
 {
-    return $this->belongsToMany(User::class, 'notification_user_statuses')
+    return $this->belongsToMany(User::class, 'Notification_user_statuses')
                 ->using(NotificationUserStatus::class)
                 ->withPivot('seen')
                 ->withTimestamps();
+}
+
+public function seen($userId)
+{
+    return $this->users()->where('user_id', $userId)->wherePivot('seen', true)->exists();
 }
 
     protected $fillable = [

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Notification_user_status', function (Blueprint $table) {
+        Schema::create('Notification_user_statuses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Notification_user_status');
+        Schema::dropIfExists('Notification_user_statuses');
     }
 };
