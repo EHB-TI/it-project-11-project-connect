@@ -56,16 +56,16 @@ Breadcrumbs::for('applications.index', function (Generator $trail) {
 // Application Details
 Breadcrumbs::for('applications.show', function (Generator $trail, $id) {
     $application = \App\Models\Application::findOrFail($id); // Fetch application details using your model
-    
+
     $trail->parent('applications.index');
-  
+
        $trail->push($application->user->name, route('applications.show', $id));
 });
 Breadcrumbs::for('applications.show2', function (Generator $trail, $id) {
     $application = \App\Models\Application::findOrFail($id); // Fetch application details using your model
-    
+
      $trail->parent('projects.show', $application->project_id);
-  
+
        $trail->push($application->user->name, route('applications.show', $id));
 });
 

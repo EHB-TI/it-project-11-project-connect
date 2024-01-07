@@ -18,9 +18,9 @@ class StoreRoute
     {
         self::$previousRouteName = self::$currentRouteName;
         self::$currentRouteName = $request->route() ? $request->route()->getName() : null;
-        
+
         return $next($request);
-        
+
     }
 
     public static function getCurrentRouteName()
