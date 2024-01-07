@@ -7,11 +7,28 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Space;
+use Auth;
 class SpaceController extends Controller
 {
 
     public function index() {
-        $spaces = Space::all();
+        if (app()->environment('local')) {
+            if (Auth::user()) {
+                $spaces = Auth::user()->spaces;
+            } else {
+                $spaces = [];
+            }
+        } else if (app()->environment('production')){
+            if (Auth::user()) {
+                $spaces = Auth::user()->spaces;
+            } else {
+                try {
+                    Auth::user()->spaces;
+                } catch (Exception $e) {
+                    return redirect()->route('login');
+                }
+            }
+        }
         return view('spaces.index', ['spaces' => $spaces]);
     }
 
