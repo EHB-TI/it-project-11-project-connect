@@ -34,7 +34,7 @@ class Notification extends Model
 
     public function users()
 {
-    return $this->belongsToMany(User::class, 'Notification_user_statuses')
+    return $this->belongsToMany(User::class, 'notification_user_statuses')
                 ->using(NotificationUserStatus::class)
                 ->withPivot('seen')
                 ->withTimestamps();

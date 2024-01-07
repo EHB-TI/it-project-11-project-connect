@@ -22,6 +22,8 @@ class NotificationUserStatus extends Model
 {
     use HasFactory;
 
+    protected $table = 'notification_user_statuses';
+
     protected $fillable = [
         'seen',
         'user_id',
