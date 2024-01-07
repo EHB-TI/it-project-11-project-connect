@@ -80,7 +80,7 @@
             @if($project->isMember(Auth::user()))
                 <x-application-box title="You are a member of this project!"
                                    message="Good luck, make something awesome!"/>
-            @elseif(Auth::user()->isMemberOfAnyProjectInCurrentSpace(session('current_space_id')) && !$project->isMember(Auth::user()))
+            @elseif(Auth::user()->isMemberOfAnyProjectInCurrentSpace() && !$project->isMember(Auth::user()))
                 <x-application-box title="You are already a member of another project!" message="Here it is:"
                                    route="projects.show"
                                    projectId="{{ Auth::user()->projects()->where('space_id', session('current_space_id'))->first()->id }}"

@@ -31,12 +31,12 @@ class DashboardController extends Controller
         // If the user is a student, show the students projects and projects he has applied for
         if (Auth::user()->hasRole('student')) {
             // Get the projects the user is a member of
-            $userProjects = $projects->filter(function ($project) {
-                return $project->users->contains(Auth::user());
-            });
+            $userProjects = Auth::user()->projects()->where('space_id', $space_id)->get();
 
             // Get the projects the user has applied for
-            $userApplications = Application::where('user_id', Auth::user()->id)->get();
+            $userApplications = Application::where('user_id', Auth::user()->id)->whereHas('project', function ($query) use ($space_id) {
+                $query->where('space_id', $space_id);
+            })->get();
             $userAppliedProjects = $userApplications->map(function ($application) {
                 return $application->project;
             });
