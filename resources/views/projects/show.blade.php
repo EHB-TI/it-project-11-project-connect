@@ -20,7 +20,7 @@
         session(['previousRoute' => $previousRoute]);
         //dd($previousRoute);
         $reviews = $project->reviews;
-    
+
     @endphp
 
 
@@ -31,9 +31,9 @@
             <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{
             $project->name }}</h1>
             <h2 id="subtitle"
-                class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">
+                class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl border-b-2">
             </h2>
-            <div id="details-content">
+            <div id="details-content" class="markdown-content">
                 @include('projects.detail-sections.overview', ['project' => $project])
             </div>
         </div>

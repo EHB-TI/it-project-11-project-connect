@@ -11,7 +11,7 @@
     else{
         $previousRoute = StoreRoute::getCurrentRouteName();
     }
-    
+
 @endphp
 {{-- @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => $application->id]) --}}
 @include('components.breadcrumb', ['breadcrumbName' => $previousRoute, 'id' => $application->id])
@@ -25,10 +25,14 @@
         <div class="mt-8">
                 <div class="mt-6">
                     <h2 class="text-2xl font-semibold mb-2">Motivation</h2>
-                    
+
                     <div class="bg-gray-200 p-4 rounded-lg mb-4">
-                        <div class="container mx-auto">
-                            <p class="text-gray-600">{{ $application->motivation }}</p>
+                        <div class="container mx-auto markdown-content">
+                            @php
+                                $parsedown = new Parsedown();
+                                $parseString = $application->motivation;
+                                echo $parsedown->text($parseString)
+                            @endphp
                         </div>
                     </div>
                 </div>
