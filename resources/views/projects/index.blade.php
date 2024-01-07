@@ -1,5 +1,5 @@
 @extends('components.head')
-@section('title', 'Home')
+@section('title', 'Projects')
 @section('content')
 
 @php
@@ -52,58 +52,65 @@ use App\Http\Middleware\StoreRoute;
     @endif
     <!--publish projects table-->
     @if (Auth::user()->role == 'teacher')
-        <table class="table-auto w-full text-left">
-            <thead>
-                <h2
-                    class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">
-                     Projects
-                </h2>
-                <tr>
-                    <th>Project Name</th>
-                    <th>Product-Owner</th>
-                    <th>Status</th>
-                    <th>publish</th>
-                    <th>unpublish</th>
+    <!-- Publish All Button -->
+    <form action="{{ route('projects.publishAll') }}" method="POST" class="mb-4">
+        @csrf
+        <button type="submit" class="bg-blue-500 text-white rounded-lg py-2 px-4">
+            Publish All Projects
+        </button>
+        <p class="text-gray-600 mt-2">Clicking this button will publish all approved projects.</p>
+    </form>
+
+    <!-- Projects Table -->
+    <table class="table-auto w-full text-left">
+        <thead>
+            <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">
+                Projects
+            </h2>
+            <tr>
+                <th>Project Name</th>
+                <th>Product-Owner</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($projects as $project)
+                <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer"
+                    onclick="window.location.href='{{ route('projects.show', $project->id) }}'">
+                    <td class="p-2">
+                        <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                            {{ $project->name }}
+                        </a>
+                    </td>
+                    <td class="p-2">{{ $project->owner->name }}</td>
+                    <td class="p-2">
+                        <div class="rounded-lg w-fit py-1 px-2
+                            {{ $project->status == 'denied' || $project->status == 'closed' ? 'bg-red-300 text-red-800' : ($project->status == 'approved' || $project->status == 'published' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-800') }}">
+                            {{ $project->status }}
+                        </div>
+                    </td>
+                    <!-- combined publish/unpublish button -->
+                    <td class="p-2">
+                        @if ($project->status == 'approved')
+                            <form action="{{ route('projects.publish') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Publish</button>
+                            </form>
+                        @elseif ($project->status == 'published')
+                            <form action="{{ route('projects.unpublish', ['project' => $project->id]) }}"
+                                method="POST">
+                                @csrf
+                                <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Unpublish</button>
+                            </form>
+                        @endif
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($projects as $project)
-                    <tr class="border-b-2 transition duration-200 hover:bg-gray-100 cursor-pointer" onclick="window.location.href='{{ route('projects.show', $project->id) }}'">
-                        <td class="p-2">
-                            <a href="{{ route('projects.show', ['id' => $project->id]) }}">
-                                {{ $project->name }}
-                            </a>
-                        </td>
-                        <td class="p-2">{{ $project->owner->name }}</td>
-                        <td class="p-2">
-                            <div
-                                class="rounded-lg w-fit py-1 px-2
-                                {{ $project->status == 'denied' || $project->status == 'closed' ? 'bg-red-300 text-red-800' : ($project->status == 'approved' || $project->status == 'published' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-800') }}">
-                                {{ $project->status }}
-                            </div>
-                        </td>
-                        <!--publish button-->
-                        <td class="p-2">
-                            @if ($project->status == 'approved')
-                                <form action="{{ route('projects.publish') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="project_id" value="{{ $project->id }}">
-                                    <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Publish</button>
-                                </form>
-                            @endif
-                        </td>
-                        <td class="p-2">
-                            @if ($project->status == 'published')
-                                <form action="{{ route('projects.unpublish', ['project' => $project->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    <button type="submit" class="bg-gray-400 rounded-lg w-fit py-1 px-2">Unpublish</button>
-                                </form>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
+            @endforeach
+        </tbody>
+    </table>
+@endif
+
+
     @endsection

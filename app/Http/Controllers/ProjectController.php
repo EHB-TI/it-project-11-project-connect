@@ -143,12 +143,43 @@ class ProjectController extends Controller
 
     public function unpublish(Request $request, Project $project)
     {
-        $project->status  = 'denied';
+        $project->status  = 'pending';
         $project->save();
 
         return back()->with('status', 'Project Unpublished!');
     }
 
+    public function publishAll(Request $request)
+    {
+        $space_id = session('current_space_id');
+        $space_name = Space::find($space_id)->name;
+    
+        // Check if there are approved projects
+        $approvedProjects = Space::find($space_id)->projects()->where('status', 'approved')->get();
+    
+        if ($approvedProjects->isEmpty()) {
+            return back()->with('status', 'No projects to publish.');
+        }
+    
+        // Publish all approved projects
+        foreach ($approvedProjects as $project) {
+            $project->status = 'published';
+            $project->save();
+    
+            $notification = Notification::create([
+                'content' => $space_name . ': ' . 'Your Project has been published: ' . $project->name,
+                'route' => route('projects.show', $project->id),
+                'space_id' => session('current_space_id'),
+            ]);
+    
+            $user = User::find($project->user_id);
+    
+            $user->notifications()->attach($notification->id, ['seen' => false]);
+        }
+    
+        return back()->with('status', 'All Projects Published!');
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */

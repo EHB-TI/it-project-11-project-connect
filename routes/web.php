@@ -138,6 +138,9 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     //unpublish route for teachers
     Route::post('/projects/{project}/unpublish', [ProjectController::class, 'unpublish'])->name('projects.unpublish') ->middleware('role:teacher');
 
+    // publish all route for teachers
+    Route::post('/projects/publishAll', [ProjectController::class, 'publishAll'])->name('projects.publishAll')->middleware('role:teacher');
+
     Route::post('/projects/{project}/approve', [ProjectController::class, 'approve'])->name('projects.approve') ->middleware('role:teacher');
     Route::post('/projects/{project}/reject', [ProjectController::class, 'reject'])->name('projects.reject') ->middleware('role:teacher');
 
