@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function notifications()
     {
-        return $this->belongsToMany(Notification::class, 'Notification_user_status', 'user_id', 'notification_id')
+        return $this->belongsToMany(Notification::class, 'Notification_user_statuses', 'user_id', 'notification_id')
                     ->withPivot('seen')
                     ->withTimestamps();
     }
@@ -63,14 +63,20 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function isMemberOfAnyProject(): bool
+    public function isMemberOfAnyProjectInCurrentSpace(): bool
     {
-        return $this->projects()->exists();
+        $projects = $this->projects()->where('space_id', session('current_space_id'))->get();
+        return $projects->count() > 0;
     }
 
     public function hasRole($role): bool
     {
         return Auth::user()->role == $role;
+    }
+
+    public function unseenCount()
+    {
+        return $this->notifications()->wherePivot('seen', false)->count();
     }
 
 

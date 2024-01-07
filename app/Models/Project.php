@@ -113,7 +113,7 @@ class Project extends Model
         }
 
         // Check if the user is already a member of a project
-        if ($user->isMemberOfAnyProject()) {
+        if ($user->isMemberOfAnyProjectInCurrentSpace(session('current_space_id'))) {
             return false;
         }
 

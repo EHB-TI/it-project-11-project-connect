@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProjectDetailsController;
 use App\Http\Controllers\ReviewController;
+use App\Models\NotificationUserStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,22 @@ if (app()->environment('local')) {
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 }
 
+//PROJECT DETAILS ROUTES
+//display the project details
+Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('projects.show');
+
+//get the overview component of the project details
+Route::get('/projects/details/overview/{id}', [ProjectDetailsController::class, 'overview']);
+
+//get the feedback component of the project details
+Route::get('/projects/details/feedback/{id}', [ProjectDetailsController::class, 'feedback']);
+
+//get the members component of the project details
+Route::get('/projects/details/members/{id}', [ProjectDetailsController::class, 'members']);
+
+//get the applications component of the project details
+Route::get('/projects/details/applications/{id}', [ProjectDetailsController::class, 'applications']);
+
 //AUTH PROTECTED ROUTES
 //only authenticated users can access these routes
 Route::middleware(['auth','set.current.space', 'store.route'])->group(function () {
@@ -115,6 +132,13 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
         if (session('current_space_id') != $request->input('space_id')) {
             session(['current_space_id' => $request->input('space_id')]);
         }
+
+        $notificationStatus = NotificationUserStatus::where('notification_id', $request->input('notification_id'))
+            ->where('user_id', Auth::user()->id)
+            ->firstOrFail();
+
+        $notificationStatus->seen = true;
+        $notificationStatus->save();
         return redirect($request->input('route'));
     })->name('space.change');
 
@@ -144,22 +168,6 @@ Route::middleware(['auth','set.current.space', 'store.route'])->group(function (
     Route::post('/projects/{project}/approve', [ProjectController::class, 'approve'])->name('projects.approve') ->middleware('role:teacher');
     Route::post('/projects/{project}/reject', [ProjectController::class, 'reject'])->name('projects.reject') ->middleware('role:teacher');
 
-
-    //PROJECT DETAILS ROUTES
-    //display the project details
-    Route::get('/projects/details/{id}', [ProjectController::class, 'show'])->name('projects.show');
-
-    //get the overview component of the project details
-    Route::get('/projects/details/overview/{id}', [ProjectDetailsController::class, 'overview']);
-
-    //get the feedback component of the project details
-    Route::get('/projects/details/feedback/{id}', [ProjectDetailsController::class, 'feedback']);
-
-    //get the members component of the project details
-    Route::get('/projects/details/members/{id}', [ProjectDetailsController::class, 'members']);
-
-    //get the applications component of the project details
-    Route::get('/projects/details/applications/{id}', [ProjectDetailsController::class, 'applications']);
 
     //get the edit component of the project details
     Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit')->middleware('checkProjectOwner');
