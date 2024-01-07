@@ -63,9 +63,10 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function isMemberOfAnyProject(): bool
+    public function isMemberOfAnyProjectInCurrentSpace($spaceId): bool
     {
-        return $this->projects()->exists();
+        $projects = $this->projects()->where('space_id', $spaceId)->get();
+        return $projects->count() > 0;
     }
 
     public function hasRole($role): bool
