@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Middleware\StoreRoute;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator;
 use App\Models\Project;
 use App\Models\User;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Dashboard
 Breadcrumbs::for('dashboard', function (Generator $trail) {
@@ -54,8 +56,17 @@ Breadcrumbs::for('applications.index', function (Generator $trail) {
 // Application Details
 Breadcrumbs::for('applications.show', function (Generator $trail, $id) {
     $application = \App\Models\Application::findOrFail($id); // Fetch application details using your model
-    $trail->parent('projects.show', $application->project_id);
-    $trail->push($application->user->name, route('applications.show', $id));
+    
+    $trail->parent('applications.index');
+  
+       $trail->push($application->user->name, route('applications.show', $id));
+});
+Breadcrumbs::for('applications.show2', function (Generator $trail, $id) {
+    $application = \App\Models\Application::findOrFail($id); // Fetch application details using your model
+    
+     $trail->parent('projects.show', $application->project_id);
+  
+       $trail->push($application->user->name, route('applications.show', $id));
 });
 
 // Deadlines

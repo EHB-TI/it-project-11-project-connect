@@ -18,8 +18,9 @@
 
         $previousRoute = session('previousRoute', StoreRoute::getPreviousRouteName());
         session(['previousRoute' => $previousRoute]);
-
+        //dd($previousRoute);
         $reviews = $project->reviews;
+    
     @endphp
 
 

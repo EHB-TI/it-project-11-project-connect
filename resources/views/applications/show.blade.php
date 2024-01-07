@@ -4,8 +4,17 @@
 @section('content')
 @php
     use App\Http\Middleware\StoreRoute;
+    $previousRoute = StoreRoute::getPreviousRouteName();
+    if($previousRoute === 'projects.index'){
+        $previousRoute = 'applications.show2';
+    }
+    else{
+        $previousRoute = StoreRoute::getCurrentRouteName();
+    }
+    
 @endphp
-@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => $application->id])
+{{-- @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => $application->id]) --}}
+@include('components.breadcrumb', ['breadcrumbName' => $previousRoute, 'id' => $application->id])
 
     <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Applications</h2>
     <h1 class="text-3xl font-bold mb-1">{{$application->project->name}}</h1>

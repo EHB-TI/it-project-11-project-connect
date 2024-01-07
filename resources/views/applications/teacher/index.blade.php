@@ -4,6 +4,7 @@
 @section('content')
 @php
     use App\Http\Middleware\StoreRoute;
+     session('previousRoute', StoreRoute::getCurrentRouteName());
 @endphp
 @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
     @if ($applications->isEmpty())

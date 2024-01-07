@@ -4,7 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
+// ...
+
+Session::put('key', 'value');
 class StoreRoute
 {
     protected static $currentRouteName;
@@ -21,12 +25,14 @@ class StoreRoute
 
     public static function getCurrentRouteName()
     {
+        Session::put('previousRoute', self::$currentRouteName);
         return self::$currentRouteName;
     }
 
     public static function getPreviousRouteName()
     {
-        return self::$previousRouteName;
+        return session('previousRoute');
+        //return self::$previousRouteName;
     }
 }
 ?>
