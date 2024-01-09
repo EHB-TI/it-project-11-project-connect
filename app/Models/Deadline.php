@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\belongsTo as belongsToAlias;
  * @package App\Models
  *
  * @property string $title
- * @property string $who
  * @property string $what
  * @property string $end_date
  * @property int $space_id
@@ -28,9 +27,21 @@ class Deadline extends Model
         return $this->belongsTo(Space::class, 'space_id');
     }
 
+    public static function findDeadline($what)
+    {
+       return self::where('what', $what)->orderBy('end_date', 'asc')->first();
+    }
+
+    public static function nextDeadlineForSpace($space_id)
+    {
+        return self::where('space_id', $space_id)
+                    ->where('end_date', '>', now())
+                    ->orderBy('end_date', 'asc')
+                    ->first();
+    }    
+
     protected $fillable = [
         'title',
-        'who',
         'what',
         'end_date',
         'space_id',

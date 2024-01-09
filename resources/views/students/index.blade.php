@@ -1,6 +1,13 @@
 @extends('components.head')
 @section('title', 'Home')
 @section('content')
+    @php
+        use App\Http\Middleware\StoreRoute;
+    @endphp
+    @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
+{{-- <div class="breadcrumbs">
+    {!! Breadcrumbs::render('students') !!}
+</div> --}}
     <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Students</h2>
     <table class="table-auto w-full text-left">
         <thead>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 
+use Auth;
+
 /**
  * Class Notification
  *
@@ -20,12 +22,32 @@ class Notification extends Model
 {
     use HasFactory;
 
+    public function space()
+    {
+        return $this->belongsTo(Space::class);
+    }
+
     public function statuses(): HasManyAlias
     {
         return $this->hasMany(NotificationUserStatus::class);
     }
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'notification_user_statuses')
+                ->using(NotificationUserStatus::class)
+                ->withPivot('seen')
+                ->withTimestamps();
+}
+
+public function seen($userId)
+{
+    return $this->users()->where('user_id', $userId)->wherePivot('seen', true)->exists();
+}
+
     protected $fillable = [
         'content',
+        'route',
+        'space_id',
     ];
 }

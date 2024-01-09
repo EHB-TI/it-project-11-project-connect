@@ -17,8 +17,15 @@ class SpaceFactory extends Factory
      */
     public function definition(): array
     {
+        $spaceNames = [
+            'IT Prroject 2023 - 2024',
+            'Java Advanced Short burst project',
+            'Backend Web Laravel project',
+            'backand web node.js project',
+        ];
+
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->unique()->randomElement($spaceNames),
             'defaultTeamSize' => 5,
         ];
     }

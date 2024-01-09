@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 use App\Models\Notification;
 
+use Auth;
+
 class NotificationController extends Controller
 {
     public function index()
     {
-        $notifications = Notification::all();
+        $notifications = Auth::user()->notifications;
 
         return view('notifications.index', compact('notifications'));
     }

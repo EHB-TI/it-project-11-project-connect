@@ -1,59 +1,35 @@
- @extends('components.head')
+@extends('components.head')
 @section('title', 'Home')
+
 @section('content')
-    <!-- Hier voeg je de content van de pagina toe -->
-    <form action="{{ route('space.create') }}" method="POST">
+    <form action="{{ route('spaces.store') }}" method="POST" class="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
         @csrf
-        <h1 style="font-size: 30px; font-weight: bold;">Create space</h1>
-        <br>
-        <div style="width: 500px;  padding: 10px; border-radius: 5px;">
-            <p>Effortlessly organize your classes with our innovative application! Craft tailored 'spaces' for each subject, enabling smooth student enrollment. Simplify your workflow, enhance communication, and create a dynamic learning experience. Join us now to revolutionize your teaching approach!</p>
-        </div>
-        <div>
-            <br>
-            <label for="space_title" class="block text-sm font-medium text-gray-700" style="font-size: 17px;">Space titel:</label>
-            <div class="mt-1">
-                <input type="text" id="space_title" name="name" required
-                    class="block w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
+        <h1 class="text-2xl font-bold mb-4">Create Space</h1>
+
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Space title:</label>
+            <input type="text" id="name" name="name" required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
         </div>
 
-        <div>
-            <br>
-            <label for="course" class="block text-sm font-medium text-gray-700" style="font-size: 17px;">Course:</label>
-            
-            <select id="course" name="course" required
-                class="block w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <option value="">Select a course</option>
-                <option value="1">Test</option>
-                <!--HIERONDER DE DROPDOWN VOOR DE CANVAS COURSE -->
-                {{-- @foreach ($canvasCourses as $canvasCourse)
-                    <option value="{{ $canvasCourse->canvasCourse_Id }}">{{ $canvasCourse->course_name }}</option>
-                @endforeach --}}
+        <div class="mb-4">
+            <label for="canvasCourseId" class="block text-sm font-medium text-gray-700">Course:</label>
+            <select id="canvasCourseId" name="canvasCourseId" required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="1">IT Project</option>
+                <option value="2">Java Advanced</option>
+                <option value="3">Integration</option>
             </select>
         </div>
 
-        <div>
-            <br>
-            <label for="default_teamsize" class="block text-sm font-medium text-gray-700" style="font-size: 17px;">Default teamleden:</label>
-            
-            <select id="default_teamsize" name="default_teamsize" required
-                class="block w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <option value="">  teamleden</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
+        <div class="mb-4">
+            <label for="defaultTeamSize" class="block text-sm font-medium text-gray-700">Default team members:</label>
+            <input class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                type="number" name="defaultTeamSize">
         </div>
 
-        <div class = "mt-[20px]" >
-            <button type="submit" style="background-color: gray; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Create Space</button>
+        <div>
+            <button type="submit" class="w-full bg-gray-700 text-white px-4 py-2 rounded-md">Create Space</button>
         </div>
     </form>
 @endsection
-   
-
-    

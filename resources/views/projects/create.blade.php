@@ -1,8 +1,14 @@
 @extends('components.head')
-@section('title', 'Home')
+@section('title', 'Create Project')
 @section('content')
+@php
+    use App\Http\Middleware\StoreRoute;
+@endphp
+@include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
+
 <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Create project</h2>
 <div class="flex flex-col gap-2">
+    
     <div class="w-1/2">
         <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Project Information</h1>
         <p class="mb-4">Describe why your idea will help fulfill an existing need. Make sure and explain where there is room for
@@ -25,6 +31,10 @@
                 <input type="hidden" id="content" name="description" class="hidden">
                 <label for="editor" class="text-gray-600 font-semibold">Write a detailed description down below</label>
                 <div id="editor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
+            </div>
+            <div class="mt-4">
+                <label for="file" class="block text-sm font-medium text-gray$-700">Upload image:</label>
+                <input type="file" id="file" name="file" class="mt-1 py-2 px-4 border rounded-full border-gray-300">
             </div>
 
             <input type="submit" value="Create Project" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 cursor-pointer w-fit">

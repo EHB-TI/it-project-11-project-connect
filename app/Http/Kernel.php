@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HasRole;
+use App\Http\Middleware\SetCurrentSpaceMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
@@ -27,6 +28,8 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use \App\Http\Middleware\StoreRoute;
+use \App\Http\Middleware\ShareNotifications;
 
 class Kernel extends HttpKernel
 {
@@ -45,6 +48,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+       StoreRoute::class,    
     ];
 
     /**
@@ -56,10 +60,12 @@ class Kernel extends HttpKernel
         'web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
-            StartSession::class,
+            StoreRoute::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            StartSession::class,
+            ShareNotifications::class,
         ],
 
         'api' => [
@@ -89,5 +95,8 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'role' => HasRole::class,
+        'store.route' => StoreRoute::class,
+        'set.current.space' => SetCurrentSpaceMiddleware::class,
+        'checkProjectOwner' => \App\Http\Middleware\CheckProjectOwner::class,
     ];
 }

@@ -29,7 +29,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'user_id', 'status'];
+    protected $fillable = ['name', 'description', 'user_id', 'status','file_path'];
 
 
     public function owner(): BelongsToAlias
@@ -55,6 +55,16 @@ class Project extends Model
     public function applications(): HasManyAlias
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function discussions(): HasManyAlias
+    {
+        return $this->hasMany(Discussion::class);
+
+    }
+    public function reviews(): HasManyAlias
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function applicationStatus(User $user): string
@@ -86,12 +96,24 @@ class Project extends Model
         return false;
     }
 
-
-
     public function canApply(User $user): bool
     {
-        // Check if the user is not the owner of the project or a teacher or a product owner
-        if ($this->isOwner($user) || $user->role === 'teacher' || $user->isProductOwner) {
+        // Check if the user is the owner of the project or a teacher
+        if ($this->isOwner($user) || $user->role === 'teacher') {
+            return false;
+        }
+
+        // Check if the user is a product owner of any project in the same space as the project
+        $space = $user->spaces()->where('space_id', $this->space_id)->first();
+        if ($space) {
+            $isProductOwnerInSpace = $space->projects()->where('user_id', $user->id)->exists();
+            if ($isProductOwnerInSpace) {
+                return false;
+            }
+        }
+
+        // Check if the user is already a member of a project
+        if ($user->isMemberOfAnyProjectInCurrentSpace(session('current_space_id'))) {
             return false;
         }
 
@@ -105,11 +127,6 @@ class Project extends Model
 
     public function hasApplied(User $user): bool
     {
-        // Check if the user is not the owner of the project or a teacher
-        if ($this->user_id === $user->id || $user->role === 'teacher') {
-            return false;
-        }
-
         // Check if the user has already applied to the project
         if ($this->applications()->where('user_id', $user->id)->exists()) {
             return true;

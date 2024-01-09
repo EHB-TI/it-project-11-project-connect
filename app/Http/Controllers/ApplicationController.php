@@ -5,51 +5,110 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
+
+use App\Models\Deadline;
+
+use App\Models\Notification;
+use App\Models\User;
+
+use App\Models\Space;
 
 use Auth;
 
+
+
+
 class ApplicationController extends Controller
 {
-    function show(Request $request)
+    function show($id)
     {
-        // new show page
+        $application = Application::find($id);
+        if (!$application) {
+            return redirect()->back()->with('error', 'Application not found.');
+        }
+
+        return view('applications.show', compact('application'));
     }
 
 
     public function store(Request $request, string $project_id)
     {
-        $project = Project::find($project_id);
+        $space_id = session('current_space_id');
+        // Find the deadline for applying to projects in the current space
 
+
+        $space = Space::find($space_id);
+        $deadline = $space->deadlines()->get()->where('what', 'Apply For Projects')->first();
+
+        // Check if the deadline is not found or has expired
+        if (!$deadline || strtotime($deadline->end_date) < strtotime(now())) {
+            return back()->with('status', 'You cannot apply for a project at this time.');
+        }
+
+        // Find the project
+        $project = Project::findOrFail($project_id);
+
+        // Check if the user can apply for the project
         if (!$project->canApply(Auth::user())) {
             return redirect(route('projects.show', $project_id))->with('status', 'You cannot apply for this project.');
         }
 
-        if (!$request->hasfile('file') || !$request->has('motivation')) {
-            return redirect()->back()->with('status', 'Please upload a file or write a motivation');
-        }
+
+        $request->validate([
+            'motivation' => 'required_without:file',
+            'file' => 'required_without:motivation|mimes:pdf,doc,docx,txts',
+        ]);
+
 
         // get path of file, store it
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('public');
         }
 
+        // Create a new application
         $application = new Application();
-        $application->fileurl = $filePath ?? null;
-        $application->motivation = $request->get('motivation') ?? null;
+        $application->file_path = $filePath;
+        $application->motivation = $request->input('motivation');
         $application->user_id = Auth::user()->id;
         $application->project_id = $project_id;
         $application->save();
 
-        // Redirect or return response
+        $space = Space::find(session('current_space_id'));
+
+        $notification = Notification::create([
+            'content' => $space->name . ': ' . Auth::user()->name . ' has applied for your project: ' . $project->name,
+            'route' => route('applications.show', $application->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($project->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
+
+
+        // Redirect with success message
         return redirect(route('projects.show', $project_id))->with('status', 'Application submitted successfully.');
     }
+
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
+
         $applications = Application::with('user')->get();
+        $currentSpaceId = session('current_space_id');
+
+        $applications = Application::with('user', 'project.space')
+            ->whereHas('project', function ($query) use ($currentSpaceId) {
+                $query->where('space_id', $currentSpaceId);
+            })
+            ->get();
+
 
         // Return the applications with user names to a view or as needed
         return view('applications.teacher.index', ['applications' => $applications]);
@@ -63,6 +122,8 @@ class ApplicationController extends Controller
         $project = Project::find($project_id);
         return view('applications.student.create', ['project' => $project]);
     }
+
+
 
 
     /**
@@ -87,5 +148,60 @@ class ApplicationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function approve($id)
+    {
+        $application = Application::find($id);
+        if($application->status == 'approved'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Approved!');
+        }
+        $application->status = 'approved';
+        $application->user->applications()->where('status', 'pending')->update(['status' => 'rejected']);
+        $application->save();
+
+        $application->project->users()->attach($application->user->id);
+
+        $space = Space::find(session('current_space_id'));
+
+        $project = Project::find($application->project->id);
+
+        $notification = Notification::create([
+            'content' => $space->name . ': ' . Auth::user()->name . ' has approved your application for: ' . $project->title,
+            'route' => route('projects.show', $project->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($application->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
+
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Approved!');
+    }
+
+    public function reject($id)
+    {
+        $application = Application::find($id);
+        if($application->status == 'rejected'){
+            return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Already Rejected!');
+        }
+        $application->status = 'rejected';
+        $application->save();
+
+        $space = Space::find(session('current_space_id'));
+
+        $project = Project::find($application->project->id);
+
+        $notification = Notification::create([
+            'content' => $space->name . ': ' . Auth::user()->name . ' has rejected your application for: ' . $project->title,
+            'route' => route('applications.show', $application->id),
+            'space_id' => session('current_space_id'),
+        ]);
+
+        $user = User::find($application->user_id);
+
+        $user->notifications()->attach($notification->id, ['seen' => false]);
+
+        return redirect()->route('projects.show', $application->project->id)->with('status', 'Application Rejected!');
     }
 }

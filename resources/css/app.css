@@ -1,3 +1,108 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.markdown-content h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+.markdown-content h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}
+
+.markdown-content h3 {
+    font-size: 1.17em;
+    margin: 1em 0;
+}
+
+.markdown-content h4 {
+    font-size: 1em;
+    margin: 1.33em 0;
+}
+
+.markdown-content h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+}
+
+.markdown-content h6 {
+    font-size: 0.67em;
+    margin: 2.33em 0;
+}
+
+.markdown-content p {
+    margin: 1em 0;
+}
+
+.markdown-content br {
+    display: block;
+    margin: 1em 0;
+}
+
+.markdown-content strong {
+    font-weight: bold;
+}
+
+.markdown-content em {
+    font-style: italic;
+}
+
+.markdown-content blockquote {
+    margin: 1em 40px;
+}
+
+.markdown-content ol, .markdown-content ul {
+    padding-left: 40px;
+}
+
+.markdown-content li {
+    margin: 0.5em 0;
+}
+
+.markdown-content code {
+    font-family: monospace;
+    background-color: #f9f9f9;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.markdown-content hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin: 1em 0;
+}
+
+.markdown-content a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.markdown-content img {
+    max-width: 100%;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.markdown-content thead {
+    background-color: #f9f9f9;
+}
+
+.markdown-content tbody {
+    background-color: #fff;
+}
+
+.markdown-content tr, .markdown-content th, .markdown-content td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+}

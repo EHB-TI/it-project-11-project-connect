@@ -9,6 +9,7 @@ class ProjectDetailsItems
         'members' => 'members',
         'feedback' => 'feedback',
         'applications' => 'applications',
+        'discussion' => 'discussion',
         //'teacher discussion' => 'teacher-discussion',
     ];
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyAlias;
 use Illuminate\Database\Eloquent\Relations\belongsToMany as belongsToManyAlias;
+
+use Auth;
 /**
  * Class User
  *
@@ -44,14 +46,37 @@ class User extends Authenticatable
         return $this->hasMany(Chat::class);
     }
 
-    public function notifications(): HasManyAlias
+    public function notifications()
     {
-        return $this->hasMany(Notification::class, 'user_id');
+        return $this->belongsToMany(Notification::class, 'notification_user_statuses', 'user_id', 'notification_id')
+                    ->withPivot('seen')
+                    ->withTimestamps();
     }
 
-    public function isMemberOfAnyProject(): bool
+    public function spaces(): BelongsToManyAlias
     {
-        return $this->projects()->exists();
+        return $this->belongsToMany(Space::class);
+    }
+
+    public function reviews(): HasManyAlias
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function isMemberOfAnyProjectInCurrentSpace(): bool
+    {
+        $projects = $this->projects()->where('space_id', session('current_space_id'))->get();
+        return $projects->count() > 0;
+    }
+
+    public function hasRole($role): bool
+    {
+        return Auth::user()->role == $role;
+    }
+
+    public function unseenCount()
+    {
+        return $this->notifications()->wherePivot('seen', false)->count();
     }
 
 
