@@ -1,5 +1,5 @@
-<div>
-    <nav class="fixed bg-gray-800 text-white flex flex-col h-screen min-w-[250px] w-1/5">
+<div x-data="{ open: false }">
+    <nav id="navbar" class="fixed bg-gray-800 text-white flex flex-col h-screen min-w-[250px] w-1/5 hidden md:flex">
         <!-- Logo -->
         <div class="flex top-0 left-0 items-center justify-center h-16 bg-gray-900">
             <img src="{{ asset('LogoPC.png') }}" alt="Logo" class="w-8 h-8">
@@ -35,7 +35,7 @@
                     $userSpaces = Auth::user()->spaces;
                 @endphp
 
-                    <!-- Dropdown menu voor spaces -->
+                <!-- Dropdown menu for spaces -->
                 <div class="relative inline-block text-left mb-10">
                     <button type="button" onclick="toggleDropdown()"
                             class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
@@ -50,9 +50,9 @@
                         </svg>
                     </button>
                     <div id="dropdown-menu"
-                         class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
-                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            @foreach ($userSpaces as $space)
+                         class="origin-bottom-left top-[-20px] transform translate-y-[-100%] absolute right-0 mt-2 w-[max(200px,_100%)]  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                        <div class="py-1 flex flex-col-reverse">
+                            @foreach ($userSpaces->reverse() as $space)
                                 <form action="{{ route('spaces.select') }}" method="POST">
                                     @csrf
                                     <input name="space_id" value="{{ $space->id }}" class="hidden"/>
@@ -83,4 +83,13 @@
             </div>
 
     </nav>
+
+    <button onclick="toggleNavbar()" class="md:hidden fixed top-0 right-0 m-4 p-2 bg-gray-800 text-white rounded">
+        <svg id="hamburger-icon" class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg id="close-icon" class="h-6 w-6 fill-current hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
 </div>

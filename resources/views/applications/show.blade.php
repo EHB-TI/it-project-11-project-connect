@@ -22,6 +22,7 @@
             <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">
                 Applications</h2>
             <h1 class="text-3xl font-bold mb-1">{{$application->project->name}}</h1>
+
             <div>Written by: {{$application->user->name}}</div>
             <!-- PDF Viewer OF motivation -->
             @if ($application ==! null)

@@ -10,7 +10,7 @@
         </a>
     @endif
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach($spaces as $space)
             <form action="{{ route('spaces.select') }}" method="POST">
                 @csrf

@@ -26,18 +26,24 @@
 
     @include('components.breadcrumb', ['breadcrumbName' => $previousRoute, 'id' => $project->id])
 
-    <div class="flex gap-8">
-        <div class="w-3/4">
-            <h1 class="mb-8 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl">{{
-            $project->name }}</h1>
+    <div class="flex flex-col-reverse lg:flex-row gap-8">
+        <div class="lg:w-3/4">
+
+                <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl break-all mb-8">
+                    {{$project->name }}
+                    <span class="text-base font-normal bg-gray-300 rounded-lg w-fit h-fit py-1 px-2 ml-2 inline-block translate-y-[-7px]">
+                        {{ $project->status }}
+                    </span>
+                </h1>
+
             <h2 id="subtitle"
-                class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl border-b-2">
+                class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl border-b-2 break-words">
             </h2>
             <div id="details-content" class="markdown-content">
                 @include('projects.detail-sections.overview', ['project' => $project])
             </div>
         </div>
-        <div class="w-1/4">
+        <div class="lg:w-1/4">
             @if(Auth::user()->role == 'teacher')
                 <div class="flex flex-col gap-4 mb-8">
                     <h2>Reviews</h2>

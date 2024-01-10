@@ -110,6 +110,13 @@ class Project extends Model
             if ($isProductOwnerInSpace) {
                 return false;
             }
+
+
+            $deadline = $space->deadlines()->where('what', 'Apply For Projects')->first();
+            if ($deadline && $deadline->end_date < now()) {
+                dd('deadline has passed');
+                return false;
+            }
         }
 
         // Check if the user is already a member of a project
