@@ -16,7 +16,12 @@ class UserController extends Controller
 {
 
     public function index(){
-        $users = User::where('role', 'student')->get();
+        // Get the current space
+        $currentSpace = Space::find(session('current_space_id'));
+
+        // Get all students associated with the current space
+        $users = $currentSpace->users()->where('role', 'student')->get();
+
         return view('students.index', ['users' => $users]);
     }
 
