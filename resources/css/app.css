@@ -53,8 +53,30 @@
     margin: 1em 40px;
 }
 
-.markdown-content ol, .markdown-content ul {
-    padding-left: 40px;
+.markdown-content ul {
+    list-style-type: disc;
+    padding-left: 2em;
+}
+
+.markdown-content ul ul {
+    list-style-type: circle;
+}
+
+.markdown-content ul ul ul {
+    list-style-type: square;
+}
+
+.markdown-content ol {
+    list-style-type: decimal;
+    padding-left: 2em;
+}
+
+.markdown-content ol ol {
+    list-style-type: lower-alpha;
+}
+
+.markdown-content ol ol ol {
+    list-style-type: lower-roman;
 }
 
 .markdown-content li {
