@@ -6,9 +6,8 @@
 @endphp
 @include('components.breadcrumb', ['breadcrumbName' => StoreRoute::getCurrentRouteName(), 'id' => null])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <div class="flex gap-8">
-
-        <div class="w-3/4">
+    <div class="flex flex-col-reverse lg:flex-row gap-8">
+        <div class="lg:w-3/4">
             @if(Auth::check() && Auth::user()->hasRole('student'))
                 <div class="mb-8">
                     <h2 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">My projects</h2>
@@ -74,7 +73,7 @@
             @endif
         </div>
 
-        <div class="w-1/4">
+        <div class="lg:w-1/4">
             @if ($deadline === null)
 
             @else
