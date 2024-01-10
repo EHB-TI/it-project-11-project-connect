@@ -57,7 +57,7 @@
                                     @csrf
                                     <input name="space_id" value="{{ $space->id }}" class="hidden"/>
                                     <button type="submit"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                             role="menuitem">{{ $space->name }}</button>
                                 </form>
                             @endforeach
