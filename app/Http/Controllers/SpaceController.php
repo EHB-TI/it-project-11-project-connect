@@ -47,6 +47,9 @@ class SpaceController extends Controller
             'defaultTeamSize' => $validatedData['defaultTeamSize'],
         ]);
 
+        // Attach the current authenticated user to the space
+        $space->users()->attach(Auth::id());
+
         $courseId = $validatedData['canvasCourseId'];
         $users = $space->getCourseUsers($courseId);
 
